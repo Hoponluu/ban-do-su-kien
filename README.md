@@ -68,7 +68,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 - Thẻ meta (title, description, Open Graph, Twitter Card), dữ liệu có cấu trúc `WebApplication` (JSON-LD), `robots.txt`, `sitemap.xml` và `site.webmanifest` đã có sẵn.
 - Ảnh chia sẻ mạng xã hội: `assets/og-image.png` (1200 × 630). Favicon và icon: `assets/logo.svg`, `assets/favicon-32.png`, `assets/apple-touch-icon.png`, `assets/icon-192.png`, `assets/icon-512.png`.
-- Địa chỉ trang đang khai báo là `https://hoponluu.github.io/ban-do-su-kien/`. Khi đổi sang tên miền riêng, tìm và thay địa chỉ này trong `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt` và `sitemap.xml`.
+- Địa chỉ trang: `https://event-map.nhanluu.com/`. Nếu đổi tên miền, thay địa chỉ này trong `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt` và `sitemap.xml`.
 
 ## Phím tắt
 

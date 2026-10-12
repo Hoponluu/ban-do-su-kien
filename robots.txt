@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hoponluu.github.io/ban-do-su-kien/sitemap.xml
+Sitemap: https://event-map.nhanluu.com/sitemap.xml

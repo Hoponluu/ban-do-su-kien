@@ -185,6 +185,26 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .shot-prev img{display:block;width:100%;height:auto}
 .modal-b textarea{width:100%;height:280px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:10px;font-family:var(--f-mono);font-size:11.5px;resize:vertical}
 
+/* Info modal: hướng dẫn nhanh + giới thiệu dự án */
+.info-b{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;gap:16px}
+.info-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.info-head .btn{flex:none}
+.info-head p{margin:4px 0 0;color:var(--ink-2);font-size:12.5px}
+.guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.guide section{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--bg)}
+.guide h4{margin:0 0 6px;font-size:13px;display:flex;align-items:center;gap:8px}
+.guide h4 b{width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:11px;flex:none}
+.guide ul{margin:0;padding-left:16px;color:var(--ink-2);font-size:12.5px;line-height:1.6}
+.guide li+li{margin-top:2px}
+.about{border-top:1px solid var(--line);padding-top:14px;display:flex;gap:14px;align-items:flex-start}
+.about .avatar{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.about small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.about h4{margin:2px 0 6px;font-size:14px}
+.about p{margin:0 0 10px;color:var(--ink-2);font-size:12.5px;line-height:1.6}
+a.btn{text-decoration:none;color:inherit}
+a.btn.primary{color:var(--accent-ink)}
+@media (max-width:640px){.guide{grid-template-columns:minmax(0,1fr)}}
+
 @media (max-width:900px){
   body{overflow:auto}
   .app{height:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 64vh auto;grid-template-areas:"top" "lib" "stage" "side"}
@@ -226,6 +246,8 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h2.5l1.2-2h4.6l1.2 2H14v8H2z"/><circle cx="8" cy="8.8" r="2.4"/></svg>Chụp ảnh</button>
     <button class="btn" id="bJson" title="Xuất / nhập dữ liệu bản vẽ">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Dữ liệu</button>
+    <button class="btn icon" id="bInfo" title="Hướng dẫn &amp; thông tin" aria-label="Hướng dẫn và thông tin dự án">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2V11.5" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".55" fill="currentColor" stroke="none"/></svg></button>
   </header>
 
   <aside class="lib" aria-label="Thư viện vật thể">
@@ -282,6 +304,63 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
     <div class="row">
       <button class="btn primary" id="sSave">Tải ảnh PNG</button>
       <button class="btn" id="sClose">Đóng</button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="infoModal" hidden>
+  <div class="modal-b info-b" role="dialog" aria-modal="true" aria-labelledby="iTitle">
+    <div class="info-head">
+      <div>
+        <h3 id="iTitle">Hướng dẫn nhanh</h3>
+        <p>Phác mặt bằng sự kiện trong vài phút: dựng không gian, kéo vật thể, vẽ luồng, xem 3D rồi chụp ảnh gửi khách.</p>
+      </div>
+      <button class="btn icon" id="iX" aria-label="Đóng"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    </div>
+    <div class="guide">
+      <section>
+        <h4><b>1</b>Sử dụng</h4>
+        <ul>
+          <li>Nhập chiều dài × rộng ở panel phải, bấm <strong>Tạo không gian chữ nhật</strong>.</li>
+          <li>Kéo vật thể từ thư viện bên trái thả vào bản vẽ.</li>
+          <li>Nhấp chọn để sửa kích thước, góc xoay, màu, tên ở panel phải.</li>
+          <li><kbd>R</kbd> xoay 90°, <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>D</kbd> nhân bản, <kbd>Delete</kbd> xoá, <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Z</kbd> hoàn tác.</li>
+        </ul>
+      </section>
+      <section>
+        <h4><b>2</b>Vẽ</h4>
+        <ul>
+          <li><kbd>W</kbd> vẽ tường tự do: nhấp từng góc, nhấp đúp hoặc <kbd>Enter</kbd> để kết thúc.</li>
+          <li><kbd>F</kbd> vẽ luồng di chuyển: khách, VIP, nhân sự, thoát hiểm.</li>
+          <li>Nhấp lên tường để thêm góc, nhấp đúp vào góc để xoá.</li>
+          <li>Vùng gạch chéo đỏ là vật thể chồng lấn hoặc nằm ngoài tường.</li>
+        </ul>
+      </section>
+      <section>
+        <h4><b>3</b>Xem 2D &amp; 3D</h4>
+        <ul>
+          <li><strong>Mặt bằng 2D</strong>: giữ <kbd>Space</kbd> + kéo hoặc chuột phải để dời, <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + cuộn để zoom, <kbd>Shift</kbd>+<kbd>1</kbd> vừa khung.</li>
+          <li><strong>Mô phỏng 3D</strong>: chọn góc tổng quan, từ trên xuống hoặc tầm mắt người đi.</li>
+          <li>Trong 3D: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> đi lại, <kbd>Q</kbd>/<kbd>E</kbd> hạ/nâng, nhấp đúp để bay đến một điểm.</li>
+        </ul>
+      </section>
+      <section>
+        <h4><b>4</b>Lưu &amp; xuất ảnh</h4>
+        <ul>
+          <li>Bản vẽ tự lưu trong trình duyệt này, mở lại là thấy.</li>
+          <li><strong>Chụp ảnh</strong> xuất PNG 2400 px gồm góc nhìn hiện tại, mặt bằng tổng thể và số liệu.</li>
+          <li><strong>Dữ liệu</strong> sao chép bản vẽ dạng JSON để lưu, gửi người khác hoặc mở trên máy khác.</li>
+        </ul>
+      </section>
+    </div>
+    <div class="about">
+      <div class="avatar" aria-hidden="true">NL</div>
+      <div>
+        <small>Về dự án</small>
+        <h4>Tool này được tạo bởi Nhân Lưu</h4>
+        <p>Nhân Lưu là một người làm sáng tạo đang có một trung tâm đào tạo UI/UX Product Design là TELOS Academy. Anh cũng có các dự án về văn hoá Việt Nam, tool này dùng để tạo các sơ đồ event mà đội ngũ anh hay dùng khi lên kế hoạch sự kiện.</p>
+        <a class="btn primary" href="https://nhanluu.com" target="_blank" rel="noopener">Ghé web của Nhân Lưu
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7v7M13 3L4 12"/></svg></a>
+      </div>
     </div>
   </div>
 </div>
@@ -955,7 +1034,7 @@ $('#tFlow').onclick = () => startFlow(flowType);
 $('#bUndo').onclick = undo; $('#bRedo').onclick = redo;
 
 document.addEventListener('keydown', e => {
-  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden) return;
+  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden) return;
   const ctrl = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
   if (e.code === 'Space') { spaceDown = true; svg.classList.add('panning'); e.preventDefault(); return; }
   if (ctrl && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
@@ -1255,7 +1334,7 @@ function loop3D() { if (looping) return; looping = true; lastT = performance.now
 /* Camera tự do: WASD/QE, zoom theo con trỏ, nhấp đúp để bay đến */
 const keys3 = new Set(); let fly = null;
 document.addEventListener('keydown', e => {
-  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden) return;
+  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden) return;
   const k = e.key.toLowerCase(); if ('wasdqe'.includes(k) && k.length === 1) { keys3.add(k); fly = null; e.preventDefault(); }
 });
 document.addEventListener('keyup', e => keys3.delete(e.key.toLowerCase()));
@@ -1632,7 +1711,13 @@ const modal = $('#modal');
 $('#bJson').onclick = () => { $('#mText').value = JSON.stringify(state, null, 2); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
 $('#mClose').onclick = () => modal.hidden = true;
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; } });
+
+/* ---------- Info modal ---------- */
+const infoModal = $('#infoModal');
+$('#bInfo').onclick = () => { infoModal.hidden = false; $('#iX').focus(); };
+$('#iX').onclick = () => infoModal.hidden = true;
+infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.hidden = true; });
 $('#mCopy').onclick = () => {
   const t = $('#mText'); const ok = () => $('#mMsg').textContent = 'Đã sao chép dữ liệu bản vẽ.';
   try { navigator.clipboard.writeText(t.value).then(ok, () => { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }); }

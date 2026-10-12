@@ -57,6 +57,13 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 - **Dữ liệu** xuất toàn bộ bản vẽ ra JSON để sao chép, và nạp lại JSON để mở bản vẽ.
 - Bản vẽ tự lưu trong trình duyệt (localStorage). Mỗi trình duyệt và mỗi địa chỉ trang có một bản lưu riêng.
 
+### Hướng dẫn & thông tin
+- Nút **ⓘ** ở góc phải thanh công cụ mở bảng hướng dẫn nhanh (sử dụng, vẽ, xem 2D & 3D, lưu & xuất ảnh) và phần giới thiệu tác giả, kèm nút dẫn về [nhanluu.com](https://nhanluu.com).
+
+## Tác giả
+
+Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, trung tâm đào tạo UI/UX Product Design. Đội ngũ dùng tool này để phác sơ đồ khi lên kế hoạch sự kiện. Xem thêm tại [nhanluu.com](https://nhanluu.com).
+
 ## Phím tắt
 
 | Phím | Tác dụng |

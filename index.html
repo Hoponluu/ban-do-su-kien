@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Analytics (property nhanluu.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PFSCQRQZM6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PFSCQRQZM6');
+</script>
 <title>Mặt Bằng Sự Kiện · Công cụ vẽ sơ đồ mặt bằng sự kiện 2D/3D online</title>
 <meta name="description" content="Công cụ vẽ mặt bằng sự kiện online miễn phí: kéo thả sân khấu, gian hàng, bàn tiệc, vẽ luồng khách, kiểm tra diện tích, sức chứa và xem mô phỏng 3D. Xuất ảnh sơ đồ gửi khách hàng ngay trên trình duyệt.">
 <meta name="keywords" content="vẽ mặt bằng sự kiện, công cụ vẽ mặt bằng sự kiện, sơ đồ mặt bằng sự kiện, phần mềm thiết kế layout sự kiện, vẽ sơ đồ hội chợ, sơ đồ gian hàng triển lãm, bố trí bàn tiệc cưới, floor plan sự kiện, mô phỏng 3D sự kiện, event layout">
@@ -1764,6 +1772,14 @@ const infoModal = $('#infoModal');
 $('#bInfo').onclick = () => { infoModal.hidden = false; $('#iX').focus(); };
 $('#iX').onclick = () => infoModal.hidden = true;
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.hidden = true; });
+
+/* ---------- Analytics: các thao tác chính ---------- */
+const track = (name, params) => { try { if (window.gtag) gtag('event', name, params); } catch (e) {} };
+$('#v3d').addEventListener('click', () => track('view_3d'));
+$('#bShot').addEventListener('click', () => track('take_screenshot', {view: viewMode}));
+$('#sSave').addEventListener('click', () => track('download_image'));
+$('#bJson').addEventListener('click', () => track('open_data'));
+$('#bInfo').addEventListener('click', () => track('open_guide'));
 $('#mCopy').onclick = () => {
   const t = $('#mText'); const ok = () => $('#mMsg').textContent = 'Đã sao chép dữ liệu bản vẽ.';
   try { navigator.clipboard.writeText(t.value).then(ok, () => { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }); }

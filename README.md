@@ -70,6 +70,10 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 - Ảnh chia sẻ mạng xã hội: `assets/og-image.png` (1200 × 630). Favicon và icon: `assets/logo.svg`, `assets/favicon-32.png`, `assets/apple-touch-icon.png`, `assets/icon-192.png`, `assets/icon-512.png`.
 - Địa chỉ trang: `https://event-map.nhanluu.com/`. Nếu đổi tên miền, thay địa chỉ này trong `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt` và `sitemap.xml`.
 
+## Google Analytics
+
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`.
+
 ## Phím tắt
 
 | Phím | Tác dụng |

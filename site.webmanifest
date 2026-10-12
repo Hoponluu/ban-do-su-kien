@@ -1,0 +1,14 @@
+{
+  "name": "Mặt Bằng Sự Kiện",
+  "short_name": "Mặt Bằng",
+  "description": "Công cụ vẽ mặt bằng sự kiện 2D/3D online",
+  "lang": "vi",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#E9ECE7",
+  "theme_color": "#FFC945",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

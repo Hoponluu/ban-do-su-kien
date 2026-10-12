@@ -10,6 +10,8 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 
 ## Bố cục code trong `index.html`
 - **CSS tokens** ở đầu `<style>`: màu theo theme sáng/tối (`--c-*` cho nhóm vật thể, `--fl-*` cho loại luồng). Mọi màu đi qua token.
+- **Màu nhấn**: `--accent` (#FFC945, vàng thương hiệu) chỉ dùng cho mảng nền (nút chính, nhãn, logo), chữ trên nền vàng dùng `--accent-ink`. Viền, tay nắm, chữ nhấn dùng `--accent-line` (#8A5F00 ở theme sáng để đủ tương phản trên nền sáng, #FFC945 ở theme tối).
+- **Tài nguyên**: `assets/` chứa logo, favicon, avatar tác giả và ảnh OG. Logo trong ảnh chụp được vẽ lại bằng canvas trong `takeShot()`.
 - **`CATALOG`**: thư viện vật thể. Mỗi mục có `k` (mã), `n` (tên), `w/d/h` (mét), `c` (nhóm màu), cùng các cờ: `shape:'circle'`, `dir` (có mặt trước), `flat` (vật thể nền, không tính chồng lấn hay chiếm chỗ), `hang` (treo trên cao), `ref` (người đối chiếu tỉ lệ), `seats`, `c3` (màu mặc định trên 3D).
 - **`FT`**: các loại luồng di chuyển.
 - **State**: `state = {name, room:{pts,h}, items[], flows[], showFlows}`, tự lưu vào localStorage với key `matbang-sukien-v1`. Hoàn tác/làm lại dùng snapshot JSON (`checkpoint()`, `undo()`, `redo()`).

@@ -64,6 +64,12 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 
 Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, trung tâm đào tạo UI/UX Product Design. Đội ngũ dùng tool này để phác sơ đồ khi lên kế hoạch sự kiện. Xem thêm tại [nhanluu.com](https://nhanluu.com).
 
+## SEO & tên miền
+
+- Thẻ meta (title, description, Open Graph, Twitter Card), dữ liệu có cấu trúc `WebApplication` (JSON-LD), `robots.txt`, `sitemap.xml` và `site.webmanifest` đã có sẵn.
+- Ảnh chia sẻ mạng xã hội: `assets/og-image.png` (1200 × 630). Favicon và icon: `assets/logo.svg`, `assets/favicon-32.png`, `assets/apple-touch-icon.png`, `assets/icon-192.png`, `assets/icon-512.png`.
+- Địa chỉ trang đang khai báo là `https://hoponluu.github.io/ban-do-su-kien/`. Khi đổi sang tên miền riêng, tìm và thay địa chỉ này trong `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt` và `sitemap.xml`.
+
 ## Phím tắt
 
 | Phím | Tác dụng |

@@ -3,8 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mặt Bằng Sự Kiện</title>
-<meta name="description" content="Công cụ vẽ mặt bằng sự kiện kéo thả 2D, mô phỏng 3D, kiểm tra diện tích, sức chứa và luồng di chuyển.">
+<title>Mặt Bằng Sự Kiện · Công cụ vẽ sơ đồ mặt bằng sự kiện 2D/3D online</title>
+<meta name="description" content="Công cụ vẽ mặt bằng sự kiện online miễn phí: kéo thả sân khấu, gian hàng, bàn tiệc, vẽ luồng khách, kiểm tra diện tích, sức chứa và xem mô phỏng 3D. Xuất ảnh sơ đồ gửi khách hàng ngay trên trình duyệt.">
+<meta name="keywords" content="vẽ mặt bằng sự kiện, công cụ vẽ mặt bằng sự kiện, sơ đồ mặt bằng sự kiện, phần mềm thiết kế layout sự kiện, vẽ sơ đồ hội chợ, sơ đồ gian hàng triển lãm, bố trí bàn tiệc cưới, floor plan sự kiện, mô phỏng 3D sự kiện, event layout">
+<meta name="author" content="Nhân Lưu">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#FFC945">
+<link rel="canonical" href="https://hoponluu.github.io/ban-do-su-kien/">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:site_name" content="Mặt Bằng Sự Kiện">
+<meta property="og:title" content="Mặt Bằng Sự Kiện · Vẽ sơ đồ mặt bằng sự kiện 2D/3D online">
+<meta property="og:description" content="Công cụ vẽ mặt bằng sự kiện online miễn phí: kéo thả sân khấu, gian hàng, bàn tiệc, vẽ luồng khách, kiểm tra diện tích, sức chứa và xem mô phỏng 3D. Xuất ảnh sơ đồ gửi khách hàng ngay trên trình duyệt.">
+<meta property="og:url" content="https://hoponluu.github.io/ban-do-su-kien/">
+<meta property="og:image" content="https://hoponluu.github.io/ban-do-su-kien/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mặt bằng sự kiện hội chợ Tết vẽ ở chế độ 2D kèm mô phỏng 3D">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mặt Bằng Sự Kiện · Vẽ sơ đồ mặt bằng sự kiện 2D/3D online">
+<meta name="twitter:description" content="Công cụ vẽ mặt bằng sự kiện online miễn phí: kéo thả sân khấu, gian hàng, bàn tiệc, vẽ luồng khách, kiểm tra diện tích, sức chứa và xem mô phỏng 3D. Xuất ảnh sơ đồ gửi khách hàng ngay trên trình duyệt.">
+<meta name="twitter:image" content="https://hoponluu.github.io/ban-do-su-kien/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Mặt Bằng Sự Kiện",
+  "alternateName": "Công cụ vẽ mặt bằng sự kiện",
+  "url": "https://hoponluu.github.io/ban-do-su-kien/",
+  "description": "Công cụ vẽ mặt bằng sự kiện online miễn phí: kéo thả sân khấu, gian hàng, bàn tiệc, vẽ luồng khách, kiểm tra diện tích, sức chứa và xem mô phỏng 3D. Xuất ảnh sơ đồ gửi khách hàng ngay trên trình duyệt.",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Trình duyệt web (Chrome, Edge, Safari, Firefox)",
+  "inLanguage": "vi",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "VND" },
+  "image": "https://hoponluu.github.io/ban-do-su-kien/assets/og-image.png",
+  "featureList": ["Kéo thả 25 loại vật thể: sân khấu, gian hàng, bàn tiệc, ghế, trang trí", "Vẽ tường tự do và luồng di chuyển khách, VIP, hậu cần, thoát hiểm", "Tính diện tích sàn, diện tích lưu thông, số chỗ ngồi", "Cảnh báo vật thể chồng lấn hoặc nằm ngoài tường", "Mô phỏng 3D với camera đi bộ tầm mắt", "Xuất ảnh PNG 2400 px và dữ liệu JSON"],
+  "author": { "@type": "Person", "name": "Nhân Lưu", "url": "https://nhanluu.com" }
+}
+</script>
 <style>body{margin:0}</style>
 </head>
 <body>
@@ -17,7 +58,7 @@
   --bg:#E9ECE7; --panel:#F7F8F5; --canvas:#F1F3EE; --floor:#FFFFFF;
   --ink:#1C2320; --ink-2:#5A645F; --ink-3:#8B948F; --line:#D3D9D1;
   --grid-minor:#E4E8E1; --grid-major:#C9D0C6; --wall:#27302C;
-  --accent:#A3241C; --accent-soft:#F4E2DF; --accent-ink:#FFFFFF; --gold:#A97F22;
+  --accent:#FFC945; --accent-line:#8A5F00; --accent-soft:#FFF1CC; --accent-ink:#231A06; --gold:#A97F22;
   --danger:#D0342C; --warn:#B87309; --ok:#2E7A4E;
   --c-stage:#5B4A93; --c-booth:#21698A; --c-seat:#3B7A55; --c-deco:#A97F22; --c-util:#5F6773; --c-zone:#B0473D; --c-ref:#3D5A80;
   --fl-guest:#2475C6; --fl-vip:#B07D0C; --fl-staff:#5F6773; --fl-exit:#138A4A;
@@ -30,7 +71,7 @@
   --bg:#121614; --panel:#191E1B; --canvas:#0F1311; --floor:#181D1A;
   --ink:#E5EAE6; --ink-2:#A0AAA4; --ink-3:#6E7872; --line:#2B332E;
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
-  --accent:#E25A4E; --accent-soft:#3A1E1B; --accent-ink:#1A0E0C; --gold:#D6AE52;
+  --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
   --c-stage:#9C8AE0; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
@@ -39,7 +80,7 @@
   --bg:#121614; --panel:#191E1B; --canvas:#0F1311; --floor:#181D1A;
   --ink:#E5EAE6; --ink-2:#A0AAA4; --ink-3:#6E7872; --line:#2B332E;
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
-  --accent:#E25A4E; --accent-soft:#3A1E1B; --accent-ink:#1A0E0C; --gold:#D6AE52;
+  --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
   --c-stage:#9C8AE0; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
@@ -50,7 +91,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:13p
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:focus-visible{outline:2px solid var(--accent-line);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
 .app{height:100%;display:grid;grid-template-columns:252px minmax(0,1fr) 292px;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"top top top" "lib stage side"}
@@ -101,7 +143,7 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 #plan.wall{cursor:crosshair}
 #plan.panning{cursor:grab}
 #plan .edge{stroke:transparent;cursor:copy}
-#plan .edge:hover{stroke:var(--accent);stroke-opacity:.28}
+#plan .edge:hover{stroke:var(--accent-line);stroke-opacity:.28}
 #plan.panning .edge{cursor:grab}
 #view3d{position:absolute;inset:0}
 #view3d canvas{display:block;width:100%;height:100%}
@@ -115,14 +157,14 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .chip .btn{height:26px;border:0;background:transparent}
 .chip .btn.icon{width:26px}
 .chip .btn:hover{background:var(--bg)}
-.chip .btn[aria-pressed="true"]{color:var(--accent)}
+.chip .btn[aria-pressed="true"]{color:var(--accent-line)}
 .zoomv{min-width:46px;text-align:center;font-size:11px;color:var(--ink-2)}
 .scalebar{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);height:32px;display:inline-flex;align-items:center;gap:10px;padding:0 10px;font-size:11px;color:var(--ink-2)}
 .scalebar i{display:block;height:6px;border:1.5px solid var(--ink);border-top:0}
 .hint{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:7px 10px;font-size:11.5px;color:var(--ink-2);max-width:min(380px,45vw);line-height:1.45}
-.hint.wallmode{border-color:var(--accent);color:var(--ink)}
+.hint.wallmode{border-color:var(--accent-line);color:var(--ink)}
 .coord{font-size:11px;color:var(--ink-3);background:var(--panel);border:1px solid var(--line);border-radius:var(--r);height:32px;display:inline-flex;align-items:center;padding:0 10px}
-.ghost{position:fixed;pointer-events:none;z-index:50;border:1.5px dashed var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:3px;transform:translate(-50%,-50%);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--accent);white-space:nowrap}
+.ghost{position:fixed;pointer-events:none;z-index:50;border:1.5px dashed var(--accent-line);background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:3px;transform:translate(-50%,-50%);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--accent-line);white-space:nowrap}
 .msg3d{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-2);padding:24px;text-align:center}
 
 /* Side */
@@ -154,7 +196,7 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .big small{font-size:10.5px;color:var(--ink-3)}
 .big b{font-family:var(--f-mono);font-size:17px;font-weight:500}
 .meter{height:6px;border-radius:3px;background:var(--bg);overflow:hidden}
-.meter i{display:block;height:100%;background:var(--accent)}
+.meter i{display:block;height:100%;background:var(--accent-line)}
 .pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{font-size:11px;border-radius:99px;padding:3px 9px;font-weight:500}
 .pill.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
@@ -165,7 +207,7 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .inv div b{margin-left:auto;font-family:var(--f-mono);font-weight:500}
 .disc summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:4px 0}
 .disc summary::-webkit-details-marker{display:none}
-.disc-t{font-size:11px;color:var(--accent);font-weight:600}
+.disc-t{font-size:11px;color:var(--accent-line);font-weight:600}
 .disc summary::before{content:'';width:0;height:0;border:4px solid transparent;border-left:5px solid var(--ink-3);margin-right:6px;transition:transform .15s}
 .disc[open] summary::before{transform:rotate(90deg) translateX(2px)}
 .disc summary .eyebrow{margin-right:auto}
@@ -173,7 +215,7 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .ftypes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ft{display:flex;align-items:center;gap:7px;height:32px;padding:0 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);cursor:pointer;font-size:12px;text-align:left}
 .ft i{width:14px;height:4px;border-radius:2px;flex:none}
-.ft.on{border-color:var(--accent);background:var(--panel);font-weight:600}
+.ft.on{border-color:var(--accent-line);background:var(--panel);font-weight:600}
 .legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:11px;color:var(--ink-2)}
 .legend span{display:inline-flex;align-items:center;gap:5px}
 
@@ -193,7 +235,7 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .guide section{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--bg)}
 .guide h4{margin:0 0 6px;font-size:13px;display:flex;align-items:center;gap:8px}
-.guide h4 b{width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:11px;flex:none}
+.guide h4 b{width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent-line);display:grid;place-items:center;font-size:11px;flex:none}
 .guide ul{margin:0;padding-left:16px;color:var(--ink-2);font-size:12.5px;line-height:1.6}
 .guide li+li{margin-top:2px}
 .about{border-top:1px solid var(--line);padding-top:14px;display:flex;gap:14px;align-items:flex-start}
@@ -220,11 +262,15 @@ a.btn.primary{color:var(--accent-ink)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 
+<noscript>
+  <h2>Công cụ vẽ mặt bằng sự kiện online</h2>
+  <p>Mặt Bằng Sự Kiện giúp bạn vẽ sơ đồ mặt bằng cho hội chợ, triển lãm, tiệc cưới, hội nghị và lễ hội: kéo thả sân khấu, gian hàng, bàn tiệc, ghế khán giả, trang trí; vẽ luồng di chuyển; tính diện tích và sức chứa; xem mô phỏng 3D và xuất ảnh PNG. Vui lòng bật JavaScript để sử dụng.</p>
+</noscript>
 <div class="app">
   <header class="top">
     <div class="brand">
-      <div class="mark" aria-hidden="true">MB</div>
-      <div class="brand-t"><small>Mặt bằng sự kiện</small><input id="projName" type="text" aria-label="Tên sự kiện"></div>
+      <img class="mark" src="assets/logo.svg" alt="" width="30" height="30">
+      <div class="brand-t"><h1 class="sr-only">Mặt Bằng Sự Kiện: công cụ vẽ sơ đồ mặt bằng sự kiện 2D/3D online</h1><small aria-hidden="true">Mặt bằng sự kiện</small><input id="projName" type="text" aria-label="Tên sự kiện"></div>
     </div>
     <span class="sep"></span>
     <div class="seg" role="group" aria-label="Công cụ">
@@ -353,7 +399,7 @@ a.btn.primary{color:var(--accent-ink)}
       </section>
     </div>
     <div class="about">
-      <div class="avatar" aria-hidden="true">NL</div>
+      <img class="avatar" src="assets/avatar-nhan-luu.png" alt="Logo Nhân Lưu" width="44" height="44">
       <div>
         <small>Về dự án</small>
         <h4>Tool này được tạo bởi Nhân Lưu</h4>
@@ -663,12 +709,12 @@ function planSVG(W, H, ex) {
     if (bad) o += shape(`fill="url(#hatch)" style="stroke:var(--danger)" stroke-width="1.6"`);
     if (c.dir) o += `<path d="M-5 ${hd+1}L5 ${hd+1}L0 ${hd+7}Z" style="fill:${col}"/>`;
     if (isSel) {
-      o += `<rect x="${-hw-5}" y="${-hd-5}" width="${it.w*s+10}" height="${it.d*s+10}" fill="none" style="stroke:var(--accent)" stroke-width="1.2" stroke-dasharray="4 3" rx="3"/>`;
+      o += `<rect x="${-hw-5}" y="${-hd-5}" width="${it.w*s+10}" height="${it.d*s+10}" fill="none" style="stroke:var(--accent-line)" stroke-width="1.2" stroke-dasharray="4 3" rx="3"/>`;
     }
     if (isSel && S.size === 1) {
-      o += `<line x1="0" y1="${-hd-5}" x2="0" y2="${-hd-24}" style="stroke:var(--accent)" stroke-width="1.2"/>`;
-      o += `<circle data-h="rot" cx="0" cy="${-hd-28}" r="6.5" style="fill:var(--panel);stroke:var(--accent);cursor:grab" stroke-width="1.6"/>`;
-      o += `<rect data-h="size" x="${hw+1}" y="${hd+1}" width="9" height="9" style="fill:var(--accent);cursor:nwse-resize"/>`;
+      o += `<line x1="0" y1="${-hd-5}" x2="0" y2="${-hd-24}" style="stroke:var(--accent-line)" stroke-width="1.2"/>`;
+      o += `<circle data-h="rot" cx="0" cy="${-hd-28}" r="6.5" style="fill:var(--panel);stroke:var(--accent-line);cursor:grab" stroke-width="1.6"/>`;
+      o += `<rect data-h="size" x="${hw+1}" y="${hd+1}" width="9" height="9" style="fill:var(--accent-line);cursor:nwse-resize"/>`;
     }
     o += `</g>`;
     // label (unrotated)
@@ -684,17 +730,17 @@ function planSVG(W, H, ex) {
   // group bounds for multi-selection
   if (!ex && S.size > 1) {
     const bb = selBounds(), [ax, ay] = w2s(bb.x0, bb.y0), [bx, by] = w2s(bb.x1, bb.y1);
-    o += `<rect x="${ax-9}" y="${ay-9}" width="${bx-ax+18}" height="${by-ay+18}" fill="none" style="stroke:var(--accent)" stroke-width="1.5" rx="4"/>`;
+    o += `<rect x="${ax-9}" y="${ay-9}" width="${bx-ax+18}" height="${by-ay+18}" fill="none" style="stroke:var(--accent-line)" stroke-width="1.5" rx="4"/>`;
     const X = {w: ax-9, c: (ax+bx)/2, e: bx+9}, Y = {n: ay-9, c: (ay+by)/2, s: by+9};
     const CUR = {nw:'nwse', se:'nwse', ne:'nesw', sw:'nesw', n:'ns', s:'ns', e:'ew', w:'ew'};
     for (const h of Object.keys(CUR)) { const hx = X[h.includes('w') ? 'w' : h.includes('e') ? 'e' : 'c'], hy = Y[h.includes('n') ? 'n' : h.includes('s') ? 's' : 'c'];
-      o += `<rect data-g="${h}" x="${hx-5}" y="${hy-5}" width="10" height="10" rx="2" style="fill:var(--panel);stroke:var(--accent);cursor:${CUR[h]}-resize" stroke-width="1.6"/>`; }
+      o += `<rect data-g="${h}" x="${hx-5}" y="${hy-5}" width="10" height="10" rx="2" style="fill:var(--panel);stroke:var(--accent-line);cursor:${CUR[h]}-resize" stroke-width="1.6"/>`; }
     o += `<g transform="translate(${ax-9} ${ay-13})"><rect y="-16" width="${String(S.size).length*7+78}" height="18" rx="4" style="fill:var(--accent)"/><text x="7" y="-7" dominant-baseline="central" font-size="11" font-weight="600" style="fill:var(--accent-ink)">${S.size} vật thể</text></g>`;
   }
   // marquee
   if (!ex && drag && drag.t === 'marq') {
     const [ax, ay] = w2s(Math.min(drag.x0, drag.x1), Math.min(drag.y0, drag.y1)), [bx, by] = w2s(Math.max(drag.x0, drag.x1), Math.max(drag.y0, drag.y1));
-    o += `<rect x="${ax}" y="${ay}" width="${bx-ax}" height="${by-ay}" style="fill:var(--accent);fill-opacity:.07;stroke:var(--accent)" stroke-width="1" stroke-dasharray="5 3"/>`;
+    o += `<rect x="${ax}" y="${ay}" width="${bx-ax}" height="${by-ay}" style="fill:var(--accent-line);fill-opacity:.07;stroke:var(--accent-line)" stroke-width="1" stroke-dasharray="5 3"/>`;
   }
   // room vertices
   if (!ex && !drawPts.length && P.length >= 3) for (let i = 0; i < P.length; i++) {
@@ -705,15 +751,15 @@ function planSVG(W, H, ex) {
   if (!ex && mode === 'wall') {
     const pts = cursorW ? [...drawPts, [cursorW[0], cursorW[1]]] : drawPts;
     if (pts.length) {
-      o += `<polyline points="${pts.map(p => w2s(p[0], p[1]).join(',')).join(' ')}" fill="none" style="stroke:var(--accent)" stroke-width="3"/>`;
-      drawPts.forEach((p, i) => { const [x,y] = w2s(p[0], p[1]); o += `<circle cx="${x}" cy="${y}" r="${i===0 && cursorW && cursorW[2] ? 9 : 4.5}" style="fill:var(--panel);stroke:var(--accent)" stroke-width="2"/>`; });
+      o += `<polyline points="${pts.map(p => w2s(p[0], p[1]).join(',')).join(' ')}" fill="none" style="stroke:var(--accent-line)" stroke-width="3"/>`;
+      drawPts.forEach((p, i) => { const [x,y] = w2s(p[0], p[1]); o += `<circle cx="${x}" cy="${y}" r="${i===0 && cursorW && cursorW[2] ? 9 : 4.5}" style="fill:var(--panel);stroke:var(--accent-line)" stroke-width="2"/>`; });
       if (cursorW && drawPts.length) {
         const l = drawPts[drawPts.length-1], len = Math.hypot(cursorW[0]-l[0], cursorW[1]-l[1]);
         const [x, y] = w2s(cursorW[0], cursorW[1]);
         o += `<g transform="translate(${x+12} ${y-14})"><rect x="0" y="-10" width="64" height="20" rx="4" style="fill:var(--accent)"/><text x="32" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="JetBrains Mono, monospace" style="fill:var(--accent-ink)">${fmt(len)} m</text></g>`;
       }
     }
-    if (cursorW) { const [x,y] = w2s(cursorW[0], cursorW[1]); o += `<path d="M${x-8} ${y}h16M${x} ${y-8}v16" style="stroke:var(--accent)" stroke-width="1.2"/>`; }
+    if (cursorW) { const [x,y] = w2s(cursorW[0], cursorW[1]); o += `<path d="M${x-8} ${y}h16M${x} ${y-8}v16" style="stroke:var(--accent-line)" stroke-width="1.2"/>`; }
   }
   return o;
 }
@@ -733,7 +779,7 @@ function flowsSVG(s, ex) {
     if (P.length < 2) continue;
     const d = 'M' + P.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
     const sw = clamp(0.2*s, 2.5, 6), sel = !ex && f.id === selFlow;
-    if (sel) o += `<path d="${d}" fill="none" style="stroke:var(--accent)" stroke-opacity=".22" stroke-width="${sw + 10}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if (sel) o += `<path d="${d}" fill="none" style="stroke:var(--accent-line)" stroke-opacity=".22" stroke-width="${sw + 10}" stroke-linecap="round" stroke-linejoin="round"/>`;
     o += `<path d="${d}" fill="none" style="stroke:${col}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" ${T.dash ? `stroke-dasharray="${sw*2.4} ${sw*1.7}"` : ''} opacity=".92"/>`;
     const gap = Math.max(3*s, 70); let acc = gap*0.55;
     for (let i = 0; i < P.length - 1; i++) {
@@ -746,7 +792,7 @@ function flowsSVG(s, ex) {
     o += `<circle cx="${P[0][0]}" cy="${P[0][1]}" r="${sw*1.4}" style="fill:var(--panel);stroke:${col}" stroke-width="${sw*0.75}"/>`;
     if (s > 6) o += `<text x="${P[0][0]}" y="${P[0][1] - sw*1.4 - 7}" text-anchor="middle" font-size="11" font-weight="700" pointer-events="none" style="fill:${col};paint-order:stroke;stroke:var(--floor);stroke-width:3.5px;stroke-linejoin:round">${esc(f.name || T.n)}</text>`;
     if (!ex && mode === 'select') o += `<path data-f="${f.id}" d="${d}" fill="none" stroke="transparent" stroke-width="${Math.max(sw + 10, 14)}" stroke-linecap="round" stroke-linejoin="round" style="cursor:move"/>`;
-    if (sel) P.forEach((p, i) => { o += `<circle data-fv="${i}" cx="${p[0]}" cy="${p[1]}" r="6" style="fill:var(--panel);stroke:var(--accent);cursor:move" stroke-width="2"/>`; });
+    if (sel) P.forEach((p, i) => { o += `<circle data-fv="${i}" cx="${p[0]}" cy="${p[1]}" r="6" style="fill:var(--panel);stroke:var(--accent-line);cursor:move" stroke-width="2"/>`; });
   }
   if (!ex && mode === 'flow') {
     const col = `var(--fl-${flowType})`, pts = cursorF ? [...flowPts, cursorF] : flowPts;
@@ -1639,11 +1685,11 @@ async function takeShot() {
       const ang = Math.atan2(tg.z - cp.z, tg.x - cp.x), half = Math.atan(Math.tan(T.camera.fov*D2R/2) * T.camera.aspect);
       const L = clamp(Math.hypot(tg.x - cp.x, tg.z - cp.z) * view.s, 60, 260);
       const top = Math.hypot(tg.x - cp.x, tg.z - cp.z) < 0.3;
-      if (!top) mark += `<path d="M${cx} ${cy}L${cx + Math.cos(ang-half)*L} ${cy + Math.sin(ang-half)*L}A${L} ${L} 0 0 1 ${cx + Math.cos(ang+half)*L} ${cy + Math.sin(ang+half)*L}Z" style="fill:var(--accent);fill-opacity:.14;stroke:var(--accent)" stroke-width="1.5"/>`;
-      mark += `<circle cx="${cx}" cy="${cy}" r="8" style="fill:var(--accent);stroke:var(--panel)" stroke-width="2.5"/><text x="${cx + 12}" y="${cy - 12}" font-size="13" font-weight="700" style="fill:var(--accent);paint-order:stroke;stroke:var(--panel);stroke-width:4px">${top ? 'Nhìn từ trên' : 'Vị trí camera'}</text>`;
+      if (!top) mark += `<path d="M${cx} ${cy}L${cx + Math.cos(ang-half)*L} ${cy + Math.sin(ang-half)*L}A${L} ${L} 0 0 1 ${cx + Math.cos(ang+half)*L} ${cy + Math.sin(ang+half)*L}Z" style="fill:var(--accent-line);fill-opacity:.14;stroke:var(--accent-line)" stroke-width="1.5"/>`;
+      mark += `<circle cx="${cx}" cy="${cy}" r="8" style="fill:var(--accent-line);stroke:var(--panel)" stroke-width="2.5"/><text x="${cx + 12}" y="${cy - 12}" font-size="13" font-weight="700" style="fill:var(--accent-line);paint-order:stroke;stroke:var(--panel);stroke-width:4px">${top ? 'Nhìn từ trên' : 'Vị trí camera'}</text>`;
     } else {
       const [a, b] = s2wFrom(saved, 0, 0), [c, d] = s2wFrom(saved, vw, vh); let [x0, y0] = w2s(a, b), [x1, y1] = w2s(c, d); x0 = Math.max(x0, 3); y0 = Math.max(y0, 3); x1 = Math.min(x1, PW - 3); y1 = Math.min(y1, PH - 3);
-      mark += `<rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}" style="fill:var(--accent);fill-opacity:.06;stroke:var(--accent)" stroke-width="2" stroke-dasharray="8 5"/><text x="${x0 + 8}" y="${y0 + 18}" font-size="13" font-weight="700" style="fill:var(--accent);paint-order:stroke;stroke:var(--panel);stroke-width:4px">Khung đang xem</text>`;
+      mark += `<rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}" style="fill:var(--accent-line);fill-opacity:.06;stroke:var(--accent-line)" stroke-width="2" stroke-dasharray="8 5"/><text x="${x0 + 8}" y="${y0 + 18}" font-size="13" font-weight="700" style="fill:var(--accent-line);paint-order:stroke;stroke:var(--panel);stroke-width:4px">Khung đang xem</text>`;
     }
     const planSc = view.s;
     const planDoc = svgDoc(`<svg x="0" y="0" width="${PW}" height="${PH}" overflow="hidden">${planSVG(PW, PH, true)}${mark}</svg>`, PW, PH);
@@ -1655,8 +1701,8 @@ async function takeShot() {
     const F = (w, sz, fam = '"Be Vietnam Pro", "Helvetica Neue", Arial, sans-serif') => `${w} ${sz}px ${fam}`;
     g.fillStyle = V('--panel'); g.fillRect(0, 0, Wt, H);
     g.fillStyle = V('--accent'); g.fillRect(pad, 46, 54, 54);
-    g.fillStyle = V('--accent-ink'); g.font = F(700, 22); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('MB', pad + 27, 74);
-    g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+    const lg = (c, pts) => { g.fillStyle = c; g.beginPath(); pts.forEach(([x, y], i) => g[i ? 'lineTo' : 'moveTo'](pad + x*54/512, 46 + y*54/512)); g.closePath(); g.fill(); };
+    lg('#5D400D', [[121,284],[240,165],[458,165],[229,393]]); lg('#FFFFFF', [[52,266],[171,147],[389,147],[160,375]]);
     g.fillStyle = V('--ink-3'); g.font = F(600, 17); g.fillText('MẶT BẰNG SỰ KIỆN · ' + new Date().toLocaleDateString('vi-VN'), pad + 74, 66);
     g.fillStyle = V('--ink'); g.font = F(700, 34); g.fillText(state.name || 'Sự kiện', pad + 74, 102);
     const P = state.room.pts, area = P.length >= 3 ? polyArea(P) : 0, seats = state.items.reduce((a, i) => a + seatsOf(i), 0);

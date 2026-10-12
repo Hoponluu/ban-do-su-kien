@@ -170,6 +170,17 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .scalebar{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);height:32px;display:inline-flex;align-items:center;gap:10px;padding:0 10px;font-size:11px;color:var(--ink-2)}
 .scalebar i{display:block;height:6px;border:1.5px solid var(--ink);border-top:0}
 .hint{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:7px 10px;font-size:11.5px;color:var(--ink-2);max-width:min(380px,45vw);line-height:1.45}
+.calbox{background:var(--panel);border:1px solid var(--accent-line);border-radius:var(--r);padding:9px 11px;font-size:12px;color:var(--ink);max-width:min(360px,80vw);line-height:1.45;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.calbox .row{align-items:center}
+.calbox .unit{flex:1;min-width:90px}
+.calbox input{height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 8px;width:100%;font-family:var(--f-mono)}
+.bg-file{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);min-width:0}
+.bg-file b{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.rng{display:flex;align-items:center;gap:8px}
+.rng input{flex:1;accent-color:var(--accent-line)}
+.rng output{font-family:var(--f-mono);font-size:12px;width:38px;text-align:right}
+.chk{display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--accent-line);margin:0}
 .hint.wallmode{border-color:var(--accent-line);color:var(--ink)}
 .coord{font-size:11px;color:var(--ink-3);background:var(--panel);border:1px solid var(--line);border-radius:var(--r);height:32px;display:inline-flex;align-items:center;padding:0 10px}
 .ghost{position:fixed;pointer-events:none;z-index:50;border:1.5px dashed var(--accent-line);background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:3px;transform:translate(-50%,-50%);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--accent-line);white-space:nowrap}
@@ -337,16 +348,19 @@ a.btn.primary{color:var(--accent-ink)}
         <button class="btn" id="zFit" title="Vừa khung">Vừa khung</button>
         <button class="btn" id="bSnap" aria-pressed="true" title="Bắt lưới 0,25 m">Bắt lưới</button>
         <button class="btn" id="bFlow2" aria-pressed="true" title="Bật/tắt lớp luồng di chuyển">Luồng: hiện</button>
+        <button class="btn" id="bBg2" aria-pressed="true" title="Bật/tắt lớp ảnh mặt bằng nền" hidden>Ảnh nền: hiện</button>
       </div>
       <div class="scalebar mono"><i id="sbar" style="width:80px"></i><span id="slabel">5 m</span><span id="sratio" style="color:var(--ink-3)">1:200</span></div>
       <span class="coord mono" id="coord">x — · y —</span>
     </div>
-    <div class="ov ov-tr"><div class="hint" id="hint"></div></div>
+    <div class="ov ov-tr"><div class="hint" id="hint"></div><div class="calbox" id="calBox" hidden></div></div>
   </main>
 
   <aside class="side" id="side" aria-label="Thuộc tính">
     <div class="sec" id="props"></div>
+    <div class="sec" id="bgsec"></div>
     <div class="sec" id="stats"></div>
+    <input type="file" id="bgFile" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf" hidden>
   </aside>
 </div>
 
@@ -355,6 +369,7 @@ a.btn.primary{color:var(--accent-ink)}
     <h3 id="sTitle">Ảnh chụp mặt bằng</h3>
     <div class="shot-prev"><img id="shotImg" alt="Ảnh chụp góc nhìn hiện tại kèm mặt bằng tổng thể"></div>
     <p class="note" id="sMsg" aria-live="polite"></p>
+    <label class="chk" id="sBgWrap" hidden><input type="checkbox" id="sBg"> Kèm ảnh mặt bằng nền</label>
     <div class="row">
       <button class="btn primary" id="sSave">Tải ảnh PNG</button>
       <button class="btn" id="sClose">Đóng</button>
@@ -387,6 +402,7 @@ a.btn.primary{color:var(--accent-ink)}
           <li><kbd>F</kbd> vẽ luồng di chuyển: khách, VIP, nhân sự, thoát hiểm.</li>
           <li>Nhấp lên tường để thêm góc, nhấp đúp vào góc để xoá.</li>
           <li>Vùng gạch chéo đỏ là vật thể chồng lấn hoặc nằm ngoài tường.</li>
+          <li>Có sẵn bản vẽ? Ở panel phải, mục <strong>Ảnh mặt bằng nền</strong>: tải ảnh hoặc PDF lên, bấm <strong>Căn tỉ lệ</strong>, nhấp 2 điểm của một đoạn đã biết kích thước rồi nhập độ dài thật, sau đó vẽ theo.</li>
         </ul>
       </section>
       <section>
@@ -422,6 +438,7 @@ a.btn.primary{color:var(--accent-ink)}
   <div class="modal-b" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <h3 id="mTitle">Dữ liệu bản vẽ (JSON)</h3>
     <p class="note">Đây là toàn bộ thông tin bản vẽ: không gian, vật thể, kích thước, vị trí, góc xoay. Sao chép để lưu hoặc gửi cho người khác; dán dữ liệu vào ô rồi bấm “Nạp” để mở lại.</p>
+    <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh mặt bằng nền (dữ liệu sẽ nặng hơn)</label>
     <textarea id="mText" spellcheck="false" aria-label="Dữ liệu JSON"></textarea>
     <p class="note" id="mMsg" aria-live="polite"></p>
     <div class="row">
@@ -540,13 +557,15 @@ let drawPts = [], cursorW = null, drag = null;
 let hist = [], fut = [];
 let issues = {outside: new Set(), overlap: new Set()};
 const find = id => state.items.find(i => i.id === id);
+let calPts = [], cursorC = null, shotBg = false;
 
 function checkpoint() { hist.push(JSON.stringify(state)); if (hist.length > 100) hist.shift(); fut = []; updUndo(); }
 function undo() { if (!hist.length) return; fut.push(JSON.stringify(state)); state = JSON.parse(hist.pop()); pruneSel(); renderAll(); }
 function redo() { if (!fut.length) return; hist.push(JSON.stringify(state)); state = JSON.parse(fut.pop()); pruneSel(); renderAll(); }
 function pruneSel() { for (const id of [...S]) if (!find(id)) S.delete(id); if (selFlow && !findF(selFlow)) selFlow = null; }
 const one = () => S.size === 1 ? find([...S][0]) : null;
-function updUndo() { $('#bUndo').disabled = !hist.length; $('#bRedo').disabled = !fut.length; }
+function updUndoBg() { if (state.bg && !bgSrc[state.bg.id]) bgRestore(); }
+function updUndo() { updUndoBg(); $('#bUndo').disabled = !hist.length; $('#bRedo').disabled = !fut.length; }
 
 /* ---------- Geometry ---------- */
 function polyArea(p) { let a = 0; for (let i = 0; i < p.length; i++) { const [x1,y1] = p[i], [x2,y2] = p[(i+1)%p.length]; a += x1*y2 - x2*y1; } return Math.abs(a)/2; }
@@ -682,6 +701,7 @@ function planSVG(W, H, ex) {
   const path = P.length ? 'M' + P.map(p => w2s(p[0], p[1]).map(v => v.toFixed(1)).join(' ')).join('L') + 'Z' : '';
   if (P.length >= 3) o += `<path d="${path}" style="fill:var(--floor)"/>`;
   o += `<rect width="${W}" height="${H}" fill="url(#gmin)"/><rect width="${W}" height="${H}" fill="url(#gmaj)"/>`;
+  o += bgSVG(s, ex);
   if (P.length >= 3) {
     const sw = clamp(0.2*s, 2, 9);
     o += `<path d="${path}" fill="none" style="stroke:var(--wall)" stroke-width="${sw}" stroke-linejoin="miter"/>`;
@@ -769,7 +789,189 @@ function planSVG(W, H, ex) {
     }
     if (cursorW) { const [x,y] = w2s(cursorW[0], cursorW[1]); o += `<path d="M${x-8} ${y}h16M${x} ${y-8}v16" style="stroke:var(--accent-line)" stroke-width="1.2"/>`; }
   }
+  if (!ex && mode === 'cal') o += calSVG();
   return o;
+}
+
+/* ---------- Ảnh mặt bằng nền ----------
+   state.bg = {id, name, iw, ih, x, y, w, rot, op, lock, show}: x, y là tâm ảnh (m), w là chiều rộng ảnh (m).
+   File ảnh chỉ nằm trên máy người dùng: lưu trong IndexedDB theo id, không gửi lên máy chủ. */
+const bgSrc = {};       // id → object URL
+const bgData = {};      // id → data URL (dùng khi xuất ảnh / JSON)
+const IDB = {
+  db: null,
+  open() { return this.db || (this.db = new Promise((ok, bad) => { const r = indexedDB.open('matbang-sukien', 1); r.onupgradeneeded = () => r.result.createObjectStore('files'); r.onsuccess = () => ok(r.result); r.onerror = () => bad(r.error); })); },
+  async tx(m, f) { const db = await this.open(); return new Promise((ok, bad) => { const t = db.transaction('files', m), q = f(t.objectStore('files')); t.oncomplete = () => ok(q && q.result); t.onerror = () => bad(t.error); }); },
+  get(k) { return this.tx('readonly', st => st.get(k)); },
+  put(k, v) { return this.tx('readwrite', st => st.put(v, k)); },
+  keys() { return this.tx('readonly', st => st.getAllKeys()); },
+  del(k) { return this.tx('readwrite', st => st.delete(k)); },
+};
+const bgH = b => b.w * b.ih / b.iw;
+const bgOn = () => !!(state.bg && state.bg.show !== false && bgSrc[state.bg.id]);
+function bgCorners(b) {
+  const h = bgH(b), r = b.rot*D2R, c = Math.cos(r), sn = Math.sin(r);
+  return [[-1,-1],[1,-1],[1,1],[-1,1]].map(([u, v]) => [b.x + (u*b.w/2)*c - (v*h/2)*sn, b.y + (u*b.w/2)*sn + (v*h/2)*c]);
+}
+function bgSVG(s, ex) {
+  const b = state.bg; if (!b || b.show === false) return '';
+  if (ex && !shotBg) return '';
+  const href = ex ? bgData[b.id] : bgSrc[b.id];
+  const [cx, cy] = w2s(b.x, b.y), w = b.w*s, h = bgH(b)*s;
+  if (!href) return ex ? '' : `<g transform="translate(${cx} ${cy}) rotate(${b.rot})" pointer-events="none"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" fill="none" style="stroke:var(--ink-3)" stroke-dasharray="6 4"/><text text-anchor="middle" dominant-baseline="central" font-size="13" style="fill:var(--ink-3)">Thiếu ảnh nền trên máy này · tải lại ảnh ở panel bên phải</text></g>`;
+  const live = !ex && !b.lock && mode === 'select';
+  return `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${b.rot})" opacity="${b.op}" ${live ? 'data-bg="1" style="cursor:move"' : 'pointer-events="none"'}><image href="${href}" x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" preserveAspectRatio="none"/>${live ? `<rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" fill="none" style="stroke:var(--accent-line)" stroke-width="1.5" stroke-dasharray="8 5"/>` : ''}</g>`;
+}
+function calSVG() {
+  const pts = cursorC && calPts.length < 2 ? [...calPts, cursorC] : calPts;
+  let o = '';
+  if (pts.length === 2) {
+    const [a, b] = pts.map(p => w2s(p[0], p[1])), len = Math.hypot(pts[1][0]-pts[0][0], pts[1][1]-pts[0][1]);
+    o += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" style="stroke:var(--accent-line)" stroke-width="2.5" stroke-dasharray="7 4"/>`;
+    o += `<g transform="translate(${(a[0]+b[0])/2} ${(a[1]+b[1])/2 - 18})"><rect x="-44" y="-11" width="88" height="22" rx="4" style="fill:var(--accent)"/><text text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11.5" font-weight="600" style="fill:var(--accent-ink)">đang: ${fmt(len)} m</text></g>`;
+  }
+  pts.forEach(p => { const [x, y] = w2s(p[0], p[1]); o += `<circle cx="${x}" cy="${y}" r="5" style="fill:var(--panel);stroke:var(--accent-line)" stroke-width="2"/><path d="M${x-12} ${y}h24M${x} ${y-12}v24" style="stroke:var(--accent-line)" stroke-width="1"/>`; });
+  return o;
+}
+async function bgStore(blob, name) {
+  // ảnh quá lớn thì thu về cạnh dài 4096 px để nhẹ bộ nhớ
+  let img = await loadImg(URL.createObjectURL(blob));
+  let iw = img.naturalWidth, ih = img.naturalHeight;
+  if (!iw || !ih) throw new Error('không đọc được ảnh');
+  const MAX = 4096;
+  if (Math.max(iw, ih) > MAX) {
+    const k = MAX/Math.max(iw, ih), c = document.createElement('canvas'); c.width = Math.round(iw*k); c.height = Math.round(ih*k);
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+    blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .9)); iw = c.width; ih = c.height;
+  }
+  const id = uid();
+  await IDB.put('bg:' + id, blob).catch(() => {});
+  bgSrc[id] = URL.createObjectURL(blob);
+  return {id, iw, ih, name};
+}
+async function bgDataOf(id) {
+  if (bgData[id]) return bgData[id];
+  if (!bgSrc[id]) return null;
+  const blob = await (await fetch(bgSrc[id])).blob();
+  return bgData[id] = await new Promise(r => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(blob); });
+}
+async function pdfToBlob(file) {
+  if (!window.pdfjsLib) await new Promise((ok, bad) => { const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js'; sc.onload = ok; sc.onerror = () => bad(new Error('không tải được thư viện đọc PDF, kiểm tra kết nối mạng')); document.head.appendChild(sc); });
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise, page = await pdf.getPage(1);
+  const v1 = page.getViewport({scale: 1}), k = Math.min(4096/Math.max(v1.width, v1.height), 6), vp = page.getViewport({scale: k});
+  const c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+  await page.render({canvasContext: g, viewport: vp}).promise;
+  return {blob: await new Promise(r => c.toBlob(r, 'image/png')), pages: pdf.numPages};
+}
+let bgMsg = '';
+async function bgImport(file) {
+  if (!file) return;
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  bgMsg = isPdf ? 'Đang đọc trang đầu của file PDF…' : 'Đang đọc ảnh…'; renderBgPanel();
+  try {
+    let blob = file, extra = '';
+    if (isPdf) { const r = await pdfToBlob(file); blob = r.blob; if (r.pages > 1) extra = ` File có ${r.pages} trang, công cụ dùng trang đầu.`; }
+    const meta = await bgStore(blob, file.name);
+    const P = state.room.pts, xs = P.map(p => p[0]), ys = P.map(p => p[1]);
+    const has = P.length >= 3, w = has ? Math.max(...xs) - Math.min(...xs) : 30;
+    checkpoint();
+    state.bg = {...meta, x: has ? (Math.min(...xs) + Math.max(...xs))/2 : w/2, y: has ? (Math.min(...ys) + Math.max(...ys))/2 : w*meta.ih/meta.iw/2, w: r2(w), rot: 0, op: .5, lock: false, show: true};
+    bgMsg = 'Đã đặt ảnh vừa khung không gian. Bước tiếp theo: bấm “Căn tỉ lệ” để ảnh đúng kích thước thật.' + extra;
+    track('bg_upload', {type: isPdf ? 'pdf' : 'image'});
+    if (viewMode === '3d') setView('2d');
+    renderAll(); fitView(); bgGc();
+  } catch (e) { bgMsg = 'Không mở được file: ' + (e && e.message || e) + '.'; renderBgPanel(); }
+}
+async function bgRestore() {
+  const b = state.bg; if (!b || bgSrc[b.id]) return;
+  try { const blob = await IDB.get('bg:' + b.id); if (blob) { bgSrc[b.id] = URL.createObjectURL(blob); renderAll(); } } catch (e) {}
+}
+async function bgGc() {
+  // xoá các ảnh cũ không còn dùng (giữ ảnh đang mở và ảnh trong lịch sử hoàn tác)
+  try {
+    const keep = new Set([state.bg && state.bg.id, ...[...hist, ...fut].map(h => { try { return JSON.parse(h).bg?.id; } catch (e) { return null; } })]);
+    for (const k of await IDB.keys()) if (String(k).startsWith('bg:') && !keep.has(String(k).slice(3))) IDB.del(k);
+  } catch (e) {}
+}
+function setShowBg(v) { if (!state.bg) return; checkpoint(); state.bg.show = v; renderAll(); }
+let opDirty = false;
+function renderBgPanel() {
+  const el = $('#bgsec'), b = state.bg;
+  if (!b) {
+    el.innerHTML = `<h3>Ảnh mặt bằng nền</h3>
+      <p class="note">Đưa bản vẽ mặt bằng có sẵn (JPG, PNG hoặc PDF) lên làm nền rồi vẽ theo. Ảnh chỉ lưu trên máy bạn, không tải lên máy chủ.</p>
+      <button class="btn" id="bgUp"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 11V3M5 6l3-3 3 3M3 11v2h10v-2"/></svg>Tải ảnh mặt bằng lên</button>
+      ${bgMsg ? `<p class="note" aria-live="polite">${esc(bgMsg)}</p>` : ''}`;
+    $('#bgUp').onclick = () => $('#bgFile').click();
+    return;
+  }
+  const missing = !bgSrc[b.id];
+  el.innerHTML = `<h3>Ảnh mặt bằng nền <span class="typ">${b.lock ? 'đã khoá' : 'kéo để dời'}</span></h3>
+    <div class="bg-file"><b title="${esc(b.name || '')}">${esc(b.name || 'Ảnh nền')}</b><span class="mono">${b.iw}×${b.ih}px</span></div>
+    ${missing ? `<div class="issue">Trình duyệt này chưa có file ảnh. Bấm “Đổi ảnh” để chọn lại đúng file, vị trí và tỉ lệ được giữ nguyên.</div>` : ''}
+    <button class="btn primary" id="bgCal">Căn tỉ lệ bằng 2 điểm</button>
+    <div class="g2">
+      ${num('bgW', 'Chiều rộng ảnh', b.w, 'm', 0.5)}${num('bgR', 'Xoay', b.rot, '°', 1)}
+      ${num('bgX', 'Tâm X', b.x, 'm', 0.25)}${num('bgY', 'Tâm Y', b.y, 'm', 0.25)}
+    </div>
+    <div class="fld"><label for="bgOp">Độ rõ</label><div class="rng"><input id="bgOp" type="range" min="0.1" max="1" step="0.05" value="${b.op}"><output id="bgOpV">${Math.round(b.op*100)}%</output></div></div>
+    <label class="chk"><input type="checkbox" id="bgLock" ${b.lock ? 'checked' : ''}> Khoá ảnh (không kéo nhầm khi vẽ)</label>
+    <label class="chk"><input type="checkbox" id="bgShow" ${b.show !== false ? 'checked' : ''}> Hiện ảnh nền</label>
+    ${bgMsg ? `<p class="note" aria-live="polite">${esc(bgMsg)}</p>` : ''}
+    <div class="row"><button class="btn" id="bgRe">Đổi ảnh</button><button class="btn danger" id="bgDel">Xoá ảnh</button></div>`;
+  $('#bgCal').onclick = () => { if (!b.show) { b.show = true; } bgMsg = ''; setMode('cal'); };
+  const bindB = (id, key) => { $(id).onchange = e => { const v = parseFloat(e.target.value); if (!isFinite(v) || (key === 'w' && v <= 0)) return; checkpoint(); b[key] = key === 'rot' ? ((v % 360) + 360) % 360 : r2(v); renderAll(); }; };
+  bindB('#bgW', 'w'); bindB('#bgR', 'rot'); bindB('#bgX', 'x'); bindB('#bgY', 'y');
+  $('#bgOp').oninput = e => { if (!opDirty) { checkpoint(); opDirty = true; } b.op = +e.target.value; $('#bgOpV').textContent = Math.round(b.op*100) + '%'; render2D(); };
+  $('#bgOp').onchange = () => { opDirty = false; save(); };
+  $('#bgLock').onchange = e => { checkpoint(); b.lock = e.target.checked; bgMsg = ''; renderAll(); };
+  $('#bgShow').onchange = e => setShowBg(e.target.checked);
+  $('#bgRe').onclick = () => { bgReplace = true; $('#bgFile').click(); };
+  $('#bgDel').onclick = () => { checkpoint(); state.bg = null; bgMsg = 'Đã xoá ảnh nền. Có thể hoàn tác bằng Ctrl Z.'; if (mode === 'cal') setMode('select'); renderAll(); };
+}
+let bgReplace = false;
+$('#bgFile').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  if (bgReplace && state.bg) {
+    bgReplace = false; const old = state.bg;
+    try {
+      let blob = f; if (f.type === 'application/pdf' || /\.pdf$/i.test(f.name)) blob = (await pdfToBlob(f)).blob;
+      const meta = await bgStore(blob, f.name);
+      checkpoint(); state.bg = {...old, ...meta, w: old.iw === meta.iw && old.ih === meta.ih ? old.w : r2(old.w)}; bgMsg = 'Đã đổi ảnh, giữ nguyên vị trí và chiều rộng.'; renderAll(); bgGc();
+    } catch (err) { bgMsg = 'Không mở được file: ' + (err && err.message || err) + '.'; renderBgPanel(); }
+    return;
+  }
+  bgReplace = false; bgImport(f);
+};
+function calApply() {
+  const L = parseFloat(String($('#calLen').value).replace(',', '.')), b = state.bg;
+  if (!b || calPts.length < 2 || !(L > 0)) { $('#calLen').focus(); return; }
+  const d = Math.hypot(calPts[1][0]-calPts[0][0], calPts[1][1]-calPts[0][1]); if (d < 1e-6) return;
+  const f = L/d, [ax, ay] = calPts[0];
+  checkpoint();
+  b.w = Math.round(b.w*f*1000)/1000; b.x = Math.round((ax + (b.x - ax)*f)*1000)/1000; b.y = Math.round((ay + (b.y - ay)*f)*1000)/1000;
+  bgMsg = `Đã căn tỉ lệ: đoạn đo = ${fmt(L)} m. Nên khoá ảnh rồi dùng Vẽ tường (W) để vẽ theo.`;
+  track('bg_calibrate');
+  setMode('select'); renderAll();
+}
+function renderCal() {
+  const box = $('#calBox');
+  if (mode !== 'cal') { box.hidden = true; return; }
+  box.hidden = false;
+  if (calPts.length < 2) {
+    box.innerHTML = `<div><b>Căn tỉ lệ ảnh nền:</b> nhấp ${calPts.length ? '<b>điểm thứ hai</b>' : 'hai điểm'} ở hai đầu một đoạn đã biết kích thước thật (một bức tường, một đường kích thước ghi trên bản vẽ). Phóng to để nhấp chính xác hơn.</div><div class="row"><button class="btn" id="calX">Huỷ</button></div>`;
+  } else {
+    box.innerHTML = `<div>Độ dài thật của đoạn vừa đo:</div>
+      <div class="row"><div class="unit"><input id="calLen" type="text" inputmode="decimal" placeholder="Ví dụ 12,5" aria-label="Độ dài thật (m)"><em>m</em></div><button class="btn primary" id="calOk">Áp dụng</button></div>
+      <div class="row"><button class="btn" id="calRe">Đo lại</button><button class="btn" id="calX">Huỷ</button></div>`;
+    $('#calOk').onclick = calApply; $('#calRe').onclick = () => { calPts = []; renderCal(); render2D(); };
+    $('#calLen').onkeydown = e => { if (e.key === 'Enter') calApply(); else if (e.key === 'Escape') setMode('select'); };
+    setTimeout(() => $('#calLen') && $('#calLen').focus(), 0);
+  }
+  $('#calX').onclick = () => setMode('select');
 }
 function render2D() {
   const s = view.s;
@@ -888,6 +1090,10 @@ svg.addEventListener('pointerdown', e => {
   svg.setPointerCapture(e.pointerId);
   if (e.button === 1 || e.button === 2 || spaceDown) { drag = {t:'pan', px, py, ox:view.ox, oy:view.oy}; svg.classList.add('panning'); e.preventDefault(); return; }
   if (e.button !== 0) return;
+  if (mode === 'cal') {
+    if (calPts.length >= 2) return;
+    calPts.push([wx, wy]); cursorC = null; renderCal(); render2D(); return;
+  }
   if (mode === 'flow') {
     const [x, y] = flowSnap(wx, wy), l = flowPts[flowPts.length-1];
     if (!l || l[0] !== x || l[1] !== y) flowPts.push([x, y]);
@@ -931,6 +1137,11 @@ svg.addEventListener('pointerdown', e => {
     drag = {t:'move', id, alt: e.altKey, wx0: wx, wy0: wy, lead: [lead.x, lead.y], start: [...S].map(i => { const t = find(i); return [t, t.x, t.y]; }), moved: false};
     render2D(); return;
   }
+  const bgh = e.target.closest('[data-bg]');
+  if (bgh && state.bg) {
+    if (S.size || selFlow) { S = new Set(); selFlow = null; renderPanel(); }
+    drag = {t:'bgmove', wx0: wx, wy0: wy, x0: state.bg.x, y0: state.bg.y, moved: false}; render2D(); return;
+  }
   if (e.pointerType === 'touch') { drag = {t:'pan', px, py, ox:view.ox, oy:view.oy}; return; }
   const add = e.shiftKey || e.metaKey || e.ctrlKey;
   if ((!add && S.size) || selFlow) { if (!add) S = new Set(); selFlow = null; renderPanel(); }
@@ -959,10 +1170,16 @@ svg.addEventListener('pointermove', e => {
   $('#coord').textContent = `x ${fmt(wx,1)} · y ${fmt(wy,1)} m`;
   if (mode === 'wall' && !drag) { cursorW = wallSnap(wx, wy); render2D(); return; }
   if (mode === 'flow' && !drag) { cursorF = flowSnap(wx, wy); render2D(); return; }
+  if (mode === 'cal' && !drag) { if (calPts.length < 2) { cursorC = [wx, wy]; render2D(); } return; }
   if (!drag) return;
   const first = () => { if (!drag.moved) { checkpoint(); drag.moved = true; } };
   if (drag.t === 'pan') { view.ox = drag.ox + px - drag.px; view.oy = drag.oy + py - drag.py; render2D(); return; }
   if (drag.t === 'marq') { drag.x1 = wx; drag.y1 = wy; marqSelect(); render2D(); return; }
+  if (drag.t === 'bgmove') {
+    const b = state.bg; if (!b) return; const dx = wx - drag.wx0, dy = wy - drag.wy0;
+    if (!drag.moved && Math.hypot(dx, dy)*view.s < 2) return;
+    first(); b.x = r2(drag.x0 + dx); b.y = r2(drag.y0 + dy); render2D(); updBgVals(); return;
+  }
   if (drag.t === 'vert') { first(); state.room.pts[drag.i] = [snapV(wx), snapV(wy)]; }
   else if (drag.t === 'fvert') { const f = findF(selFlow); if (!f) return; first(); f.pts[drag.i] = [snapV(wx), snapV(wy)]; }
   else if (drag.t === 'fmove') {
@@ -1050,6 +1267,7 @@ function zoomAt(px, py, k) {
 function fitView() {
   const W = svg.clientWidth, H = svg.clientHeight; if (!W || !H) return;
   const pts = [...state.room.pts]; state.items.forEach(i => pts.push(...shapePts(i)));
+  if (bgOn()) pts.push(...bgCorners(state.bg));
   if (!pts.length) { view = {s:20, ox:60, oy:60}; render2D(); return; }
   const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
   const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
@@ -1065,15 +1283,18 @@ $('#bSnap').onclick = () => { snapOn = !snapOn; $('#bSnap').setAttribute('aria-p
 
 /* ---------- Mode & keys ---------- */
 function setMode(m) {
-  mode = m; drawPts = m === 'wall' ? drawPts : []; flowPts = m === 'flow' ? flowPts : []; if (m !== 'wall') cursorW = null; if (m !== 'flow') cursorF = null;
+  mode = m; calPts = []; cursorC = null; drawPts = m === 'wall' ? drawPts : []; flowPts = m === 'flow' ? flowPts : []; if (m !== 'wall') cursorW = null; if (m !== 'flow') cursorF = null;
   $('#tSelect').setAttribute('aria-pressed', m === 'select'); $('#tWall').setAttribute('aria-pressed', m === 'wall'); $('#tFlow').setAttribute('aria-pressed', m === 'flow');
-  svg.classList.toggle('wall', m === 'wall' || m === 'flow');
+  svg.classList.toggle('wall', m === 'wall' || m === 'flow' || m === 'cal');
+  if (m === 'cal' && viewMode === '3d') setView('2d');
+  renderCal();
   if (m === 'wall' || m === 'flow') { S = new Set(); selFlow = null; renderPanel(); if (viewMode === '3d') setView('2d'); }
   setHint(); render2D();
 }
 function setHint() {
   const h = $('#hint');
   h.classList.toggle('wallmode', mode === 'wall' || mode === 'flow');
+  h.hidden = mode === 'cal';
   h.innerHTML = mode === 'flow'
     ? `<b>Vẽ luồng ${FT[flowType].n.toLowerCase()}:</b> nhấp để đặt từng điểm theo hướng di chuyển (điểm đầu là nơi bắt đầu). Nhấp đúp hoặc <kbd>Enter</kbd> để kết thúc. <kbd>⌫</kbd> lùi 1 điểm, <kbd>Esc</kbd> huỷ.`
     : mode === 'wall'
@@ -1097,6 +1318,11 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Enter') finishWall();
     else if (e.key === 'Escape') { drawPts = []; setMode('select'); }
     else if (e.key === 'Backspace') { e.preventDefault(); drawPts.pop(); render2D(); }
+    return;
+  }
+  if (mode === 'cal') {
+    if (e.key === 'Escape') setMode('select');
+    else if (e.key === 'Backspace' && calPts.length) { e.preventDefault(); calPts.pop(); renderCal(); render2D(); }
     return;
   }
   if (mode === 'flow') {
@@ -1658,8 +1884,9 @@ function buildItem(it, roomH) {
 }
 
 /* ---------- Screenshot ---------- */
-function fitFor(W, H, pad) {
+function fitFor(W, H, pad, withBg) {
   const pts = [...state.room.pts]; state.items.forEach(i => pts.push(...shapePts(i)));
+  if (withBg && bgOn()) pts.push(...bgCorners(state.bg));
   if (!pts.length) return {s: 20, ox: pad, oy: pad};
   const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
   const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
@@ -1676,7 +1903,9 @@ async function svgImg(doc) { const u = URL.createObjectURL(new Blob([doc], {type
 let shotBlob = null;
 async function takeShot() {
   const btn = $('#bShot'); btn.disabled = true;
+  $('#sBgWrap').hidden = !bgOn(); shotBg = bgOn() && $('#sBg').checked;
   try {
+    if (shotBg) await bgDataOf(state.bg.id);
     const is3d = viewMode === '3d' && T;
     // 1) góc nhìn hiện tại
     let viewImg, vw, vh;
@@ -1693,7 +1922,7 @@ async function takeShot() {
     const Lw = 1380, Rw = Wt - pad*2 - gap - Lw;
     const Lh = Math.round(clamp(Lw * vh/vw, 620, 1180)), PH = Lh, PW = Rw;
     // 3) mặt bằng tổng thể + đánh dấu góc nhìn
-    const saved = view; view = fitFor(PW, PH, 46);
+    const saved = view; view = fitFor(PW, PH, 46, shotBg);
     let mark = '';
     if (is3d) {
       const cp = T.camera.position, tg = T.controls.target, [cx, cy] = w2s(cp.x, cp.z);
@@ -1769,7 +1998,14 @@ $('#shotModal').addEventListener('click', e => { if (e.target.id === 'shotModal'
 
 /* ---------- Data modal ---------- */
 const modal = $('#modal');
-$('#bJson').onclick = () => { $('#mText').value = JSON.stringify(state, null, 2); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
+async function dataText() {
+  if (!(state.bg && $('#mBg').checked)) return JSON.stringify(state, null, 2);
+  const data = await bgDataOf(state.bg.id);
+  return JSON.stringify({...state, bg: {...state.bg, data}}, null, 2);
+}
+$('#bJson').onclick = async () => { $('#mBgWrap').hidden = !state.bg; $('#mText').value = await dataText(); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
+$('#mBg').onchange = async () => { $('#mText').value = await dataText(); $('#mMsg').textContent = $('#mBg').checked ? 'Đã kèm ảnh nền vào dữ liệu.' : ''; };
+$('#sBg').onchange = () => takeShot();
 $('#mClose').onclick = () => modal.hidden = true;
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; } });
@@ -1792,14 +2028,21 @@ $('#mCopy').onclick = () => {
   try { navigator.clipboard.writeText(t.value).then(ok, () => { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }); }
   catch (e) { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }
 };
-$('#mLoad').onclick = () => {
+$('#mLoad').onclick = async () => {
   try {
     const s = JSON.parse($('#mText').value);
     if (!s.room || !Array.isArray(s.room.pts) || !Array.isArray(s.items)) throw new Error('thiếu room hoặc items');
     s.items = s.items.filter(i => CM[i.k]).map(i => ({...mk(i.k, 0, 0), ...i, id: i.id || uid()}));
     s.room.h = s.room.h || 4; s.name = s.name || 'Sự kiện'; s.flows = Array.isArray(s.flows) ? s.flows.filter(f => f && Array.isArray(f.pts) && f.pts.length >= 2).map(f => ({id: f.id || uid(), type: FT[f.type] ? f.type : 'guest', name: f.name || '', pts: f.pts})) : [];
-    checkpoint(); state = s; S = new Set(); renderAll(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
-    $('#mMsg').textContent = `Đã nạp ${s.items.length} vật thể.`;
+    let bgNote = '';
+    if (s.bg && typeof s.bg === 'object' && s.bg.iw && s.bg.ih && s.bg.w > 0) {
+      const b = s.bg; s.bg = {id: b.id || uid(), name: b.name || 'Ảnh nền', iw: +b.iw, ih: +b.ih, x: +b.x || 0, y: +b.y || 0, w: +b.w, rot: +b.rot || 0, op: clamp(+b.op || .5, .1, 1), lock: !!b.lock, show: b.show !== false};
+      if (typeof b.data === 'string' && b.data.startsWith('data:image/')) {
+        const blob = await (await fetch(b.data)).blob(); s.bg.id = uid(); await IDB.put('bg:' + s.bg.id, blob).catch(() => {}); bgSrc[s.bg.id] = URL.createObjectURL(blob); bgData[s.bg.id] = b.data; bgNote = ' Kèm ảnh nền.';
+      } else if (!bgSrc[s.bg.id]) bgNote = ' Dữ liệu không kèm ảnh nền: bấm “Đổi ảnh” ở panel phải để chọn lại file.';
+    } else s.bg = null;
+    checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
+    $('#mMsg').textContent = `Đã nạp ${s.items.length} vật thể.` + bgNote;
   } catch (e) { $('#mMsg').textContent = 'Dữ liệu không đọc được (' + e.message + '). Hãy dán đúng nội dung đã sao chép từ công cụ này.'; }
 };
 $('#mSample').onclick = () => { checkpoint(); state = sample(); S = new Set(); renderAll(); fitView(); fitted = false; if (viewMode === '3d') enter3D(); $('#mMsg').textContent = 'Đã mở bản mẫu Hội chợ Tết. Có thể hoàn tác bằng Ctrl Z.'; $('#mText').value = JSON.stringify(state, null, 2); };
@@ -1809,12 +2052,17 @@ function renderAll() {
   validate(); render2D(); renderPanel(); renderStats(); updUndo(); save();
   $('#projName').value = state.name || '';
   for (const id of ['#bFlow2', '#bFlow3']) { $(id).setAttribute('aria-pressed', showFlowsNow()); $(id).textContent = 'Luồng: ' + (showFlowsNow() ? 'hiện' : 'ẩn'); }
+  const bb = $('#bBg2'), bv = !!state.bg && state.bg.show !== false; bb.hidden = !state.bg; bb.setAttribute('aria-pressed', bv); bb.textContent = 'Ảnh nền: ' + (bv ? 'hiện' : 'ẩn');
+  renderBgPanel();
   if (viewMode === '3d') build3D();
 }
+function updBgVals() { const b = state.bg; if (!b) return; for (const [id, v] of [['#bgX', b.x], ['#bgY', b.y], ['#bgW', b.w]]) { const el = $(id); if (el && document.activeElement !== el) el.value = r2(v); } }
+$('#bBg2').onclick = () => setShowBg(!(state.bg && state.bg.show !== false));
 renderLib(); setHint();
 new ResizeObserver(() => { if (viewMode === '2d') render2D(); }).observe($('#stage'));
 renderAll();
 requestAnimationFrame(fitView);
+bgRestore().then(() => { if (bgOn()) fitView(); bgGc(); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { if (viewMode === '3d') build3D(); });
 })();
 </script>

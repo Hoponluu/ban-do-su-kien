@@ -29,6 +29,12 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 
 Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũi tên chỉ mặt trước. Trên 3D, mỗi loại có hình khối khái quát riêng.
 
+### Ảnh mặt bằng nền
+- Tải ảnh (JPG, PNG, WebP) hoặc PDF (dùng trang đầu) của bản vẽ có sẵn làm nền để vẽ theo. File chỉ nằm trên máy người dùng, lưu trong IndexedDB của trình duyệt, không tải lên máy chủ.
+- **Căn tỉ lệ bằng 2 điểm:** nhấp hai đầu một đoạn đã biết kích thước, nhập độ dài thật (m), ảnh tự giãn đúng tỉ lệ.
+- Chỉnh chiều rộng, góc xoay, vị trí tâm, độ rõ; khoá ảnh để không kéo nhầm; nút **Ảnh nền: hiện/ẩn** ở thanh dưới bản vẽ.
+- Khi chụp ảnh và khi xuất dữ liệu JSON có tuỳ chọn kèm ảnh nền (mặc định tắt). Đọc PDF dùng pdf.js (Mozilla, Apache 2.0), chỉ tải khi chọn file PDF.
+
 ### Luồng di chuyển
 - Có 4 loại luồng: khách tham quan, khách VIP, nhân sự · hậu cần, thoát hiểm.
 - Vẽ bằng công cụ **Luồng** (phím `F`) hoặc bấm thẻ luồng trong thư viện. Nhấp lần lượt từng điểm theo hướng đi, nhấp đúp hoặc Enter để kết thúc.
@@ -72,7 +78,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`.
 
 ## Ghi công
 
@@ -117,6 +123,7 @@ Bản vẽ được lưu dưới dạng JSON. Đơn vị là mét, gốc toạ �
 }
 ```
 
+- `bg` (có thể không có): ảnh mặt bằng nền `{id, name, iw, ih, x, y, w, rot, op, lock, show}`; `x`, `y` là tâm ảnh, `w` là chiều rộng ảnh (m). Khi xuất JSON có kèm ảnh, thêm trường `data` (data URL).
 - `room.pts`: các điểm góc tường theo thứ tự. `room.h` là chiều cao trần.
 - `items[].k`: mã loại vật thể, khớp với `CATALOG` trong code. `x`, `y` là tâm vật thể. `w`, `d`, `h` là rộng, sâu, cao. `rot` là góc xoay tính bằng độ, chiều kim đồng hồ.
 - `flows[].type`: `guest`, `vip`, `staff` hoặc `exit`. Điểm đầu tiên trong `pts` là nơi bắt đầu.

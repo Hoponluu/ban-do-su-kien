@@ -74,6 +74,11 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`.
 
+## Ghi công
+
+- Mô hình người 3D (nam, nữ): bộ "Background Posed Humans" của [Quaternius](https://quaternius.com/packs/backgroundposedhumans.html), giấy phép [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). Dữ liệu được nhúng sẵn trong `index.html` (hằng `HUMAN`).
+- Thư viện 3D: [three.js](https://threejs.org) r128, giấy phép MIT.
+
 ## Phím tắt
 
 | Phím | Tác dụng |

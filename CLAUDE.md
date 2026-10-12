@@ -21,6 +21,10 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **3D**: `enter3D()`, `build3D()`, `buildItem(it)` (mỗi loại vật thể một `case`), `buildFlows()` và `placeFlows(dt)` cho mũi tên chạy. Camera tự do nằm ở `step3D(dt)`, `bindFree3D()` và `floorHit()`. Toạ độ 2D `(x, y)` ứng với 3D `(x, 0, y)`, `rotation.y = -rot`.
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
+## Mô hình người
+- `HUMAN` chứa lưới tam giác của người nam và nữ (Quaternius "Background Posed Humans", CC0), toạ độ nguyên, chiều cao chuẩn hoá 1000, mặt trước hướng +z. Mỗi vật liệu một phần: `skin`, `shirt`, `pants`, `shoes`, `hair`. `humanPart()` dựng và lưu sẵn geometry; trong `buildItem`, màu áo lấy theo `it.color`.
+- Muốn đổi tư thế hay kiểu tóc: tải bản OBJ của pack, gom mỗi `usemtl` thành một phần, chuẩn hoá chiều cao về 1000, rồi thay dữ liệu trong `HUMAN`.
+
 ## Thêm một loại vật thể mới
 1. Thêm mục vào `CATALOG`.
 2. Nếu cần hình 3D riêng, thêm `case` trong `buildItem`.

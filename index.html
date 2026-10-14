@@ -125,6 +125,9 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .btn:hover{border-color:var(--ink-3)}
 .btn:disabled{opacity:.4;cursor:default}
 .btn.icon{width:32px;padding:0}
+.new-btn{font-weight:600;padding:0 10px 0 12px}
+@media (max-width:900px){.new-btn kbd{display:none}}
+.btn.primary kbd{color:var(--accent-ink);border-color:rgba(35,26,6,.3)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.danger{color:var(--danger)}
 .btn.danger.armed{background:var(--danger);border-color:var(--danger);color:#fff}
@@ -306,9 +309,9 @@ a.btn.primary{color:var(--accent-ink)}
       <img class="mark" src="assets/logo.svg" alt="" width="30" height="30">
       <div class="brand-t"><h1 class="sr-only">Mặt Bằng Sự Kiện: công cụ vẽ sơ đồ mặt bằng sự kiện 2D/3D online</h1><small aria-hidden="true">Mặt bằng sự kiện</small><input id="projName" type="text" aria-label="Tên sự kiện"></div>
     </div>
+    <button class="btn primary new-btn" id="bNew" title="Tạo bản vẽ mới, bắt đầu từ trang trống (phím N)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>Tạo mới <kbd>N</kbd></button>
     <span class="sep"></span>
-    <button class="btn" id="bNew" title="Tạo bản vẽ mới, bắt đầu từ trang trống">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>Tạo mới</button>
     <div class="seg" role="group" aria-label="Công cụ">
       <button id="tSelect" aria-pressed="true" title="Chọn và di chuyển (V)">
         <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2l9 5-4 1.2L6.3 12z"/></svg>Chọn <kbd>V</kbd></button>
@@ -429,7 +432,7 @@ a.btn.primary{color:var(--accent-ink)}
       <section>
         <h4><b>1</b>Sử dụng</h4>
         <ul>
-          <li>Bấm <strong>Tạo mới</strong> để có trang trống, rồi chọn tải ảnh mặt bằng có sẵn hoặc tự vẽ tường.</li>
+          <li>Bấm <strong>Tạo mới</strong> (phím <kbd>N</kbd>) để có trang trống, rồi chọn tải ảnh mặt bằng có sẵn hoặc tự vẽ tường.</li>
           <li>Nhập chiều dài × rộng ở panel phải, bấm <strong>Tạo không gian chữ nhật</strong>.</li>
           <li>Kéo vật thể từ thư viện bên trái thả vào bản vẽ.</li>
           <li>Nhấp chọn để sửa kích thước, góc xoay, màu, tên ở panel phải.</li>
@@ -1355,6 +1358,8 @@ document.addEventListener('keydown', e => {
   if (e.code === 'Space') { spaceDown = true; svg.classList.add('panning'); e.preventDefault(); return; }
   if (ctrl && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if (ctrl && k === 'y') { e.preventDefault(); redo(); return; }
+  // Tạo mới: N, hoặc Ctrl/⌘ + N ở nơi trình duyệt cho phép (đa số trình duyệt giữ Ctrl/⌘ + N để mở cửa sổ mới)
+  if (k === 'n' && !e.altKey && !e.shiftKey && (ctrl || (mode === 'select' && viewMode === '2d'))) { e.preventDefault(); return openNew(); }
   if (mode === 'wall') {
     if (e.key === 'Enter') finishWall();
     else if (e.key === 'Escape') { drawPts = []; setMode('select'); }
@@ -2056,11 +2061,12 @@ let starterOff = false;
 const isBlank = () => state.room.pts.length < 3 && !state.items.length && !state.bg;
 function updStarter() { const on = isBlank() && !starterOff && mode === 'select' && viewMode === '2d'; $('#starter').hidden = !on; $('#hint').hidden = on || mode === 'cal'; }
 const newModal = $('#newModal');
-$('#bNew').onclick = () => {
+$('#bNew').onclick = () => openNew();
+function openNew() {
   $('#nName').value = 'Sự kiện mới';
   $('#nNote').hidden = isBlank();
   newModal.hidden = false; $('#nName').focus(); $('#nName').select();
-};
+}
 function newDoc() {
   checkpoint();
   state = {v: 1, name: $('#nName').value.trim() || 'Sự kiện mới', room: {pts: [], h: 4}, items: [], flows: [], showFlows: true, bg: null};

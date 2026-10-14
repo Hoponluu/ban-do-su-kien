@@ -22,7 +22,7 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
 ## Tạo mới và thẻ gợi ý
-- Nút `#bNew` mở `#newModal`; `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
+- Nút `#bNew` (nút vàng `.btn.primary`, ngay sau tên sự kiện) mở `#newModal` qua `openNew()`; phím `N` ở chế độ chọn 2D, Ctrl/⌘ + N ở mọi chế độ (Chrome, Edge, Safari giữ Ctrl/⌘ + N nên thường không tới được trang). `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
 - Thẻ `#starter` hiện khi `isBlank()` (chưa có tường, vật thể, ảnh nền), đang ở chế độ `select` và xem 2D; `updStarter()` gọi trong `renderAll()`, `setMode()`, `setView()`. Khi thẻ hiện thì ô `#hint` ẩn. Bấm × đặt `starterOff` cho tới lần Tạo mới kế tiếp.
 
 ## Ảnh mặt bằng nền

@@ -190,7 +190,12 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .msg3d{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-2);padding:24px;text-align:center}
 
 /* Side */
-.side{grid-area:side;background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-height:0}
+.side{grid-area:side;background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-height:0;display:flex;flex-direction:column}
+.side>.sec{flex:none}
+.side-foot{margin-top:auto;padding:14px 16px 16px;display:flex;align-items:center;gap:10px;font-size:11.5px;line-height:1.5;color:var(--ink-2)}
+.side-foot img{width:28px;height:28px;border-radius:50%;flex:none}
+.side-foot a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px}
+.side-foot a:hover{color:var(--accent-line)}
 .sec{padding:16px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
 .sec h3{margin:0;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
 .sw{width:12px;height:12px;border-radius:3px;flex:none}
@@ -288,7 +293,8 @@ a.btn.primary{color:var(--accent-ink)}
 .undo-grp{display:inline-flex;gap:10px}
 .seg.view button{gap:.28em}
 @media (max-width:900px){
-  body{overflow:auto;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+  body{overflow:auto}
+  .app{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
   .seg.view .lg{display:none}
   .top .sep{display:none}
   .seg.view button{padding:0 14px}
@@ -405,6 +411,10 @@ a.btn.primary{color:var(--accent-ink)}
     <div class="sec" id="props"></div>
     <div class="sec" id="bgsec"></div>
     <div class="sec" id="stats"></div>
+    <footer class="side-foot">
+      <img src="assets/avatar-nhan-luu.png" alt="" width="28" height="28">
+      <span>Sản phẩm phi thương mại dành cho cộng đồng của <a href="https://nhanluu.com" target="_blank" rel="noopener">Nhân Lưu</a></span>
+    </footer>
     <input type="file" id="bgFile" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf" hidden>
   </aside>
 </div>

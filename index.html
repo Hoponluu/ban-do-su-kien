@@ -583,12 +583,14 @@ const CATALOG = [
   {g:'Gian hàng', items:[
     {k:'booth33', n:'Gian hàng 3×3', w:3, d:3, h:2.5, c:'booth', dir:1},
     {k:'booth32', n:'Gian hàng 3×2', w:3, d:2, h:2.5, c:'booth', dir:1},
+    {k:'booth45', n:'Gian hàng 4,5×4,5', w:4.5, d:4.5, h:2.6, c:'booth', dir:1},
     {k:'kiosk', n:'Ki-ốt tròn', w:2.4, d:2.4, h:2.6, c:'booth', shape:'circle'},
     {k:'counter', n:'Quầy lễ tân', w:2.5, d:0.8, h:1.1, c:'booth', dir:1},
   ]},
   {g:'Bàn ghế', items:[
     {k:'roundtable', n:'Bàn tròn 10 khách', w:3, d:3, h:0.75, c:'seat', shape:'circle', seats:10},
     {k:'longtable', n:'Bàn dài', w:1.8, d:0.6, h:0.75, c:'seat'},
+    {k:'etable', n:'Bàn sự kiện 1,6 m', w:1.6, d:0.6, h:0.75, c:'seat', dir:1},
     {k:'chair', n:'Ghế', w:0.5, d:0.5, h:0.9, c:'seat', seats:1, dir:1},
     {k:'seatblock', n:'Khối ghế khán giả', w:6, d:4.5, h:0.9, c:'seat', dir:1},
     {k:'mat', n:'Chiếu ngồi', w:2, d:1.6, h:0.02, c:'seat', seats:4, flat:true, c3:'#D8C07A'},
@@ -1234,6 +1236,10 @@ const trunc = (t, n) => t.length > n ? t.slice(0, Math.max(1, Math.floor(n)-1)) 
 
 function detail(it, c, s, col) {
   const hw = it.w*s/2, hd = it.d*s/2; let o = '';
+  if (it.k === 'etable') {
+    const n = Math.max(1, Math.round(it.w/1.6)), st = it.w*s/n;
+    for (let i = 1; i < n; i++) o += `<line x1="${-hw + i*st}" y1="${-hd}" x2="${-hw + i*st}" y2="${hd}" style="stroke:${col}" stroke-width="1"/>`;
+  }
   if (it.k === 'truss' || it.k === 'trussbar') {
     // giàn truss: đường zíc zắc theo chiều dài, khung cổng có 2 chân ở 2 đầu
     const n = Math.max(2, Math.round(it.w/0.5)), st = it.w*s/n; let z = `M${-hw} ${-hd}`;
@@ -1675,6 +1681,7 @@ function renderPanel() {
     <div class="fld"><label for="pC">Màu</label><div class="colr"><input id="pC" type="color" value="${toHex(col)}"><button class="btn" id="pCr" ${it.color ? '' : 'disabled'}>Theo nhóm</button></div></div>
     ${it.k === 'led' ? ledSection(it) : ''}
     <div class="stat"><span>Diện tích chiếm chỗ</span><b>${fmt(footprint(it))} m²</b></div>
+    ${it.k === 'etable' ? `<div class="stat"><span>Số bàn 1,6 m (tăng chiều rộng để thêm bàn)</span><b>${Math.max(1, Math.round(it.w/1.6))}</b></div>` : ''}
     ${seatsOf(it) ? `<div class="stat"><span>Số chỗ ngồi</span><b>${seatsOf(it)}</b></div>` : ''}
     <div class="row">
       <button class="btn" id="pRot">Xoay 90°</button>
@@ -2082,7 +2089,7 @@ function buildItem(it, roomH) {
       break; }
     case 'speaker': box(w, h, d, mBlack); cyl(w*.3, w*.3, .02, M('#3a3d40'), 0, h*.35, d/2 + .01).rotation.x = Math.PI/2; break;
     case 'foh': box(w, h*.9, d, mD); box(w*.9, .06, d*.6, mBlack, 0, h*.93, 0).rotation.x = -.25; break;
-    case 'booth33': case 'booth32':
+    case 'booth33': case 'booth32': case 'booth45':
       box(w, .04, d, mL, 0, .02, 0);
       box(w, h, .06, mN, 0, h/2, -d/2 + .03);
       [-1, 1].forEach(sx => box(.06, h, d, mN, sx*(w/2 - .03), h/2, 0));
@@ -2095,6 +2102,11 @@ function buildItem(it, roomH) {
       const rt = Math.max(.45, Math.min(w, d)/2 - .65);
       cyl(rt, rt, .04, M('#F4F0E6'), 0, .75, 0, 36); cyl(rt*.98, rt*1.02, .72, mL, 0, .37, 0, 36);
       for (let i = 0; i < 10; i++) { const a = i/10*Math.PI*2, R = rt + .38; chair(Math.sin(a)*R, Math.cos(a)*R, a + Math.PI, mB); }
+      break; }
+    case 'etable': {
+      // dãy bàn 1,6 m xếp sát nhau: số bàn = chiều rộng / 1,6, có khăn phủ màu nhóm
+      const n = Math.max(1, Math.round(w/1.6)), tw = w/n, cloth = M(base.clone().lerp(new THREE.Color('#ffffff'), .55));
+      for (let i = 0; i < n; i++) { const x = -w/2 + tw*(i + .5); box(tw - .03, .04, d, cloth, x, h - .02, 0); box(tw - .03, h - .25, .02, cloth, x, (h - .04)/2 + .1, d/2 - .01); [-1, 1].forEach(a => box(.04, h - .04, .04, mWood, x + a*(tw/2 - .1), (h - .04)/2, -d/2 + .08)); }
       break; }
     case 'longtable': box(w, .05, d, mWood, 0, h - .025, 0); [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([a,b]) => box(.05, h - .05, .05, mWood, a*(w/2 - .08), (h - .05)/2, b*(d/2 - .06))); break;
     case 'chair': chair(0, 0, 0, mB); break;
@@ -2335,7 +2347,40 @@ const TEMPLATES = [
   {id: 'blank', n: 'Trang trống', d: 'Tự vẽ tường hoặc tải ảnh mặt bằng có sẵn', build: () => ({v: 1, name: 'Sự kiện mới', room: {pts: [], h: 4}, items: [], flows: [], showFlows: true, bg: null})},
   {id: 'tet', n: 'Hội chợ Tết · Chợ Quê', d: '32 × 20 m · sân khấu, 8 gian hàng, bàn tròn, luồng khách', build: sample},
   {id: 'wedding', n: 'Tiệc cưới · Sảnh chờ + Sảnh tiệc', d: '2 phòng · 12 bàn tròn 120 khách · truss, đèn Beam, Par LED', build: weddingTpl},
+  {id: 'bookstreet', n: 'Đường sách · Lễ hội văn hoá', d: 'Trục 150 m, lòng đường 7 m · gian sách 4,5 m hai bên · 4 sân khấu · dãy bàn sự kiện 1,6 m · 5 khu trò chơi', build: bookStreetTpl},
 ];
+/* Đường sách: trục dài 150 m. y 0–4,5 dãy gian sách trên, y 4,5–11,5 lòng đường 7 m, y 11,5–16 dãy gian sách dưới.
+   Vị trí lấy theo bản vẽ Excel của BTC (quy đổi ~0,083 m/px), làm tròn cho khớp ô 4,5 m và bàn 1,6 m. */
+function bookStreetTpl() {
+  const items = [], B = 4.5, top = B/2, bot = 16 - B/2, mid = 8;
+  // dãy gian sách cố định: lấp các đoạn [a, b] bằng ô 4,5 m, căn giữa đoạn
+  const stalls = (a, b, y, rot) => { const n = Math.floor((b - a)/B), x0 = a + (b - a - n*B)/2; for (let i = 0; i < n; i++) items.push(mk('booth45', r2(x0 + B*(i + .5)), y, {rot})); };
+  const green = (a, b, y) => { const n = Math.max(1, Math.round((b - a)/2.5)); for (let i = 0; i < n; i++) items.push(mk('plant', r2(a + (b - a)*(i + .5)/n), y, {label: ''})); };
+  const stage = (a, b, y, rot, label) => items.push(mk('stage', r2((a + b)/2), y, {w: r2(b - a - .3), d: 4.2, h: 0.6, rot, label}));
+  // dãy trên (mặt gian hướng xuống lòng đường)
+  stalls(0.6, 26.7, top, 0); green(26.7, 31.8, top); stalls(31.8, 48.1, top, 0); green(48.1, 53.4, top);
+  stalls(53.4, 114, top, 0); green(114, 117, top); stalls(117, 127.7, top, 0); stage(127.7, 138.5, top, 0, 'Sân khấu Làng nghề');
+  // dãy dưới (mặt gian hướng lên lòng đường)
+  stage(0.6, 10.8, bot, 180, 'Sân khấu Workshop'); items.push(mk('zone', 13.45, bot, {w: 5.1, d: B, label: 'Khu kỹ thuật', color: '#21698A'}));
+  stalls(16.1, 32.1, bot, 180); stage(32.1, 48.1, bot, 180, 'Sân khấu chính'); stalls(48.1, 67.3, bot, 180); green(67.3, 70.4, bot);
+  stalls(70.4, 82.1, bot, 180); stage(82.1, 92.7, bot, 180, 'Sân khấu Làng nghề 2'); stalls(92.7, 114, bot, 180); green(114, 117, bot); stalls(117, 149.4, bot, 180);
+  // giữa đường: các đơn vị bày bàn 1,6 m xếp sát nhau, tên ghi ở bàn giữa mỗi cụm
+  // mỗi đơn vị một dãy bàn sự kiện 1,6 m (rộng n × 1,6 m), mặt bàn hướng xuống dưới đường
+  const tables = (x, groups) => { for (const [name, n] of groups) { items.push(mk('etable', r2(x + 0.8*n), mid, {w: r2(1.6*n), label: name})); x += 1.6*n; } return x; };
+  tables(2, [['Chất Việt', 2], ['Cọ Bay Art', 3], ['Shalom Wood', 3], ['Cánh Cụt Studio', 2], ['Bàn Tay Việt', 2], ['Túi vải Kim', 2], ['Rừng Quế', 3], ['The Greenmart VN', 3]]);
+  tables(48.3, [['Pơ Lang', 2], ['Kén', 2], ['Ther – Thờ Space', 2], ['Xanh Chàm', 4], ['Chào Show', 2], ['Chất Việt Play to Learn', 4], ['Cờ Thủy Tinh Châu', 6]]);
+  tables(85, [['Workshop vòng tay handmade', 3], ['Chè bưởi Vĩnh Long', 4]]);
+  // khu trò chơi (cụm hồng)
+  [[97.5, 103.5, 'Game Rút gỗ khổng lồ'], [104.5, 115, 'Game Đi cầu khỉ'], [116, 125, 'Game Đập lon'], [126, 136, 'Game Ô ăn quan'], [137.5, 145.5, 'Game Nhảy sạp']]
+    .forEach(([a, b, label]) => items.push(mk('zone', (a + b)/2, mid, {w: b - a, d: 4, label, color: '#D63AA0'})));
+  // hai cổng
+  items.push(mk('gate', 0.4, mid, {w: 7, rot: 90, label: 'Cổng CXPR'}), mk('gate', 149.6, mid, {w: 7, rot: 270, label: 'Cổng HBT'}));
+  const flows = [
+    {id: uid(), type: 'guest', name: 'Khách đi từ cổng CXPR', pts: [[1, 5.4], [148, 5.4]]},
+    {id: uid(), type: 'guest', name: 'Khách đi từ cổng HBT', pts: [[149, 10.6], [2, 10.6]]},
+  ];
+  return {v: 1, name: 'Đường sách · Lễ hội văn hoá', room: {pts: [[0,0],[150,0],[150,16],[0,16]], h: 4, name: 'Đường sách'}, rooms: [], items, flows, showFlows: true};
+}
 function weddingTpl() {
   const items = [
     mk('led', 12, 0.5, {w: 8, h: 4.2, label: 'Màn LED'}),

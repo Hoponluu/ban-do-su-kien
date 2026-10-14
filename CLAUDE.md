@@ -31,6 +31,11 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 ## Ánh sáng & truss
 - `truss` (khung cổng: 2 chân + xà ngang ở độ cao h), `trussbar` (thanh treo ở độ cao h), `beam`, `par` (đèn treo ở độ cao h, chiếu về +z, nghiêng xuống). Cả 4 có cờ `hang` nên không tính chồng lấn. Chùm sáng 3D là nón `AdditiveBlending` + vệt sáng trên sàn, không dùng SpotLight thật để nhẹ máy. Màu đèn lấy `it.color` hoặc `c3`.
 
+## Bàn sự kiện và gian 4,5 m
+- `etable` (Bàn sự kiện 1,6 m): chiều rộng w được chia thành `round(w/1,6)` bàn; 2D vẽ vạch chia, 3D dựng từng bàn có khăn phủ. Panel hiện "Số bàn 1,6 m". Dùng một vật thể cho cả dãy bàn của một đơn vị.
+- `booth45` (Gian hàng 4,5×4,5) dùng chung builder 3D với `booth33`.
+- Mẫu `bookstreet` (`bookStreetTpl()`): trục 150 × 16 m, dãy gian 4,5 m hai bên (y 0–4,5 và 11,5–16), lòng đường 7 m ở giữa; vị trí sân khấu, cây xanh, cụm bàn, khu trò chơi quy đổi từ bản Excel của BTC.
+
 ## Chân cột phải
 - `.side-foot` (avatar + "Sản phẩm phi thương mại dành cho cộng đồng của Nhân Lưu", link nhanluu.com) nằm cuối `.side`; `.side` là flex cột nên `margin-top:auto` đẩy nó xuống đáy.
 

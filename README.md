@@ -14,20 +14,20 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 ### Không gian
 - **Nhiều phòng**: không gian có thể gồm nhiều phòng, ví dụ sảnh chờ + sảnh tiệc. Ở panel phải: đặt tên, xem diện tích từng phòng, xoá phòng; **Vẽ thêm phòng** (điểm vẽ bắt dính vào góc tường cũ để chung vách) hoặc **Thêm phòng cạnh bên** (phòng chữ nhật đặt sát cạnh phải). Trong chế độ Vẽ tường có nút đổi giữa *thêm phòng mới* và *thay toàn bộ*.
 - **Đèn sân khấu**: đèn Beam (chùm hẹp) và Par LED (chùm rộng) treo ở độ cao tuỳ chỉnh, chiếu về phía trước theo mũi tên; đổi màu đèn bằng ô Màu. Trên 3D có chùm sáng và vệt sáng trên sàn.
-- Hộp Tạo mới cho chọn điểm bắt đầu: **Trang trống** hoặc một **mẫu có sẵn** (hiện có mẫu Hội chợ Tết · Chợ Quê và Tiệc cưới · Sảnh chờ + Sảnh tiệc; thêm mẫu mới trong mảng `TEMPLATES`).
+- Hộp Tạo mới cho chọn điểm bắt đầu: **Trang trống** hoặc một **mẫu có sẵn** (hiện có mẫu Hội chợ Tết · Chợ Quê, Tiệc cưới · Sảnh chờ + Sảnh tiệc, và Đường sách · Lễ hội văn hoá; thêm mẫu mới trong mảng `TEMPLATES`).
 - Nút **Tạo mới** (vàng, cạnh tên sự kiện; phím `N`) mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
 - Nhập chiều dài × chiều rộng để tạo phòng hình chữ nhật.
 - Công cụ **Vẽ tường** (phím `W`) vẽ đa giác tự do, tự bắt thẳng góc và hiện chiều dài từng cạnh.
 - Nhấp lên tường để thêm điểm góc rồi kéo để tạo góc mới. Nhấp đúp vào một điểm góc để xoá điểm đó.
 - Kích thước từng cạnh hiển thị trực tiếp trên bản vẽ. Chiều cao trần dùng cho phần 3D.
 
-### Thư viện vật thể (29 loại)
+### Thư viện vật thể (31 loại)
 | Nhóm | Vật thể |
 |---|---|
 | Sân khấu & kỹ thuật | Sân khấu, màn LED, loa đứng, bàn điều khiển |
 | Ánh sáng & truss | Khung truss cổng, thanh truss treo, đèn Beam (moving head), đèn Par LED |
-| Gian hàng | Gian hàng 3×3, gian hàng 3×2, ki-ốt tròn, quầy lễ tân |
-| Bàn ghế | Bàn tròn 10 khách, bàn dài, ghế, khối ghế khán giả, chiếu ngồi |
+| Gian hàng | Gian hàng 3×3, gian hàng 3×2, gian hàng 4,5×4,5, ki-ốt tròn, quầy lễ tân |
+| Bàn ghế | Bàn tròn 10 khách, bàn dài, bàn sự kiện 1,6 m (kéo rộng thành dãy nhiều bàn), ghế, khối ghế khán giả, chiếu ngồi |
 | Trang trí | Chậu cây, chậu hoa, cổng chào, chùm đèn lồng, bình phong, thảm lối đi |
 | Tiện ích & kết cấu | Bàn buffet, cột, cửa ra vào, vùng chức năng |
 | Người · đối chiếu tỉ lệ | Người nam 1,7 m, người nữ 1,6 m |

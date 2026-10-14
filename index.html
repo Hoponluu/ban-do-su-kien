@@ -246,6 +246,21 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .shot-prev img{display:block;width:100%;height:auto}
 .modal-b textarea{width:100%;height:280px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:10px;font-family:var(--f-mono);font-size:11.5px;resize:vertical}
 
+/* Thẻ gợi ý khi bản vẽ còn trống */
+.starter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(440px,calc(100% - 32px));background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 12px 32px rgba(0,0,0,.14);display:flex;flex-direction:column;gap:12px;z-index:5}
+.starter h3{margin:0;font-size:16px}
+.starter p{margin:0;color:var(--ink-2);font-size:12.5px;line-height:1.5}
+.starter-x{position:absolute;top:10px;right:10px}
+.starter-opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:var(--bg);cursor:pointer}
+.starter-opt:hover{border-color:var(--accent-line)}
+.starter-opt.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.starter-opt.primary small{color:var(--accent-ink);opacity:.75}
+.starter-opt svg{width:22px;height:22px;flex:none}
+.starter-opt b{display:block;font-size:13.5px;font-weight:600}
+.starter-opt small{display:block;font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.starter-link{align-self:center;background:none;border:0;padding:4px;color:var(--accent-line);font-size:12px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.newdoc .fld input{height:34px}
+
 /* Info modal: hướng dẫn nhanh + giới thiệu dự án */
 .info-b{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;gap:16px}
 .info-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -292,6 +307,8 @@ a.btn.primary{color:var(--accent-ink)}
       <div class="brand-t"><h1 class="sr-only">Mặt Bằng Sự Kiện: công cụ vẽ sơ đồ mặt bằng sự kiện 2D/3D online</h1><small aria-hidden="true">Mặt bằng sự kiện</small><input id="projName" type="text" aria-label="Tên sự kiện"></div>
     </div>
     <span class="sep"></span>
+    <button class="btn" id="bNew" title="Tạo bản vẽ mới, bắt đầu từ trang trống">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>Tạo mới</button>
     <div class="seg" role="group" aria-label="Công cụ">
       <button id="tSelect" aria-pressed="true" title="Chọn và di chuyển (V)">
         <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2l9 5-4 1.2L6.3 12z"/></svg>Chọn <kbd>V</kbd></button>
@@ -326,6 +343,18 @@ a.btn.primary{color:var(--accent-ink)}
   <main class="stage" id="stage">
     <svg id="plan" aria-label="Bản vẽ mặt bằng"></svg>
     <div id="view3d" hidden></div>
+    <div class="starter" id="starter" role="dialog" aria-labelledby="stTitle" hidden>
+      <button class="btn icon starter-x" id="stX" aria-label="Ẩn gợi ý"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+      <h3 id="stTitle">Bắt đầu với trang trống</h3>
+      <p>Chọn một cách để dựng không gian sự kiện. Sau đó kéo sân khấu, gian hàng, bàn ghế từ thư viện vật thể vào.</p>
+      <button class="starter-opt primary" id="stUpload">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.6"/></svg>
+        <span><b>Tải ảnh mặt bằng có sẵn</b><small>JPG, PNG hoặc PDF. Căn tỉ lệ rồi vẽ theo. Ảnh chỉ lưu trên máy bạn.</small></span></button>
+      <button class="starter-opt" id="stWall">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6h9v7h7"/><circle cx="4" cy="20" r="1.8" fill="currentColor"/><circle cx="4" cy="6" r="1.8" fill="currentColor"/><circle cx="13" cy="6" r="1.8" fill="currentColor"/><circle cx="20" cy="13" r="1.8" fill="currentColor"/></svg>
+        <span><b>Tự vẽ bằng công cụ Vẽ tường</b><small>Nhấp lần lượt từng góc tường, nhấp lại điểm đầu để khép kín. Phím tắt W.</small></span></button>
+      <button class="starter-link" id="stRect">Hoặc tạo nhanh không gian chữ nhật 30 × 20 m</button>
+    </div>
 
     <div class="ov ov-tl" id="ov3d" hidden>
       <div class="chip">
@@ -376,6 +405,17 @@ a.btn.primary{color:var(--accent-ink)}
     </div>
   </div>
 </div>
+<div class="modal" id="newModal" hidden>
+  <div class="modal-b newdoc" role="dialog" aria-modal="true" aria-labelledby="nTitle" style="width:min(440px,100%)">
+    <h3 id="nTitle">Tạo bản vẽ mới</h3>
+    <div class="fld"><label for="nName">Tên sự kiện</label><input id="nName" type="text" value="Sự kiện mới"></div>
+    <p class="note" id="nNote">Bản vẽ hiện tại sẽ được thay bằng một trang trống. Bạn có thể hoàn tác bằng Ctrl Z ngay sau đó, hoặc vào <b>Dữ liệu</b> để sao chép bản hiện tại trước.</p>
+    <div class="row">
+      <button class="btn" id="nCancel">Huỷ</button>
+      <button class="btn primary" id="nOk">Tạo trang trống</button>
+    </div>
+  </div>
+</div>
 <div class="modal" id="infoModal" hidden>
   <div class="modal-b info-b" role="dialog" aria-modal="true" aria-labelledby="iTitle">
     <div class="info-head">
@@ -389,6 +429,7 @@ a.btn.primary{color:var(--accent-ink)}
       <section>
         <h4><b>1</b>Sử dụng</h4>
         <ul>
+          <li>Bấm <strong>Tạo mới</strong> để có trang trống, rồi chọn tải ảnh mặt bằng có sẵn hoặc tự vẽ tường.</li>
           <li>Nhập chiều dài × rộng ở panel phải, bấm <strong>Tạo không gian chữ nhật</strong>.</li>
           <li>Kéo vật thể từ thư viện bên trái thả vào bản vẽ.</li>
           <li>Nhấp chọn để sửa kích thước, góc xoay, màu, tên ở panel phải.</li>
@@ -1289,7 +1330,7 @@ function setMode(m) {
   if (m === 'cal' && viewMode === '3d') setView('2d');
   renderCal();
   if (m === 'wall' || m === 'flow') { S = new Set(); selFlow = null; renderPanel(); if (viewMode === '3d') setView('2d'); }
-  setHint(); render2D();
+  setHint(); render2D(); if (typeof updStarter === 'function') updStarter();
 }
 function setHint() {
   const h = $('#hint');
@@ -1309,7 +1350,7 @@ $('#tFlow').onclick = () => startFlow(flowType);
 $('#bUndo').onclick = undo; $('#bRedo').onclick = redo;
 
 document.addEventListener('keydown', e => {
-  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden) return;
+  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden) return;
   const ctrl = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
   if (e.code === 'Space') { spaceDown = true; svg.classList.add('panning'); e.preventDefault(); return; }
   if (ctrl && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
@@ -1576,7 +1617,7 @@ function setView(v) {
   document.querySelector('.ov-tr').classList.toggle('low', v === '3d');
   if (v === '3d') { if (mode === 'wall') { drawPts = []; mode = 'select'; setMode('select'); } enter3D(); }
   else requestAnimationFrame(render2D);
-  setHint();
+  setHint(); updStarter();
 }
 $('#v2d').onclick = () => setView('2d');
 $('#v3d').onclick = () => setView('3d');
@@ -1614,7 +1655,7 @@ function loop3D() { if (looping) return; looping = true; lastT = performance.now
 /* Camera tự do: WASD/QE, zoom theo con trỏ, nhấp đúp để bay đến */
 const keys3 = new Set(); let fly = null;
 document.addEventListener('keydown', e => {
-  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden) return;
+  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden) return;
   const k = e.key.toLowerCase(); if ('wasdqe'.includes(k) && k.length === 1) { keys3.add(k); fly = null; e.preventDefault(); }
 });
 document.addEventListener('keyup', e => keys3.delete(e.key.toLowerCase()));
@@ -2008,7 +2049,35 @@ $('#mBg').onchange = async () => { $('#mText').value = await dataText(); $('#mMs
 $('#sBg').onchange = () => takeShot();
 $('#mClose').onclick = () => modal.hidden = true;
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; $('#newModal').hidden = true; } });
+
+/* ---------- Tạo mới + thẻ gợi ý bắt đầu ---------- */
+let starterOff = false;
+const isBlank = () => state.room.pts.length < 3 && !state.items.length && !state.bg;
+function updStarter() { const on = isBlank() && !starterOff && mode === 'select' && viewMode === '2d'; $('#starter').hidden = !on; $('#hint').hidden = on || mode === 'cal'; }
+const newModal = $('#newModal');
+$('#bNew').onclick = () => {
+  $('#nName').value = 'Sự kiện mới';
+  $('#nNote').hidden = isBlank();
+  newModal.hidden = false; $('#nName').focus(); $('#nName').select();
+};
+function newDoc() {
+  checkpoint();
+  state = {v: 1, name: $('#nName').value.trim() || 'Sự kiện mới', room: {pts: [], h: 4}, items: [], flows: [], showFlows: true, bg: null};
+  S = new Set(); selFlow = null; starterOff = false; bgMsg = ''; fitted = false;
+  newModal.hidden = true;
+  if (viewMode === '3d') setView('2d');
+  setMode('select'); renderAll(); view = {s: 20, ox: 60, oy: 60}; render2D();
+  track('new_doc');
+}
+$('#nOk').onclick = newDoc;
+$('#nName').onkeydown = e => { if (e.key === 'Enter') newDoc(); };
+$('#nCancel').onclick = () => newModal.hidden = true;
+newModal.addEventListener('click', e => { if (e.target === newModal) newModal.hidden = true; });
+$('#stX').onclick = () => { starterOff = true; updStarter(); };
+$('#stUpload').onclick = () => { bgReplace = false; $('#bgFile').click(); };
+$('#stWall').onclick = () => setMode('wall');
+$('#stRect').onclick = () => { checkpoint(); state.room.pts = [[0,0],[30,0],[30,20],[0,20]]; renderAll(); fitView(); };
 
 /* ---------- Info modal ---------- */
 const infoModal = $('#infoModal');
@@ -2053,7 +2122,7 @@ function renderAll() {
   $('#projName').value = state.name || '';
   for (const id of ['#bFlow2', '#bFlow3']) { $(id).setAttribute('aria-pressed', showFlowsNow()); $(id).textContent = 'Luồng: ' + (showFlowsNow() ? 'hiện' : 'ẩn'); }
   const bb = $('#bBg2'), bv = !!state.bg && state.bg.show !== false; bb.hidden = !state.bg; bb.setAttribute('aria-pressed', bv); bb.textContent = 'Ảnh nền: ' + (bv ? 'hiện' : 'ẩn');
-  renderBgPanel();
+  renderBgPanel(); updStarter();
   if (viewMode === '3d') build3D();
 }
 function updBgVals() { const b = state.bg; if (!b) return; for (const [id, v] of [['#bgX', b.x], ['#bgY', b.y], ['#bgW', b.w]]) { const el = $(id); if (el && document.activeElement !== el) el.value = r2(v); } }

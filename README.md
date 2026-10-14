@@ -12,6 +12,7 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 ## Tính năng
 
 ### Không gian
+- Nút **Tạo mới** ở thanh trên mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
 - Nhập chiều dài × chiều rộng để tạo phòng hình chữ nhật.
 - Công cụ **Vẽ tường** (phím `W`) vẽ đa giác tự do, tự bắt thẳng góc và hiện chiều dài từng cạnh.
 - Nhấp lên tường để thêm điểm góc rồi kéo để tạo góc mới. Nhấp đúp vào một điểm góc để xoá điểm đó.
@@ -78,7 +79,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`.
 
 ## Ghi công
 

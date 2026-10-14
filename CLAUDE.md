@@ -21,6 +21,10 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **3D**: `enter3D()`, `build3D()`, `buildItem(it)` (mỗi loại vật thể một `case`), `buildFlows()` và `placeFlows(dt)` cho mũi tên chạy. Camera tự do nằm ở `step3D(dt)`, `bindFree3D()` và `floorHit()`. Toạ độ 2D `(x, y)` ứng với 3D `(x, 0, y)`, `rotation.y = -rot`.
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
+## Tạo mới và thẻ gợi ý
+- Nút `#bNew` mở `#newModal`; `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
+- Thẻ `#starter` hiện khi `isBlank()` (chưa có tường, vật thể, ảnh nền), đang ở chế độ `select` và xem 2D; `updStarter()` gọi trong `renderAll()`, `setMode()`, `setView()`. Khi thẻ hiện thì ô `#hint` ẩn. Bấm × đặt `starterOff` cho tới lần Tạo mới kế tiếp.
+
 ## Ảnh mặt bằng nền
 - `state.bg = {id, name, iw, ih, x, y, w, rot, op, lock, show}` (tâm ảnh và chiều rộng tính bằng mét). File ảnh lưu trong IndexedDB (`IDB`, key `bg:<id>`), không nằm trong localStorage. `bgSrc[id]` là object URL để hiển thị, `bgData[id]` là data URL dùng khi chụp ảnh hoặc xuất JSON (ảnh trong SVG xuất ra phải là data URL thì mới vẽ được).
 - `bgSVG()` vẽ ảnh ngay trên lưới, dưới tường. Ảnh chỉ kéo được khi chưa khoá và đang ở chế độ `select` (`data-bg`, `drag.t = 'bgmove'`).

@@ -21,6 +21,16 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **3D**: `enter3D()`, `build3D()`, `buildItem(it)` (mỗi loại vật thể một `case`), `buildFlows()` và `placeFlows(dt)` cho mũi tên chạy. Camera tự do nằm ở `step3D(dt)`, `bindFree3D()` và `floorHit()`. Toạ độ 2D `(x, y)` ứng với 3D `(x, 0, y)`, `rotation.y = -rot`.
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
+## Nhiều phòng
+- Phòng 0 là `state.room.pts` (+ `state.room.name`) để file cũ vẫn mở được; các phòng thêm ở `state.rooms = [{id, name, pts}]`. Luôn đi qua `roomList()` (mỗi phòng `{k, name, pts}`), `roomPts(k)`, `allRoomPts()`, `totalArea()`; đừng đọc `state.room.pts` trực tiếp cho việc tính toán chung.
+- Ô góc tường `data-v="k:i"`, cạnh tường `data-e="k:i"`, `drag.k` cho biết đang kéo góc của phòng nào. `nearRoomVertex()` cho điểm vẽ và góc kéo bắt dính vào góc của phòng khác (chung vách).
+- `finishWall()`: `wallAdd` = true thì thêm phòng, false thì thay toàn bộ. Nút `#wallTg` trong ô gợi ý đổi qua lại.
+- 3D dựng sàn từng phòng; vách chung chỉ dựng một lần (khử trùng theo cặp điểm). 2D bỏ số đo trùng trên vách chung, hiện tên + diện tích từng phòng khi có từ 2 phòng.
+- `validate()`: vật thể nằm ngoài khi có điểm không thuộc phòng nào.
+
+## Ánh sáng & truss
+- `truss` (khung cổng: 2 chân + xà ngang ở độ cao h), `trussbar` (thanh treo ở độ cao h), `beam`, `par` (đèn treo ở độ cao h, chiếu về +z, nghiêng xuống). Cả 4 có cờ `hang` nên không tính chồng lấn. Chùm sáng 3D là nón `AdditiveBlending` + vệt sáng trên sàn, không dùng SpotLight thật để nhẹ máy. Màu đèn lấy `it.color` hoặc `c3`.
+
 ## Chân cột phải
 - `.side-foot` (avatar + "Sản phẩm phi thương mại dành cho cộng đồng của Nhân Lưu", link nhanluu.com) nằm cuối `.side`; `.side` là flex cột nên `margin-top:auto` đẩy nó xuống đáy.
 

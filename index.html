@@ -68,7 +68,7 @@
   --grid-minor:#E4E8E1; --grid-major:#C9D0C6; --wall:#27302C;
   --accent:#FFC945; --accent-line:#8A5F00; --accent-soft:#FFF1CC; --accent-ink:#231A06; --gold:#A97F22;
   --danger:#D0342C; --warn:#B87309; --ok:#2E7A4E;
-  --c-stage:#5B4A93; --c-booth:#21698A; --c-seat:#3B7A55; --c-deco:#A97F22; --c-util:#5F6773; --c-zone:#B0473D; --c-ref:#3D5A80;
+  --c-stage:#5B4A93; --c-light:#B45309; --c-booth:#21698A; --c-seat:#3B7A55; --c-deco:#A97F22; --c-util:#5F6773; --c-zone:#B0473D; --c-ref:#3D5A80;
   --fl-guest:#2475C6; --fl-vip:#B07D0C; --fl-staff:#5F6773; --fl-exit:#138A4A;
   --bg3d:#E4E8E2; --ground3d:#CBD1C8; --floor3d:#F4F2EC; --wall3d:#B9C2BC;
   --f-ui:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -81,7 +81,7 @@
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
   --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
-  --c-stage:#9C8AE0; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
+  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
   color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -90,7 +90,7 @@
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
   --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
-  --c-stage:#9C8AE0; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
+  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
   color-scheme:dark}
 
@@ -173,6 +173,12 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .scalebar{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);height:32px;display:inline-flex;align-items:center;gap:10px;padding:0 10px;font-size:11px;color:var(--ink-2)}
 .scalebar i{display:block;height:6px;border:1.5px solid var(--ink);border-top:0}
 .hint{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:7px 10px;font-size:11.5px;color:var(--ink-2);max-width:min(380px,45vw);line-height:1.45}
+.hint-tg{border:1px solid var(--accent-line);background:var(--panel);color:var(--accent-line);border-radius:5px;padding:1px 7px;font-size:11px;cursor:pointer;margin-left:2px}
+.rooms{display:flex;flex-direction:column;gap:6px}
+.room-row{display:flex;align-items:center;gap:6px}
+.room-row input{flex:1;min-width:0;height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 8px}
+.room-row .mono{font-size:11.5px;color:var(--ink-2);white-space:nowrap}
+.room-row .btn.icon{width:28px;height:28px}
 .calbox{background:var(--panel);border:1px solid var(--accent-line);border-radius:var(--r);padding:9px 11px;font-size:12px;color:var(--ink);max-width:min(360px,80vw);line-height:1.45;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
 .calbox .row{align-items:center}
 .calbox .unit{flex:1;min-width:90px}
@@ -272,6 +278,22 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .starter-opt small{display:block;font-size:11.5px;color:var(--ink-2);margin-top:2px}
 .starter-link{align-self:center;background:none;border:0;padding:4px;color:var(--accent-line);font-size:12px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .newdoc .fld input{height:34px}
+.fsec{border:1px solid var(--line);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.fsec h4{margin:0;font-size:13px}
+.fsec .row .btn{flex:0 1 auto}
+.paste summary{cursor:pointer;font-size:12px;color:var(--ink-2);padding:2px 0}
+.paste[open] summary{margin-bottom:8px}
+.paste textarea{width:100%;height:140px;border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:10px;font-family:var(--f-mono);font-size:11.5px;resize:vertical;margin-bottom:8px}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tpl{display:flex;flex-direction:column;gap:6px;padding:6px 6px 10px;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);cursor:pointer;text-align:left}
+.tpl:hover{border-color:var(--ink-3)}
+.tpl[aria-pressed="true"]{border-color:var(--accent-line);box-shadow:0 0 0 2px var(--accent-soft)}
+.tpl-th{aspect-ratio:5/3;border-radius:5px;overflow:hidden;background:var(--canvas);display:grid;place-items:center;color:var(--ink-3)}
+.tpl-th svg{display:block;width:100%;height:100%}
+.tpl-th.blank{border:1.5px dashed var(--line)}
+.tpl-th.blank svg{width:28px;height:28px}
+.tpl b{font-size:12.5px;font-weight:600;padding:0 4px}
+.tpl small{font-size:11px;color:var(--ink-2);padding:0 4px;line-height:1.35}
 
 /* Info modal: hướng dẫn nhanh + giới thiệu dự án */
 .info-b{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;gap:16px}
@@ -302,7 +324,7 @@ a.btn.primary{color:var(--accent-ink)}
   .seg.view .lg{display:none}
   .top .sep{display:none}
   .seg.view button{padding:0 14px}
-  /* Chụp ảnh + Dữ liệu xuống thanh dưới cùng để phần trên gọn, vùng vẽ rộng hơn */
+  /* Chụp ảnh + Lưu file xuống thanh dưới cùng để phần trên gọn, vùng vẽ rộng hơn */
   .top-act{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--panel);border-top:1px solid var(--line);padding:8px 16px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 14px rgba(0,0,0,.06)}
   .top-act .btn{flex:1;height:40px}
   .app{height:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 64vh auto;grid-template-areas:"top" "lib" "stage" "side"}
@@ -351,8 +373,8 @@ a.btn.primary{color:var(--accent-ink)}
     <div class="top-act">
       <button class="btn" id="bShot" title="Chụp góc nhìn hiện tại kèm mặt bằng tổng thể">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h2.5l1.2-2h4.6l1.2 2H14v8H2z"/><circle cx="8" cy="8.8" r="2.4"/></svg>Chụp ảnh</button>
-      <button class="btn" id="bJson" title="Xuất / nhập dữ liệu bản vẽ">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Dữ liệu</button>
+      <button class="btn" id="bJson" title="Lưu bản vẽ ra file, hoặc mở file đã lưu">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Lưu file</button>
     </div>
     <button class="btn icon" id="bInfo" title="Hướng dẫn &amp; thông tin" aria-label="Hướng dẫn và thông tin dự án">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2V11.5" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".55" fill="currentColor" stroke="none"/></svg></button>
@@ -380,6 +402,7 @@ a.btn.primary{color:var(--accent-ink)}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6h9v7h7"/><circle cx="4" cy="20" r="1.8" fill="currentColor"/><circle cx="4" cy="6" r="1.8" fill="currentColor"/><circle cx="13" cy="6" r="1.8" fill="currentColor"/><circle cx="20" cy="13" r="1.8" fill="currentColor"/></svg>
         <span><b>Tự vẽ bằng công cụ Vẽ tường</b><small>Nhấp lần lượt từng góc tường, nhấp lại điểm đầu để khép kín. Phím tắt W.</small></span></button>
       <button class="starter-link" id="stRect">Hoặc tạo nhanh không gian chữ nhật 30 × 20 m</button>
+      <button class="starter-link" id="stTpl">Xem các mẫu có sẵn</button>
     </div>
 
     <div class="ov ov-tl" id="ov3d" hidden>
@@ -437,13 +460,14 @@ a.btn.primary{color:var(--accent-ink)}
   </div>
 </div>
 <div class="modal" id="newModal" hidden>
-  <div class="modal-b newdoc" role="dialog" aria-modal="true" aria-labelledby="nTitle" style="width:min(440px,100%)">
+  <div class="modal-b newdoc" role="dialog" aria-modal="true" aria-labelledby="nTitle" style="width:min(520px,100%)">
     <h3 id="nTitle">Tạo bản vẽ mới</h3>
+    <div class="fld"><label>Bắt đầu từ</label><div class="tpl-grid" id="tplGrid" role="group" aria-label="Mẫu bản vẽ"></div></div>
     <div class="fld"><label for="nName">Tên sự kiện</label><input id="nName" type="text" value="Sự kiện mới"></div>
-    <p class="note" id="nNote">Bản vẽ hiện tại sẽ được thay bằng một trang trống. Bạn có thể hoàn tác bằng Ctrl Z ngay sau đó, hoặc vào <b>Dữ liệu</b> để sao chép bản hiện tại trước.</p>
+    <p class="note" id="nNote">Bản vẽ hiện tại sẽ được thay thế. Bạn có thể hoàn tác bằng Ctrl Z ngay sau đó, hoặc bấm <b>Lưu file</b> để lưu bản hiện tại trước.</p>
     <div class="row">
       <button class="btn" id="nCancel">Huỷ</button>
-      <button class="btn primary" id="nOk">Tạo trang trống</button>
+      <button class="btn primary" id="nOk">Tạo bản vẽ</button>
     </div>
   </div>
 </div>
@@ -473,6 +497,7 @@ a.btn.primary{color:var(--accent-ink)}
           <li><kbd>W</kbd> vẽ tường tự do: nhấp từng góc, nhấp đúp hoặc <kbd>Enter</kbd> để kết thúc.</li>
           <li><kbd>F</kbd> vẽ luồng di chuyển: khách, VIP, nhân sự, thoát hiểm.</li>
           <li>Nhấp lên tường để thêm góc, nhấp đúp vào góc để xoá.</li>
+          <li>Nhiều phòng (sảnh chờ + sảnh tiệc): ở panel phải bấm <strong>Vẽ thêm phòng</strong> hoặc <strong>Thêm phòng cạnh bên</strong>. Điểm vẽ tự bắt dính vào góc tường cũ để hai phòng chung vách.</li>
           <li>Vùng gạch chéo đỏ là vật thể chồng lấn hoặc nằm ngoài tường.</li>
           <li>Có sẵn bản vẽ? Ở panel phải, mục <strong>Ảnh mặt bằng nền</strong>: tải ảnh hoặc PDF lên, bấm <strong>Căn tỉ lệ</strong>, nhấp 2 điểm của một đoạn đã biết kích thước rồi nhập độ dài thật, sau đó vẽ theo.</li>
         </ul>
@@ -490,7 +515,7 @@ a.btn.primary{color:var(--accent-ink)}
         <ul>
           <li>Bản vẽ tự lưu trong trình duyệt này, mở lại là thấy.</li>
           <li><strong>Chụp ảnh</strong> xuất PNG 2400 px gồm góc nhìn hiện tại, mặt bằng tổng thể và số liệu.</li>
-          <li><strong>Dữ liệu</strong> sao chép bản vẽ dạng JSON để lưu, gửi người khác hoặc mở trên máy khác.</li>
+          <li><strong>Lưu file</strong> tải bản vẽ về máy thành file .json để cất giữ, gửi người khác; mở lại bằng nút <strong>Chọn file .json…</strong> trong cùng hộp.</li>
         </ul>
       </section>
     </div>
@@ -507,18 +532,33 @@ a.btn.primary{color:var(--accent-ink)}
   </div>
 </div>
 <div class="modal" id="modal" hidden>
-  <div class="modal-b" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <h3 id="mTitle">Dữ liệu bản vẽ (JSON)</h3>
-    <p class="note">Đây là toàn bộ thông tin bản vẽ: không gian, vật thể, kích thước, vị trí, góc xoay. Sao chép để lưu hoặc gửi cho người khác; dán dữ liệu vào ô rồi bấm “Nạp” để mở lại.</p>
-    <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh (ảnh mặt bằng nền, ảnh màn LED). Dữ liệu sẽ nặng hơn.</label>
-    <textarea id="mText" spellcheck="false" aria-label="Dữ liệu JSON"></textarea>
-    <p class="note" id="mMsg" aria-live="polite"></p>
-    <div class="row">
-      <button class="btn" id="mCopy">Sao chép</button>
-      <button class="btn" id="mLoad">Nạp từ ô trên</button>
-      <button class="btn" id="mSample">Mở bản mẫu</button>
-      <button class="btn primary" id="mClose">Đóng</button>
+  <div class="modal-b filem" role="dialog" aria-modal="true" aria-labelledby="mTitle" style="width:min(560px,100%)">
+    <div class="info-head">
+      <div><h3 id="mTitle">Lưu và mở bản vẽ</h3>
+        <p>Bản vẽ luôn tự lưu trong trình duyệt này. Lưu ra file để cất giữ, gửi cho người khác, hoặc mở trên máy khác.</p></div>
+      <button class="btn icon" id="mX" aria-label="Đóng"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
     </div>
+    <section class="fsec">
+      <h4>Lưu file</h4>
+      <p class="note">Toàn bộ bản vẽ (không gian, vật thể, luồng di chuyển) được lưu thành một file <b>.json</b> trên máy bạn.</p>
+      <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh (ảnh mặt bằng nền, ảnh màn LED). File sẽ nặng hơn.</label>
+      <div class="row">
+        <button class="btn primary" id="mSave"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Lưu file về máy</button>
+        <button class="btn" id="mCopy">Sao chép dữ liệu</button>
+      </div>
+    </section>
+    <section class="fsec">
+      <h4>Mở file</h4>
+      <p class="note">Mở lại file .json đã lưu từ công cụ này. Bản vẽ hiện tại sẽ được thay thế, có thể hoàn tác bằng Ctrl Z.</p>
+      <div class="row"><button class="btn" id="mOpen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 11V3M5 6l3-3 3 3M3 12v2h10v-2"/></svg>Chọn file .json…</button></div>
+      <details class="paste" id="mPaste">
+        <summary>Hoặc dán dữ liệu đã sao chép</summary>
+        <textarea id="mText" spellcheck="false" aria-label="Dữ liệu bản vẽ" placeholder="Dán dữ liệu vào đây"></textarea>
+        <button class="btn" id="mLoad">Mở từ dữ liệu đã dán</button>
+      </details>
+    </section>
+    <p class="note" id="mMsg" aria-live="polite"></p>
+    <input type="file" id="mFile" accept=".json,application/json" hidden>
   </div>
 </div>
 
@@ -533,6 +573,12 @@ const CATALOG = [
     {k:'led', n:'Màn LED', w:6, d:0.3, h:3.5, c:'stage', dir:1},
     {k:'speaker', n:'Loa đứng', w:0.6, d:0.6, h:1.8, c:'stage', dir:1},
     {k:'foh', n:'Bàn điều khiển', w:2.4, d:1.2, h:1, c:'stage', dir:1},
+  ]},
+  {g:'Ánh sáng & truss', items:[
+    {k:'truss', n:'Khung truss cổng', w:8, d:0.4, h:5.5, c:'light', hang:true, dir:1},
+    {k:'trussbar', n:'Thanh truss treo', w:6, d:0.3, h:5.5, c:'light', hang:true},
+    {k:'beam', n:'Đèn Beam (moving head)', w:0.4, d:0.4, h:5.2, c:'light', hang:true, dir:1, c3:'#8FD3FF'},
+    {k:'par', n:'Đèn Par LED', w:0.3, d:0.3, h:5.2, c:'light', shape:'circle', hang:true, dir:1, c3:'#FFB347'},
   ]},
   {g:'Gian hàng', items:[
     {k:'booth33', n:'Gian hàng 3×3', w:3, d:3, h:2.5, c:'booth', dir:1},
@@ -567,7 +613,7 @@ const CATALOG = [
   ]},
 ];
 const CM = {}; CATALOG.forEach(g => g.items.forEach(i => CM[i.k] = i));
-const CAT_NAMES = {stage:'Sân khấu & kỹ thuật', booth:'Gian hàng', seat:'Bàn ghế', deco:'Trang trí', util:'Tiện ích', zone:'Vùng', ref:'Người'};
+const CAT_NAMES = {stage:'Sân khấu & kỹ thuật', light:'Ánh sáng & truss', booth:'Gian hàng', seat:'Bàn ghế', deco:'Trang trí', util:'Tiện ích', zone:'Vùng', ref:'Người'};
 
 /* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
@@ -641,6 +687,24 @@ function updUndo() { updUndoBg(); $('#bUndo').disabled = !hist.length; $('#bRedo
 
 /* ---------- Geometry ---------- */
 function polyArea(p) { let a = 0; for (let i = 0; i < p.length; i++) { const [x1,y1] = p[i], [x2,y2] = p[(i+1)%p.length]; a += x1*y2 - x2*y1; } return Math.abs(a)/2; }
+/* Không gian nhiều phòng: phòng 0 là state.room.pts (giữ tương thích file cũ), các phòng thêm nằm trong state.rooms = [{id, name, pts}]. */
+function roomList() {
+  const L = [];
+  if (state.room.pts.length >= 3) L.push({k: 0, name: state.room.name || 'Không gian chính', pts: state.room.pts});
+  (state.rooms || []).forEach((r, i) => { if (r.pts && r.pts.length >= 3) L.push({k: i + 1, name: r.name || `Phòng ${i + 2}`, pts: r.pts}); });
+  return L;
+}
+const roomPts = k => k === 0 ? state.room.pts : state.rooms[k - 1].pts;
+const allRoomPts = () => roomList().flatMap(r => r.pts);
+const totalArea = () => roomList().reduce((a, r) => a + polyArea(r.pts), 0);
+function polyCentroid(P) { let a = 0, cx = 0, cy = 0; for (let i = 0; i < P.length; i++) { const [x1,y1] = P[i], [x2,y2] = P[(i+1)%P.length], f = x1*y2 - x2*y1; a += f; cx += (x1+x2)*f; cy += (y1+y2)*f; } return Math.abs(a) < 1e-9 ? P[0] : [cx/(3*a), cy/(3*a)]; }
+function deleteRoom(k) {
+  checkpoint();
+  if (k === 0) { const nx = (state.rooms || []).shift(); state.room.pts = nx ? nx.pts : []; state.room.name = nx ? nx.name : ''; }
+  else state.rooms.splice(k - 1, 1);
+  renderAll();
+}
+let wallAdd = false;
 function perim(p) { let l = 0; for (let i = 0; i < p.length; i++) { const [x1,y1] = p[i], [x2,y2] = p[(i+1)%p.length]; l += Math.hypot(x2-x1, y2-y1); } return l; }
 function inPoly(x, y, p) { let ins = false; for (let i = 0, j = p.length-1; i < p.length; j = i++) { const [xi,yi] = p[i], [xj,yj] = p[j]; if (((yi>y) !== (yj>y)) && (x < (xj-xi)*(y-yi)/(yj-yi)+xi)) ins = !ins; } return ins; }
 function shapePts(it) {
@@ -668,11 +732,11 @@ function seatsOf(it) {
 }
 function validate() {
   issues = {outside: new Set(), overlap: new Set()};
-  const room = state.room.pts, solid = [];
+  const RL = roomList(), solid = [];
   for (const it of state.items) {
     const c = CM[it.k], P = shapePts(it);
-    if (room.length >= 3 && it.k !== 'door') {
-      if (P.some(([x,y]) => !inPoly(x, y, room) && !onEdge(x, y, room))) issues.outside.add(it.id);
+    if (RL.length && it.k !== 'door') {
+      if (P.some(([x,y]) => !RL.some(R => inPoly(x, y, R.pts) || onEdge(x, y, R.pts)))) issues.outside.add(it.id);
     }
     if (!c.flat && !c.hang && !c.ref) solid.push([it, P]);
   }
@@ -769,18 +833,20 @@ function planSVG(W, H, ex) {
     <pattern id="hatch" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect width="2.2" height="7" style="fill:var(--danger)" fill-opacity=".55"/></pattern>
   </defs>
   <rect width="${W}" height="${H}" style="fill:var(--canvas)"/>`;
-  const P = state.room.pts;
-  const path = P.length ? 'M' + P.map(p => w2s(p[0], p[1]).map(v => v.toFixed(1)).join(' ')).join('L') + 'Z' : '';
-  if (P.length >= 3) o += `<path d="${path}" style="fill:var(--floor)"/>`;
+  const RL = roomList();
+  const pathOf = P => 'M' + P.map(p => w2s(p[0], p[1]).map(v => v.toFixed(1)).join(' ')).join('L') + 'Z';
+  for (const R of RL) o += `<path d="${pathOf(R.pts)}" style="fill:var(--floor)"/>`;
   o += `<rect width="${W}" height="${H}" fill="url(#gmin)"/><rect width="${W}" height="${H}" fill="url(#gmaj)"/>`;
   o += bgSVG(s, ex);
-  if (P.length >= 3) {
+  const dimSeen = new Set();
+  for (const R of RL) { const P = R.pts, k = R.k, path = pathOf(P);
     const sw = clamp(0.2*s, 2, 9);
     o += `<path d="${path}" fill="none" style="stroke:var(--wall)" stroke-width="${sw}" stroke-linejoin="miter"/>`;
-    if (!ex && !drawPts.length) for (let i = 0; i < P.length; i++) { const [ax, ay] = w2s(...P[i]), [bx, by] = w2s(...P[(i+1)%P.length]); o += `<line class="edge" data-e="${i}" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke-width="${Math.max(sw, 12)}"/>`; }
+    if (!ex && !drawPts.length) for (let i = 0; i < P.length; i++) { const [ax, ay] = w2s(...P[i]), [bx, by] = w2s(...P[(i+1)%P.length]); o += `<line class="edge" data-e="${k}:${i}" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke-width="${Math.max(sw, 12)}"/>`; }
     // edge dimensions
     for (let i = 0; i < P.length; i++) {
       const [x1,y1] = P[i], [x2,y2] = P[(i+1)%P.length], len = Math.hypot(x2-x1, y2-y1); if (len < 0.01) continue;
+      const dk = [[x1,y1],[x2,y2]].map(q => q.map(v => v.toFixed(2)).join(',')).sort().join('|'); if (dimSeen.has(dk)) continue; dimSeen.add(dk);
       let nx = (y2-y1)/len, ny = -(x2-x1)/len; const mx = (x1+x2)/2, my = (y1+y2)/2;
       if (inPoly(mx + nx*0.05, my + ny*0.05, P)) { nx = -nx; ny = -ny; }
       const [sx, sy] = w2s(mx, my); const off = 16 + sw/2;
@@ -792,6 +858,11 @@ function planSVG(W, H, ex) {
         o += `<g transform="translate(${sx+nx*off} ${sy+ny*off}) rotate(${ang})"><rect x="-26" y="-8" width="52" height="16" rx="3" style="fill:var(--canvas)"/><text text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" style="fill:var(--ink-2)">${fmt(len)} m</text></g>`;
       }
     }
+  }
+  // tên + diện tích từng phòng khi có từ 2 phòng
+  if (RL.length > 1) for (const R of RL) {
+    const [cx, cy] = w2s(...polyCentroid(R.pts)), fs = clamp(s*0.9, 11, 22);
+    o += `<g pointer-events="none" transform="translate(${cx} ${cy})" style="fill:var(--ink-3)" fill-opacity=".55" text-anchor="middle" font-weight="700"><text font-size="${fs}" dominant-baseline="central">${esc(R.name.toUpperCase())}</text><text y="${fs*0.95}" font-size="${fs*0.62}" font-weight="500" dominant-baseline="central" font-family="JetBrains Mono, monospace">${fmt(polyArea(R.pts), 1)} m²</text></g>`;
   }
   // items
   const order = [...state.items].sort((a,b) => rank(a) - rank(b));
@@ -843,9 +914,9 @@ function planSVG(W, H, ex) {
     o += `<rect x="${ax}" y="${ay}" width="${bx-ax}" height="${by-ay}" style="fill:var(--accent-line);fill-opacity:.07;stroke:var(--accent-line)" stroke-width="1" stroke-dasharray="5 3"/>`;
   }
   // room vertices
-  if (!ex && !drawPts.length && P.length >= 3) for (let i = 0; i < P.length; i++) {
-    const [x, y] = w2s(P[i][0], P[i][1]);
-    o += `<rect data-v="${i}" x="${x-5}" y="${y-5}" width="10" height="10" style="fill:var(--panel);stroke:var(--wall);cursor:move" stroke-width="1.5"/>`;
+  if (!ex && !drawPts.length) for (const R of RL) for (let i = 0; i < R.pts.length; i++) {
+    const [x, y] = w2s(R.pts[i][0], R.pts[i][1]);
+    o += `<rect data-v="${R.k}:${i}" x="${x-5}" y="${y-5}" width="10" height="10" style="fill:var(--panel);stroke:var(--wall);cursor:move" stroke-width="1.5"/>`;
   }
   // wall drawing preview
   if (!ex && mode === 'wall') {
@@ -945,7 +1016,7 @@ async function bgImport(file) {
     let blob = file, extra = '';
     if (isPdf) { const r = await pdfToBlob(file); blob = r.blob; if (r.pages > 1) extra = ` File có ${r.pages} trang, công cụ dùng trang đầu.`; }
     const meta = await bgStore(blob, file.name);
-    const P = state.room.pts, xs = P.map(p => p[0]), ys = P.map(p => p[1]);
+    const P = allRoomPts(), xs = P.map(p => p[0]), ys = P.map(p => p[1]);
     const has = P.length >= 3, w = has ? Math.max(...xs) - Math.min(...xs) : 30;
     checkpoint();
     state.bg = {...meta, x: has ? (Math.min(...xs) + Math.max(...xs))/2 : w/2, y: has ? (Math.min(...ys) + Math.max(...ys))/2 : w*meta.ih/meta.iw/2, w: r2(w), rot: 0, op: .5, lock: false, show: true};
@@ -1163,6 +1234,18 @@ const trunc = (t, n) => t.length > n ? t.slice(0, Math.max(1, Math.floor(n)-1)) 
 
 function detail(it, c, s, col) {
   const hw = it.w*s/2, hd = it.d*s/2; let o = '';
+  if (it.k === 'truss' || it.k === 'trussbar') {
+    // giàn truss: đường zíc zắc theo chiều dài, khung cổng có 2 chân ở 2 đầu
+    const n = Math.max(2, Math.round(it.w/0.5)), st = it.w*s/n; let z = `M${-hw} ${-hd}`;
+    for (let i = 1; i <= n; i++) z += `L${-hw + i*st} ${i % 2 ? hd : -hd}`;
+    o += `<path d="${z}" fill="none" style="stroke:${col}" stroke-width="1" stroke-opacity=".7"/>`;
+    if (it.k === 'truss') [-1, 1].forEach(sx => { const t = Math.max(it.d*s, 4); o += `<rect x="${sx*hw - (sx > 0 ? t : 0)}" y="${-t/2}" width="${t}" height="${t}" style="fill:${col};fill-opacity:.55"/>`; });
+  }
+  if (it.k === 'beam' || it.k === 'par') {
+    // hướng chiếu sáng: hình quạt về phía trước
+    const L = (it.k === 'beam' ? 1.6 : 1.2)*s, a = (it.k === 'beam' ? .12 : .45)*L;
+    o += `<path d="M0 0L${-a} ${L}L${a} ${L}Z" style="fill:${col}" fill-opacity=".18"/>`;
+  }
   if (it.k === 'roundtable') {
     const rt = Math.max(0.45, Math.min(it.w, it.d)/2 - 0.65), R = (rt + 0.35)*s;
     o += `<circle r="${rt*s}" style="fill:${col};fill-opacity:.35;stroke:${col}" stroke-width="1"/>`;
@@ -1192,9 +1275,16 @@ function detail(it, c, s, col) {
 /* ---------- 2D interaction ---------- */
 function ptr(e) { const r = svg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
 
+function nearRoomVertex(wx, wy, skipK, skipI) {
+  let best = null, bd = 12/view.s;
+  for (const R of roomList()) R.pts.forEach((p, i) => { if (R.k === skipK && i === skipI) return; const d = Math.hypot(p[0]-wx, p[1]-wy); if (d < bd) { bd = d; best = p; } });
+  return best;
+}
+function vertSnap(wx, wy, k, i) { const v = nearRoomVertex(wx, wy, k, i); return v ? [v[0], v[1]] : [snapV(wx), snapV(wy)]; }
 function wallSnap(wx, wy) {
   let x = wx, y = wy;
   if (drawPts.length >= 3) { const [fx, fy] = drawPts[0]; if (Math.hypot(fx-x, fy-y)*view.s < 14) return [fx, fy, true]; }
+  { const v = nearRoomVertex(wx, wy, -1, -1); if (v) return [v[0], v[1], false]; }
   if (snapOn) { x = Math.round(x/0.5)*0.5; y = Math.round(y/0.5)*0.5; } else { x = r2(x); y = r2(y); }
   if (drawPts.length) {
     const [lx, ly] = drawPts[drawPts.length-1], dx = x-lx, dy = y-ly;
@@ -1203,7 +1293,11 @@ function wallSnap(wx, wy) {
   return [x, y, false];
 }
 function finishWall() {
-  if (drawPts.length >= 3) { checkpoint(); state.room.pts = drawPts.map(p => [p[0], p[1]]); }
+  if (drawPts.length >= 3) {
+    checkpoint(); const pts = drawPts.map(p => [p[0], p[1]]);
+    if (wallAdd && roomList().length) { state.rooms = state.rooms || []; state.rooms.push({id: uid(), name: `Phòng ${roomList().length + 1}`, pts}); }
+    else { state.room.pts = pts; state.room.name = ''; state.rooms = []; }
+  }
   drawPts = []; cursorW = null; setMode('select'); renderAll();
 }
 
@@ -1228,16 +1322,16 @@ svg.addEventListener('pointerdown', e => {
     const id = flh.dataset.f; if (selFlow !== id || S.size) { selFlow = id; S = new Set(); renderPanel(); }
     drag = {t:'fmove', wx0: wx, wy0: wy, start: findF(id).pts.map(p => [...p]), moved: false}; render2D(); return;
   }
-  if (!drawPts.length) {
+  if (!drawPts.length && mode !== 'wall') {
     const v = e.target.closest('[data-v]');
-    if (v) { drag = {t:'vert', i: +v.dataset.v, moved: false}; return; }
+    if (v) { const [k, i] = v.dataset.v.split(':').map(Number); drag = {t:'vert', k, i, moved: false}; return; }
     const ed = e.target.closest('[data-e]');
     if (ed) {
       // nhấp lên tường: chèn điểm mới vào cạnh rồi kéo luôn điểm đó
-      const P = state.room.pts, i = +ed.dataset.e, [x1, y1] = P[i], [x2, y2] = P[(i+1)%P.length];
+      const [k, i] = ed.dataset.e.split(':').map(Number), P = roomPts(k), [x1, y1] = P[i], [x2, y2] = P[(i+1)%P.length];
       const L2 = (x2-x1)**2 + (y2-y1)**2 || 1, t = clamp(((wx-x1)*(x2-x1) + (wy-y1)*(y2-y1))/L2, 0, 1);
       checkpoint(); P.splice(i+1, 0, [r2(x1 + t*(x2-x1)), r2(y1 + t*(y2-y1))]);
-      drag = {t:'vert', i: i+1, moved: true}; validate(); render2D(); return;
+      drag = {t:'vert', k, i: i+1, moved: true}; validate(); render2D(); return;
     }
   }
   if (mode === 'wall') {
@@ -1302,7 +1396,7 @@ svg.addEventListener('pointermove', e => {
     if (!drag.moved && Math.hypot(dx, dy)*view.s < 2) return;
     first(); b.x = r2(drag.x0 + dx); b.y = r2(drag.y0 + dy); render2D(); updBgVals(); return;
   }
-  if (drag.t === 'vert') { first(); state.room.pts[drag.i] = [snapV(wx), snapV(wy)]; }
+  if (drag.t === 'vert') { first(); roomPts(drag.k)[drag.i] = vertSnap(wx, wy, drag.k, drag.i); }
   else if (drag.t === 'fvert') { const f = findF(selFlow); if (!f) return; first(); f.pts[drag.i] = [snapV(wx), snapV(wy)]; }
   else if (drag.t === 'fmove') {
     const f = findF(selFlow); if (!f) return; const dx = snapV(wx - drag.wx0), dy = snapV(wy - drag.wy0);
@@ -1372,7 +1466,7 @@ svg.addEventListener('dblclick', e => {
     return;
   }
   const v = e.target.closest('[data-v]');
-  if (v && !drawPts.length) { if (state.room.pts.length > 3) { checkpoint(); state.room.pts.splice(+v.dataset.v, 1); renderAll(); } return; }
+  if (v && !drawPts.length) { const [k, i] = v.dataset.v.split(':').map(Number), P = roomPts(k); if (P.length > 3) { checkpoint(); P.splice(i, 1); renderAll(); } return; }
   if (mode === 'wall') finishWall();
 });
 svg.addEventListener('wheel', e => {
@@ -1388,7 +1482,7 @@ function zoomAt(px, py, k) {
 }
 function fitView() {
   const W = svg.clientWidth, H = svg.clientHeight; if (!W || !H) return;
-  const pts = [...state.room.pts]; state.items.forEach(i => pts.push(...shapePts(i)));
+  const pts = allRoomPts(); state.items.forEach(i => pts.push(...shapePts(i)));
   if (bgOn()) pts.push(...bgCorners(state.bg));
   if (!pts.length) { view = {s:20, ox:60, oy:60}; render2D(); return; }
   const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
@@ -1420,13 +1514,14 @@ function setHint() {
   h.innerHTML = mode === 'flow'
     ? `<b>Vẽ luồng ${FT[flowType].n.toLowerCase()}:</b> nhấp để đặt từng điểm theo hướng di chuyển (điểm đầu là nơi bắt đầu). Nhấp đúp hoặc <kbd>Enter</kbd> để kết thúc. <kbd>⌫</kbd> lùi 1 điểm, <kbd>Esc</kbd> huỷ.`
     : mode === 'wall'
-    ? `<b>Vẽ tường bao:</b> nhấp để đặt từng điểm góc (tự bắt thẳng góc). Nhấp lại điểm đầu, nhấp đúp hoặc <kbd>Enter</kbd> để khép kín. <kbd>⌫</kbd> lùi 1 điểm, <kbd>Esc</kbd> huỷ. Không gian mới sẽ thay thế không gian hiện tại. Muốn sửa tường đang có: nhấp lên tường để thêm điểm rồi kéo.`
+    ? `<b>Vẽ tường bao:</b> nhấp để đặt từng điểm góc (tự bắt thẳng góc). Nhấp lại điểm đầu, nhấp đúp hoặc <kbd>Enter</kbd> để khép kín. <kbd>⌫</kbd> lùi 1 điểm, <kbd>Esc</kbd> huỷ. ${roomList().length ? (wallAdd ? `Đang vẽ <b>phòng mới</b>, thêm vào không gian hiện có (bắt dính vào góc tường cũ để chung vách). <button class="hint-tg" id="wallTg">Đổi sang: thay toàn bộ</button>` : `Đang vẽ <b>thay toàn bộ</b> không gian hiện có. <button class="hint-tg" id="wallTg">Đổi sang: thêm phòng mới</button>`) : 'Muốn sửa tường đang có: nhấp lên tường để thêm điểm rồi kéo.'}`
     : viewMode === '3d'
       ? `<b>Đi lại:</b> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> tiến/lùi/trái/phải · <kbd>Q</kbd>/<kbd>E</kbd> hạ/nâng · giữ <kbd>Shift</kbd> đi nhanh. Kéo trái: xoay · kéo phải: dời · cuộn: zoom theo con trỏ · nhấp đúp lên sàn: bay đến điểm đó.`
       : `Kéo trên nền để <b>quét chọn</b> nhiều vật thể, <kbd>Shift</kbd> + nhấp để thêm/bớt. Dời bản vẽ: giữ <kbd>Space</kbd> rồi kéo, chuột phải, hoặc vuốt trackpad. Phóng to: <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + cuộn. Giữ <kbd>Alt</kbd>/<kbd>⌥</kbd> khi kéo để nhân bản. Nhấp lên tường để thêm điểm góc, nhấp đúp điểm để xoá.`;
 }
 $('#tSelect').onclick = () => setMode('select');
-$('#tWall').onclick = () => setMode('wall');
+$('#tWall').onclick = () => { wallAdd = roomList().length > 0; setMode('wall'); };
+document.addEventListener('click', e => { if (e.target.id === 'wallTg') { wallAdd = !wallAdd; setHint(); } });
 $('#tFlow').onclick = () => startFlow(flowType);
 $('#bUndo').onclick = undo; $('#bRedo').onclick = redo;
 
@@ -1457,7 +1552,7 @@ document.addEventListener('keydown', e => {
   }
   if (viewMode === '3d' && !ctrl && 'wasdqe'.includes(k) && k.length === 1) return;
   if (k === 'v') return setMode('select');
-  if (k === 'w') return setMode('wall');
+  if (k === 'w') { wallAdd = roomList().length > 0; return setMode('wall'); }
   if (k === 'f' && !ctrl) return startFlow(flowType);
   if (ctrl && k === 'a') { e.preventDefault(); selFlow = null; S = new Set(state.items.map(i => i.id)); renderPanel(); render2D(); return; }
   if (k === '=' || k === '+') return zoomAt(svg.clientWidth/2, svg.clientHeight/2, 1.25);
@@ -1529,23 +1624,33 @@ function renderPanel() {
   if (S.size > 1) return renderMulti(el);
   const it = one();
   if (!it) {
-    const P = state.room.pts, xs = P.map(p=>p[0]), ys = P.map(p=>p[1]);
+    const RL = roomList(), P = state.room.pts, xs = P.map(p=>p[0]), ys = P.map(p=>p[1]);
     const bw = P.length ? Math.max(...xs) - Math.min(...xs) : 30, bh = P.length ? Math.max(...ys) - Math.min(...ys) : 20;
     el.innerHTML = `
-      <h3>Không gian chính <span class="typ">${P.length} góc</span></h3>
+      <h3>Không gian <span class="typ">${RL.length ? RL.length + ' phòng · ' + fmt(totalArea(), 1) + ' m²' : 'chưa có tường'}</span></h3>
+      ${RL.length ? `<div class="rooms">${RL.map(R => `<div class="room-row"><input data-rn="${R.k}" value="${esc(R.name)}" aria-label="Tên phòng"><span class="mono">${fmt(polyArea(R.pts), 1)} m²</span><button class="btn icon" data-rdel="${R.k}" title="Xoá phòng này" aria-label="Xoá phòng ${esc(R.name)}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>`).join('')}</div>
+      <button class="btn" id="rAddDraw"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>Vẽ thêm phòng (chung vách)</button>` : ''}
       <div class="g3">
         <div class="fld"><label for="rW">Chiều dài</label><div class="unit"><input id="rW" type="number" step="0.5" min="2" value="${r2(bw)}"><em>m</em></div></div>
         <span style="padding-bottom:8px;color:var(--ink-3)">×</span>
         <div class="fld"><label for="rD">Chiều rộng</label><div class="unit"><input id="rD" type="number" step="0.5" min="2" value="${r2(bh)}"><em>m</em></div></div>
       </div>
-      <button class="btn primary" id="rMake">Tạo không gian chữ nhật</button>
+      <div class="row"><button class="btn primary" id="rMake">Tạo không gian chữ nhật</button>${RL.length ? '<button class="btn" id="rAddRect" title="Thêm phòng chữ nhật kích thước trên, đặt sát cạnh phải không gian hiện có">Thêm phòng cạnh bên</button>' : ''}</div>
       <div class="fld"><label for="rH">Chiều cao trần (dùng cho 3D)</label><div class="unit"><input id="rH" type="number" step="0.1" min="2" value="${state.room.h}"><em>m</em></div></div>
-      <p class="note">Muốn mặt bằng hình chữ L, đa giác… dùng công cụ <b>Vẽ tường</b> (phím W). Kéo các ô vuông ở góc tường để chỉnh hình dạng.</p>
+      <p class="note">Muốn mặt bằng hình chữ L, đa giác… dùng công cụ <b>Vẽ tường</b> (phím W). Có nhiều phòng (ví dụ sảnh chờ + sảnh tiệc): bấm <b>Vẽ thêm phòng</b> hoặc <b>Thêm phòng cạnh bên</b>. Kéo các ô vuông ở góc tường để chỉnh hình dạng.</p>
       <button class="btn danger ${clearArmed ? 'armed' : ''}" id="rClear">${clearArmed ? 'Bấm lần nữa để xoá ' + state.items.length + ' vật thể' : 'Xoá tất cả vật thể'}</button>`;
     $('#rMake').onclick = () => {
       const w = parseFloat($('#rW').value), d = parseFloat($('#rD').value);
       if (!(w >= 2 && d >= 2)) return;
-      checkpoint(); state.room.pts = [[0,0],[w,0],[w,d],[0,d]]; renderAll(); fitView();
+      checkpoint(); state.room.pts = [[0,0],[w,0],[w,d],[0,d]]; state.room.name = ''; state.rooms = []; renderAll(); fitView();
+    };
+    el.querySelectorAll('[data-rn]').forEach(inp => inp.onchange = () => { const k = +inp.dataset.rn, v = inp.value.trim(); checkpoint(); if (k === 0) state.room.name = v; else state.rooms[k - 1].name = v || `Phòng ${k + 1}`; renderAll(); });
+    el.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => deleteRoom(+b.dataset.rdel));
+    if ($('#rAddDraw')) $('#rAddDraw').onclick = () => { wallAdd = true; setMode('wall'); };
+    if ($('#rAddRect')) $('#rAddRect').onclick = () => {
+      const w = parseFloat($('#rW').value), d = parseFloat($('#rD').value); if (!(w >= 1 && d >= 1)) return;
+      const A = allRoomPts(), x0 = Math.max(...A.map(p => p[0])), y0 = Math.min(...A.map(p => p[1]));
+      checkpoint(); state.rooms = state.rooms || []; state.rooms.push({id: uid(), name: `Phòng ${roomList().length + 1}`, pts: [[x0,y0],[x0+w,y0],[x0+w,y0+d],[x0,y0+d]]}); renderAll(); fitView();
     };
     $('#rH').onchange = e => { const v = parseFloat(e.target.value); if (v >= 2) { checkpoint(); state.room.h = v; renderAll(); } };
     $('#rClear').onclick = () => {
@@ -1652,7 +1757,7 @@ function toHex(c) { if (/^#[0-9a-f]{6}$/i.test(c)) return c; const cv = document
 
 let invOpen = false;
 function renderStats() {
-  const P = state.room.pts, area = P.length >= 3 ? polyArea(P) : 0;
+  const RL = roomList(), area = totalArea();
   let occ = 0, seats = 0; const byCat = {};
   for (const it of state.items) {
     const c = CM[it.k];
@@ -1675,7 +1780,7 @@ function renderStats() {
       <div class="meter" role="img" aria-label="Tỉ lệ chiếm chỗ ${fmt(pct,0)}%"><i style="width:${clamp(pct,0,100)}%"></i></div>
     </div>
     <div class="stat"><span>Diện tích lưu thông còn lại</span><b>${fmt(free,1)} m²</b></div>
-    <div class="stat"><span>Chu vi tường</span><b>${fmt(P.length >= 3 ? perim(P) : 0,1)} m</b></div>
+    <div class="stat"><span>${RL.length > 1 ? `Chu vi tường (${RL.length} phòng)` : 'Chu vi tường'}</span><b>${fmt(RL.reduce((a, R) => a + perim(R.pts), 0),1)} m</b></div>
     <div class="stat"><span>Luồng di chuyển</span><b>${(state.flows || []).length} luồng · ${fmt((state.flows || []).reduce((a, f) => a + flowLen(f), 0), 1)} m</b></div>
     <div class="stat"><span>Sàn trên mỗi chỗ ngồi</span><b>${seats ? fmt(area/seats,2) + ' m²' : '—'}</b></div>
     <div class="pills">
@@ -1800,7 +1905,7 @@ function bindFree3D(el) {
 }
 
 function bounds() {
-  const pts = state.room.pts.length ? state.room.pts : state.items.map(i => [i.x, i.y]);
+  const rp = allRoomPts(), pts = rp.length ? rp : state.items.map(i => [i.x, i.y]);
   if (!pts.length) return {cx: 0, cz: 0, w: 10, d: 10, x0: -5, z0: -5, x1: 5, z1: 5};
   const xs = pts.map(p => p[0]), zs = pts.map(p => p[1]);
   const x0 = Math.min(...xs), x1 = Math.max(...xs), z0 = Math.min(...zs), z1 = Math.max(...zs);
@@ -1836,22 +1941,28 @@ function build3D() {
   // ground
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(m*8, m*8), new THREE.MeshStandardMaterial({color: col('--ground3d'), roughness: 1}));
   ground.rotation.x = -Math.PI/2; ground.position.set(b.cx, -0.02, b.cz); ground.receiveShadow = true; root.add(ground);
-  const P = state.room.pts, H = state.room.h || 4;
-  if (P.length >= 3) {
-    const shp = new THREE.Shape(P.map(p => new THREE.Vector2(p[0], -p[1])));
-    const floor = new THREE.Mesh(new THREE.ShapeGeometry(shp), new THREE.MeshStandardMaterial({color: col('--floor3d'), roughness: .9}));
-    floor.rotation.x = -Math.PI/2; floor.receiveShadow = true; root.add(floor);
+  const RL = roomList(), H = state.room.h || 4;
+  if (RL.length) {
+    for (const R of RL) {
+      const shp = new THREE.Shape(R.pts.map(p => new THREE.Vector2(p[0], -p[1])));
+      const floor = new THREE.Mesh(new THREE.ShapeGeometry(shp), new THREE.MeshStandardMaterial({color: col('--floor3d'), roughness: .9}));
+      floor.rotation.x = -Math.PI/2; floor.receiveShadow = true; root.add(floor);
+    }
     const grid = new THREE.GridHelper(Math.ceil(m)+2, Math.ceil(m)+2, col('--wall3d'), col('--wall3d'));
     grid.position.set(b.cx, 0.003, b.cz); grid.material.transparent = true; grid.material.opacity = .22; root.add(grid);
     if (wallMode !== 'hidden') {
       const wm = new THREE.MeshStandardMaterial({color: col('--wall3d'), roughness: .9, transparent: wallMode === 'ghost', opacity: wallMode === 'ghost' ? .28 : 1, side: THREE.DoubleSide, depthWrite: wallMode !== 'ghost'});
-      const lm = new THREE.LineBasicMaterial({color: col('--wall3d')});
-      for (let i = 0; i < P.length; i++) {
-        const [x1,z1] = P[i], [x2,z2] = P[(i+1)%P.length], len = Math.hypot(x2-x1, z2-z1); if (len < 0.01) continue;
-        const g = new THREE.BoxGeometry(len + 0.15, H, 0.15);
-        const wall = new THREE.Mesh(g, wm); wall.position.set((x1+x2)/2, H/2, (z1+z2)/2); wall.rotation.y = -Math.atan2(z2-z1, x2-x1);
-        wall.castShadow = wallMode === 'solid'; wall.receiveShadow = true; root.add(wall);
-        const e = new THREE.LineSegments(new THREE.EdgesGeometry(g), lm); e.position.copy(wall.position); e.rotation.copy(wall.rotation); root.add(e);
+      const lm = new THREE.LineBasicMaterial({color: col('--wall3d')}), seen = new Set();
+      for (const R of RL) { const P = R.pts;
+        for (let i = 0; i < P.length; i++) {
+          const [x1,z1] = P[i], [x2,z2] = P[(i+1)%P.length], len = Math.hypot(x2-x1, z2-z1); if (len < 0.01) continue;
+          // vách chung giữa 2 phòng chỉ dựng một lần
+          const key = [[x1,z1],[x2,z2]].map(q => q.map(v => v.toFixed(2)).join(',')).sort().join('|'); if (seen.has(key)) continue; seen.add(key);
+          const g = new THREE.BoxGeometry(len + 0.15, H, 0.15);
+          const wall = new THREE.Mesh(g, wm); wall.position.set((x1+x2)/2, H/2, (z1+z2)/2); wall.rotation.y = -Math.atan2(z2-z1, x2-x1);
+          wall.castShadow = wallMode === 'solid'; wall.receiveShadow = true; root.add(wall);
+          const e = new THREE.LineSegments(new THREE.EdgesGeometry(g), lm); e.position.copy(wall.position); e.rotation.copy(wall.rotation); root.add(e);
+        }
       }
     }
   }
@@ -2022,6 +2133,47 @@ function buildItem(it, roomH) {
       for (const m in HUMAN[it.k]) { const o = new THREE.Mesh(humanPart(it.k, m), M(col[m], {flatShading: true})); o.castShadow = true; o.receiveShadow = true; hg.add(o); }
       hg.scale.setScalar(h); g.add(hg);
       break; }
+    case 'truss': case 'trussbar': {
+      const sz = Math.min(.4, Math.max(.25, d)), mT = M('#C3C7CB', {metalness: .7, roughness: .35});
+      // một đoạn giàn: 4 thanh chính + thanh giằng chéo mỗi 0,5 m, dựng dọc trục X rồi xoay theo hướng cần
+      const bar = (len, cx, cy, cz, vertical) => {
+        const tg = new THREE.Group(); tg.position.set(cx, cy, cz); if (vertical) tg.rotation.z = Math.PI/2; g.add(tg);
+        const part = (geo, x, y, z, rz, ry) => { const o = new THREE.Mesh(geo, mT); o.position.set(x, y, z); if (rz) o.rotation.z = rz; if (ry) o.rotation.y = ry; o.castShadow = true; tg.add(o); };
+        const chord = new THREE.BoxGeometry(len, .035, .035);
+        [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([a, b]) => part(chord, 0, a*sz/2, b*sz/2));
+        const n = Math.max(1, Math.round(len/.5)), st = len/n, dl = Math.hypot(st, sz), ang = Math.atan2(sz, st);
+        const brace = new THREE.BoxGeometry(dl, .018, .018);
+        for (let i = 0; i < n; i++) {
+          const x = -len/2 + st*(i + .5), sg = i % 2 ? 1 : -1;
+          part(brace, x, 0, sz/2, sg*ang); part(brace, x, 0, -sz/2, -sg*ang);
+          const bz = new THREE.Mesh(brace, mT); bz.position.set(x, sz/2, 0); bz.rotation.set(Math.PI/2, sg*ang, 0); tg.add(bz);
+          const bz2 = new THREE.Mesh(brace, mT); bz2.position.set(x, -sz/2, 0); bz2.rotation.set(Math.PI/2, -sg*ang, 0); tg.add(bz2);
+        }
+      };
+      if (it.k === 'truss') {
+        const leg = h - sz/2;
+        [-1, 1].forEach(sx => { const x = sx*(w/2 - sz/2); bar(leg, x, leg/2, 0, true); box(sz + .3, .03, sz + .3, mT, x, .015, 0); });
+        bar(w, 0, h - sz/2, 0, false);
+      } else {
+        bar(w, 0, h, 0, false);
+        const ceil = Math.max(roomH, h + .4); [-1, 1].forEach(sx => cyl(.006, .006, ceil - h, M('#555'), sx*w*.4, h + (ceil - h)/2, 0, 6));
+      }
+      break; }
+    case 'beam': case 'par': {
+      // thân đèn treo ở độ cao h, chùm sáng hình nón hướng xuống về phía trước (mặt trước = +z)
+      const beamy = it.k === 'beam', lc = new THREE.Color(it.color || c.c3);
+      const ceil = Math.max(roomH, h + .4);
+      if (beamy) { box(.36, .1, .3, mBlack, 0, h + .05, 0); [-1, 1].forEach(sx => box(.04, .3, .14, mBlack, sx*.17, h - .12, 0)); box(.26, .26, .3, mBlack, 0, h - .2, 0); }
+      else { const can = cyl(.14, .12, .32, mBlack, 0, h - .16, 0, 16); can.rotation.x = .5; box(.32, .04, .06, mBlack, 0, h + .02, 0); }
+      cyl(.006, .006, Math.max(.01, ceil - h), M('#555'), 0, h + (ceil - h)/2, 0, 6);
+      const tilt = beamy ? .55 : .45, y0 = h - .25, L = Math.max(.5, y0/Math.cos(tilt)), r = L*Math.tan(beamy ? .07 : .33);
+      const lg = new THREE.Group(); lg.position.set(0, y0, 0); lg.rotation.x = -tilt; g.add(lg);
+      const coneMat = new THREE.MeshBasicMaterial({color: lc, transparent: true, opacity: beamy ? .32 : .13, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide});
+      const cone = new THREE.Mesh(new THREE.ConeGeometry(r, L, 24, 1, true), coneMat); cone.position.y = -L/2; lg.add(cone);
+      const spot = new THREE.Mesh(new THREE.CircleGeometry(r, 28), new THREE.MeshBasicMaterial({color: lc, transparent: true, opacity: beamy ? .5 : .28, blending: THREE.AdditiveBlending, depthWrite: false}));
+      spot.rotation.x = -Math.PI/2; spot.scale.y = 1/Math.cos(tilt); spot.position.set(0, .015, Math.sin(tilt)*L); g.add(spot);
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(beamy ? .09 : .11, 16), new THREE.MeshBasicMaterial({color: lc})); lens.position.set(0, -.001, 0); lens.rotation.x = Math.PI/2; lg.add(lens);
+      break; }
     default: box(w, Math.max(h, .1), d, mB);
   }
   return g;
@@ -2029,7 +2181,7 @@ function buildItem(it, roomH) {
 
 /* ---------- Screenshot ---------- */
 function fitFor(W, H, pad, withBg) {
-  const pts = [...state.room.pts]; state.items.forEach(i => pts.push(...shapePts(i)));
+  const pts = allRoomPts(); state.items.forEach(i => pts.push(...shapePts(i)));
   if (withBg && bgOn()) pts.push(...bgCorners(state.bg));
   if (!pts.length) return {s: 20, ox: pad, oy: pad};
   const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
@@ -2093,7 +2245,7 @@ async function takeShot() {
     lg('#5D400D', [[121,284],[240,165],[458,165],[229,393]]); lg('#FFFFFF', [[52,266],[171,147],[389,147],[160,375]]);
     g.fillStyle = V('--ink-3'); g.font = F(600, 17); g.fillText('MẶT BẰNG SỰ KIỆN · ' + new Date().toLocaleDateString('vi-VN'), pad + 74, 66);
     g.fillStyle = V('--ink'); g.font = F(700, 34); g.fillText(state.name || 'Sự kiện', pad + 74, 102);
-    const P = state.room.pts, area = P.length >= 3 ? polyArea(P) : 0, seats = state.items.reduce((a, i) => a + seatsOf(i), 0);
+    const area = totalArea(), seats = state.items.reduce((a, i) => a + seatsOf(i), 0);
     const st = [['Diện tích sàn', fmt(area, 1) + ' m²'], ['Chỗ ngồi', String(seats)], ['Vật thể', String(state.items.length)], ['Trần', fmt(state.room.h, 1) + ' m']];
     g.textAlign = 'right'; let sx = Wt - pad;
     for (const [k, v] of st.reverse()) { g.fillStyle = V('--ink'); g.font = F(500, 30, '"JetBrains Mono", Menlo, monospace'); g.fillText(v, sx, 102); const w1 = g.measureText(v).width; g.fillStyle = V('--ink-3'); g.font = F(600, 15); g.fillText(k.toUpperCase(), sx, 66); sx -= Math.max(w1, g.measureText(k.toUpperCase()).width) + 56; }
@@ -2123,9 +2275,10 @@ async function takeShot() {
   } finally { btn.disabled = false; }
 }
 function s2wFrom(v, px, py) { return [(px - v.ox)/v.s, (py - v.oy)/v.s]; }
+const fileSlug = () => (state.name || 'mat-bang').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'mat-bang';
 async function saveShot() {
   if (!shotBlob) return;
-  const name = (state.name || 'mat-bang').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '').toLowerCase() + '.png';
+  const name = fileSlug() + '.png';
   const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
   if (dl) {
     try { await dl.save({filename: name, data: shotBlob}); $('#sMsg').textContent = 'Đã lưu ' + name + '.'; }
@@ -2150,32 +2303,103 @@ async function dataText() {
   for (const it of out.items) if (it.img) { const d = await bgDataOf(it.img.id); if (d) it.img.data = d; }
   return JSON.stringify(out, null, 2);
 }
-$('#bJson').onclick = async () => { $('#mBgWrap').hidden = !hasImages(); $('#mText').value = await dataText(); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
-$('#mBg').onchange = async () => { $('#mText').value = await dataText(); $('#mMsg').textContent = $('#mBg').checked ? 'Đã kèm ảnh vào dữ liệu.' : ''; };
+$('#bJson').onclick = () => { $('#mBgWrap').hidden = !hasImages(); $('#mText').value = ''; $('#mPaste').open = false; $('#mMsg').textContent = ''; modal.hidden = false; $('#mSave').focus(); };
+$('#mX').onclick = () => modal.hidden = true;
+$('#mSave').onclick = async () => {
+  const name = fileSlug() + '.json', blob = new Blob([await dataText()], {type: 'application/json'});
+  const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+  if (dl) {
+    try { await dl.save({filename: name, data: blob}); $('#mMsg').textContent = 'Đã lưu ' + name + '.'; }
+    catch (e) { $('#mMsg').textContent = e && e.code === 'declined' ? 'Đã huỷ lưu file.' : 'Không lưu được file ở đây. Hãy dùng “Sao chép dữ liệu”.'; }
+  } else {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    $('#mMsg').textContent = `Đã lưu ${name} vào thư mục tải về. Mở lại bằng nút “Chọn file .json…”.`;
+  }
+  track('save_file', {with_images: $('#mBg').checked});
+};
+$('#mOpen').onclick = () => $('#mFile').click();
+$('#mFile').onchange = async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; if (await loadData(await f.text(), f.name)) { modal.hidden = true; track('open_file'); } };
+$('#mBg').onchange = () => { $('#mMsg').textContent = ''; };
 $('#sBg').onchange = () => takeShot();
-$('#mClose').onclick = () => modal.hidden = true;
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; $('#newModal').hidden = true; } });
 
 /* ---------- Tạo mới + thẻ gợi ý bắt đầu ---------- */
 let starterOff = false;
-const isBlank = () => state.room.pts.length < 3 && !state.items.length && !state.bg;
+const isBlank = () => !roomList().length && !state.items.length && !state.bg;
 function updStarter() { const on = isBlank() && !starterOff && mode === 'select' && viewMode === '2d'; $('#starter').hidden = !on; $('#hint').hidden = on || mode === 'cal'; }
 const newModal = $('#newModal');
 $('#bNew').onclick = () => openNew();
-function openNew() {
-  $('#nName').value = 'Sự kiện mới';
+/* Mẫu bản vẽ: thêm mẫu mới bằng cách thêm một mục vào TEMPLATES (build() trả về state đầy đủ). */
+const TEMPLATES = [
+  {id: 'blank', n: 'Trang trống', d: 'Tự vẽ tường hoặc tải ảnh mặt bằng có sẵn', build: () => ({v: 1, name: 'Sự kiện mới', room: {pts: [], h: 4}, items: [], flows: [], showFlows: true, bg: null})},
+  {id: 'tet', n: 'Hội chợ Tết · Chợ Quê', d: '32 × 20 m · sân khấu, 8 gian hàng, bàn tròn, luồng khách', build: sample},
+  {id: 'wedding', n: 'Tiệc cưới · Sảnh chờ + Sảnh tiệc', d: '2 phòng · 12 bàn tròn 120 khách · truss, đèn Beam, Par LED', build: weddingTpl},
+];
+function weddingTpl() {
+  const items = [
+    mk('led', 12, 0.5, {w: 8, h: 4.2, label: 'Màn LED'}),
+    mk('stage', 12, 2.7, {w: 10, d: 4, h: 0.6}),
+    mk('truss', 12, 5, {w: 12, h: 5.6, label: 'Truss cổng'}),
+    ...[7.5, 10.5, 13.5, 16.5].map(x => mk('beam', x, 5, {rot: 180, h: 5.3})),
+    ...[6.6, 17.4].map(x => mk('par', x, 5, {rot: 180, h: 5.3, color: '#FF7AB6'})),
+    mk('speaker', 6, 1.2), mk('speaker', 18, 1.2),
+    mk('carpet', 12, 11.2, {w: 2.4, d: 13, label: 'Lối đi hoa'}),
+    ...[8, 11.5, 15].flatMap(y => [3.5, 7.5, 16.5, 20.5].map(x => mk('roundtable', x, y))),
+    mk('buffet', 0.9, 11, {rot: 90}), mk('buffet', 23.1, 11, {rot: 270}),
+    mk('foh', 21, 17.2, {rot: 180}),
+    mk('door', 12, 18, {w: 3, label: 'Cửa vào sảnh tiệc'}),
+    mk('door', 24, 6, {w: 2, rot: 90, label: 'Cửa hậu cần'}),
+    mk('door', 12, 26, {w: 3, label: 'Lối vào'}),
+    mk('counter', 12, 23.6, {label: 'Bàn ký sổ'}),
+    mk('gate', 4.5, 20, {label: 'Backdrop chụp ảnh'}),
+    mk('longtable', 19.5, 20.6, {w: 2.4, label: 'Bàn quà'}),
+    ...[[1, 19], [23, 19], [1, 25], [23, 25]].map(([x, y]) => mk('plant', x, y)),
+    mk('woman', 13.4, 23.6), mk('man', 10.6, 23.6),
+  ];
+  const flows = [
+    {id: uid(), type: 'guest', name: 'Khách', pts: [[12, 25.8], [14.6, 24.8], [14.6, 20.4], [12, 19], [12, 6.2]]},
+    {id: uid(), type: 'staff', name: 'Phục vụ', pts: [[23.8, 6], [22.2, 6], [22.2, 13.2]]},
+  ];
+  return {v: 1, name: 'Tiệc cưới · Sảnh Hoa Sen', room: {pts: [[0,0],[24,0],[24,18],[0,18]], h: 6, name: 'Sảnh tiệc'},
+    rooms: [{id: uid(), name: 'Sảnh chờ', pts: [[0,18],[24,18],[24,26],[0,26]]}], items, flows, showFlows: true};
+}
+let tplSel = 'blank', nameTouched = false;
+function tplThumb(st, W = 200, H = 120) {
+  const keep = {state, view, S, selFlow, issues};
+  state = st; S = new Set(); selFlow = null; issues = {outside: new Set(), overlap: new Set()}; view = fitFor(W, H, 8);
+  let o = planSVG(W, H, true);
+  ({state, view, S, selFlow, issues} = keep);
+  o = o.replace(/id="(gmin|gmaj|hatch)"/g, 'id="t_$1"').replace(/url\(#(gmin|gmaj|hatch)\)/g, 'url(#t_$1)');
+  return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true" font-family="Be Vietnam Pro, sans-serif">${o}</svg>`;
+}
+function renderTpl() {
+  $('#tplGrid').innerHTML = TEMPLATES.map(t => `<button type="button" class="tpl" data-tpl="${t.id}" aria-pressed="${t.id === tplSel}">
+    <span class="tpl-th${t.id === 'blank' ? ' blank' : ''}">${t.id === 'blank' ? '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>' : tplThumb(t.build())}</span>
+    <b>${esc(t.n)}</b><small>${esc(t.d)}</small></button>`).join('');
+  $('#tplGrid').querySelectorAll('[data-tpl]').forEach(b => b.onclick = () => pickTpl(b.dataset.tpl));
+}
+function pickTpl(id) {
+  tplSel = id;
+  $('#tplGrid').querySelectorAll('[data-tpl]').forEach(b => b.setAttribute('aria-pressed', b.dataset.tpl === id));
+  if (!nameTouched) { const t = TEMPLATES.find(x => x.id === id); $('#nName').value = t.build().name; }
+}
+function openNew(sel = 'blank') {
+  tplSel = sel; nameTouched = false; renderTpl(); pickTpl(sel);
   $('#nNote').hidden = isBlank();
   newModal.hidden = false; $('#nName').focus(); $('#nName').select();
 }
+$('#nName').addEventListener('input', () => nameTouched = true);
 function newDoc() {
   checkpoint();
-  state = {v: 1, name: $('#nName').value.trim() || 'Sự kiện mới', room: {pts: [], h: 4}, items: [], flows: [], showFlows: true, bg: null};
+  const t = TEMPLATES.find(x => x.id === tplSel) || TEMPLATES[0];
+  state = t.build(); state.name = $('#nName').value.trim() || state.name;
   S = new Set(); selFlow = null; starterOff = false; bgMsg = ''; fitted = false;
   newModal.hidden = true;
   if (viewMode === '3d') setView('2d');
-  setMode('select'); renderAll(); view = {s: 20, ox: 60, oy: 60}; render2D();
-  track('new_doc');
+  setMode('select'); renderAll();
+  if (roomList().length) fitView(); else { view = {s: 20, ox: 60, oy: 60}; render2D(); }
+  track('new_doc', {template: t.id});
 }
 $('#nOk').onclick = newDoc;
 $('#nName').onkeydown = e => { if (e.key === 'Enter') newDoc(); };
@@ -2184,7 +2408,8 @@ newModal.addEventListener('click', e => { if (e.target === newModal) newModal.hi
 $('#stX').onclick = () => { starterOff = true; updStarter(); };
 $('#stUpload').onclick = () => { bgReplace = false; $('#bgFile').click(); };
 $('#stWall').onclick = () => setMode('wall');
-$('#stRect').onclick = () => { checkpoint(); state.room.pts = [[0,0],[30,0],[30,20],[0,20]]; renderAll(); fitView(); };
+$('#stTpl').onclick = () => openNew('tet');
+$('#stRect').onclick = () => { checkpoint(); state.room.pts = [[0,0],[30,0],[30,20],[0,20]]; state.rooms = []; renderAll(); fitView(); };
 
 /* ---------- Info modal ---------- */
 const infoModal = $('#infoModal');
@@ -2199,17 +2424,20 @@ $('#bShot').addEventListener('click', () => track('take_screenshot', {view: view
 $('#sSave').addEventListener('click', () => track('download_image'));
 $('#bJson').addEventListener('click', () => track('open_data'));
 $('#bInfo').addEventListener('click', () => track('open_guide'));
-$('#mCopy').onclick = () => {
-  const t = $('#mText'); const ok = () => $('#mMsg').textContent = 'Đã sao chép dữ liệu bản vẽ.';
-  try { navigator.clipboard.writeText(t.value).then(ok, () => { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }); }
-  catch (e) { t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ, bấm Ctrl/⌘ C để sao chép.'; }
+$('#mCopy').onclick = async () => {
+  const txt = await dataText(), ok = () => $('#mMsg').textContent = 'Đã sao chép dữ liệu bản vẽ. Dán vào mục “Mở file” ở máy khác để mở lại.';
+  const manual = () => { $('#mPaste').open = true; const t = $('#mText'); t.value = txt; t.focus(); t.select(); $('#mMsg').textContent = 'Đã chọn toàn bộ dữ liệu, bấm Ctrl/⌘ C để sao chép.'; };
+  try { await navigator.clipboard.writeText(txt); ok(); } catch (e) { manual(); }
 };
-$('#mLoad').onclick = async () => {
+$('#mLoad').onclick = async () => { if (await loadData($('#mText').value)) modal.hidden = true; };
+async function loadData(txt, fname) {
   try {
-    const s = JSON.parse($('#mText').value);
+    const s = JSON.parse(txt);
     if (!s.room || !Array.isArray(s.room.pts) || !Array.isArray(s.items)) throw new Error('thiếu room hoặc items');
     s.items = s.items.filter(i => CM[i.k]).map(i => ({...mk(i.k, 0, 0), ...i, id: i.id || uid()}));
-    s.room.h = s.room.h || 4; s.name = s.name || 'Sự kiện'; s.flows = Array.isArray(s.flows) ? s.flows.filter(f => f && Array.isArray(f.pts) && f.pts.length >= 2).map(f => ({id: f.id || uid(), type: FT[f.type] ? f.type : 'guest', name: f.name || '', pts: f.pts})) : [];
+    s.room.h = s.room.h || 4; s.name = s.name || 'Sự kiện';
+    const okPts = P => Array.isArray(P) && P.length >= 3 && P.every(q => Array.isArray(q) && isFinite(q[0]) && isFinite(q[1]));
+    s.rooms = Array.isArray(s.rooms) ? s.rooms.filter(r => r && okPts(r.pts)).map((r, i) => ({id: r.id || uid(), name: String(r.name || `Phòng ${i + 2}`), pts: r.pts.map(q => [+q[0], +q[1]])})) : []; s.flows = Array.isArray(s.flows) ? s.flows.filter(f => f && Array.isArray(f.pts) && f.pts.length >= 2).map(f => ({id: f.id || uid(), type: FT[f.type] ? f.type : 'guest', name: f.name || '', pts: f.pts})) : [];
     let bgNote = '', ledIn = 0, ledMiss = 0;
     for (const it of s.items) {
       const m = it.img;
@@ -2224,13 +2452,13 @@ $('#mLoad').onclick = async () => {
       const b = s.bg; s.bg = {id: b.id || uid(), name: b.name || 'Ảnh nền', iw: +b.iw, ih: +b.ih, x: +b.x || 0, y: +b.y || 0, w: +b.w, rot: +b.rot || 0, op: clamp(+b.op || .5, .1, 1), lock: !!b.lock, show: b.show !== false};
       if (typeof b.data === 'string' && b.data.startsWith('data:image/')) {
         const blob = await (await fetch(b.data)).blob(); s.bg.id = uid(); await IDB.put('bg:' + s.bg.id, blob).catch(() => {}); bgSrc[s.bg.id] = URL.createObjectURL(blob); bgData[s.bg.id] = b.data; bgNote = ' Kèm ảnh nền.';
-      } else if (!bgSrc[s.bg.id]) bgNote = ' Dữ liệu không kèm ảnh nền: bấm “Đổi ảnh” ở panel phải để chọn lại file.';
+      } else if (!bgSrc[s.bg.id]) bgNote = ' File không kèm ảnh nền: bấm “Đổi ảnh” ở panel phải để chọn lại file.';
     } else s.bg = null;
     checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); ledRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
-    $('#mMsg').textContent = `Đã nạp ${s.items.length} vật thể.` + bgNote + (ledIn ? ` Kèm ${ledIn} ảnh màn LED.` : '') + (ledMiss ? ` ${ledMiss} màn LED thiếu ảnh trên máy này (chọn lại ở panel phải).` : '');
-  } catch (e) { $('#mMsg').textContent = 'Dữ liệu không đọc được (' + e.message + '). Hãy dán đúng nội dung đã sao chép từ công cụ này.'; }
-};
-$('#mSample').onclick = () => { checkpoint(); state = sample(); S = new Set(); renderAll(); fitView(); fitted = false; if (viewMode === '3d') enter3D(); $('#mMsg').textContent = 'Đã mở bản mẫu Hội chợ Tết. Có thể hoàn tác bằng Ctrl Z.'; $('#mText').value = JSON.stringify(state, null, 2); };
+    $('#mMsg').textContent = `Đã mở ${fname ? fname + ', ' : ''}${s.items.length} vật thể.` + bgNote + (ledIn ? ` Kèm ${ledIn} ảnh màn LED.` : '') + (ledMiss ? ` ${ledMiss} màn LED thiếu ảnh trên máy này (chọn lại ở panel phải).` : '');
+    return true;
+  } catch (e) { $('#mMsg').textContent = (fname ? `File ${fname} không đọc được` : 'Dữ liệu không đọc được') + ` (${e.message}). Hãy dùng file hoặc dữ liệu lưu từ công cụ này.`; return false; }
+}
 
 /* ---------- Boot ---------- */
 function renderAll() {

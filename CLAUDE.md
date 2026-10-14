@@ -21,6 +21,16 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **3D**: `enter3D()`, `build3D()`, `buildItem(it)` (mỗi loại vật thể một `case`), `buildFlows()` và `placeFlows(dt)` cho mũi tên chạy. Camera tự do nằm ở `step3D(dt)`, `bindFree3D()` và `floorHit()`. Toạ độ 2D `(x, y)` ứng với 3D `(x, 0, y)`, `rotation.y = -rot`.
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
+## Nhiều phòng
+- Phòng 0 là `state.room.pts` (+ `state.room.name`) để file cũ vẫn mở được; các phòng thêm ở `state.rooms = [{id, name, pts}]`. Luôn đi qua `roomList()` (mỗi phòng `{k, name, pts}`), `roomPts(k)`, `allRoomPts()`, `totalArea()`; đừng đọc `state.room.pts` trực tiếp cho việc tính toán chung.
+- Ô góc tường `data-v="k:i"`, cạnh tường `data-e="k:i"`, `drag.k` cho biết đang kéo góc của phòng nào. `nearRoomVertex()` cho điểm vẽ và góc kéo bắt dính vào góc của phòng khác (chung vách).
+- `finishWall()`: `wallAdd` = true thì thêm phòng, false thì thay toàn bộ. Nút `#wallTg` trong ô gợi ý đổi qua lại.
+- 3D dựng sàn từng phòng; vách chung chỉ dựng một lần (khử trùng theo cặp điểm). 2D bỏ số đo trùng trên vách chung, hiện tên + diện tích từng phòng khi có từ 2 phòng.
+- `validate()`: vật thể nằm ngoài khi có điểm không thuộc phòng nào.
+
+## Ánh sáng & truss
+- `truss` (khung cổng: 2 chân + xà ngang ở độ cao h), `trussbar` (thanh treo ở độ cao h), `beam`, `par` (đèn treo ở độ cao h, chiếu về +z, nghiêng xuống). Cả 4 có cờ `hang` nên không tính chồng lấn. Chùm sáng 3D là nón `AdditiveBlending` + vệt sáng trên sàn, không dùng SpotLight thật để nhẹ máy. Màu đèn lấy `it.color` hoặc `c3`.
+
 ## Chân cột phải
 - `.side-foot` (avatar + "Sản phẩm phi thương mại dành cho cộng đồng của Nhân Lưu", link nhanluu.com) nằm cuối `.side`; `.side` là flex cột nên `margin-top:auto` đẩy nó xuống đáy.
 
@@ -30,6 +40,10 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 ## Tạo mới và thẻ gợi ý
 - Nút `#bNew` (nút vàng `.btn.primary`, ngay sau tên sự kiện) mở `#newModal` qua `openNew()`; phím `N` ở chế độ chọn 2D, Ctrl/⌘ + N ở mọi chế độ (Chrome, Edge, Safari giữ Ctrl/⌘ + N nên thường không tới được trang). `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
 - Thẻ `#starter` hiện khi `isBlank()` (chưa có tường, vật thể, ảnh nền), đang ở chế độ `select` và xem 2D; `updStarter()` gọi trong `renderAll()`, `setMode()`, `setView()`. Khi thẻ hiện thì ô `#hint` ẩn. Bấm × đặt `starterOff` cho tới lần Tạo mới kế tiếp.
+
+## Lưu file và mẫu bản vẽ
+- Nút `#bJson` (nhãn "Lưu file") mở `#modal` "Lưu và mở bản vẽ": `#mSave` tải file `<tên>.json` (qua `fileSlug()`, dùng capability `downloads` nếu có), `#mCopy` sao chép, `#mOpen` + `#mFile` mở file, khung dán `#mText` + `#mLoad`. Cả mở file và dán đều qua `loadData(txt, fname)`.
+- `TEMPLATES` (mỗi mục `{id, n, d, build}`) hiện trong hộp Tạo mới dưới dạng thẻ có ảnh thu nhỏ (`tplThumb()` dựng bằng `planSVG` với state tạm, đổi id pattern để không trùng bản vẽ chính). Thêm mẫu mới: thêm một mục có `build()` trả về state đầy đủ.
 
 ## Ảnh mặt bằng nền
 - `state.bg = {id, name, iw, ih, x, y, w, rot, op, lock, show}` (tâm ảnh và chiều rộng tính bằng mét). File ảnh lưu trong IndexedDB (`IDB`, key `bg:<id>`), không nằm trong localStorage. `bgSrc[id]` là object URL để hiển thị, `bgData[id]` là data URL dùng khi chụp ảnh hoặc xuất JSON (ảnh trong SVG xuất ra phải là data URL thì mới vẽ được).

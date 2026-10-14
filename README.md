@@ -12,16 +12,20 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 ## Tính năng
 
 ### Không gian
+- **Nhiều phòng**: không gian có thể gồm nhiều phòng, ví dụ sảnh chờ + sảnh tiệc. Ở panel phải: đặt tên, xem diện tích từng phòng, xoá phòng; **Vẽ thêm phòng** (điểm vẽ bắt dính vào góc tường cũ để chung vách) hoặc **Thêm phòng cạnh bên** (phòng chữ nhật đặt sát cạnh phải). Trong chế độ Vẽ tường có nút đổi giữa *thêm phòng mới* và *thay toàn bộ*.
+- **Đèn sân khấu**: đèn Beam (chùm hẹp) và Par LED (chùm rộng) treo ở độ cao tuỳ chỉnh, chiếu về phía trước theo mũi tên; đổi màu đèn bằng ô Màu. Trên 3D có chùm sáng và vệt sáng trên sàn.
+- Hộp Tạo mới cho chọn điểm bắt đầu: **Trang trống** hoặc một **mẫu có sẵn** (hiện có mẫu Hội chợ Tết · Chợ Quê và Tiệc cưới · Sảnh chờ + Sảnh tiệc; thêm mẫu mới trong mảng `TEMPLATES`).
 - Nút **Tạo mới** (vàng, cạnh tên sự kiện; phím `N`) mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
 - Nhập chiều dài × chiều rộng để tạo phòng hình chữ nhật.
 - Công cụ **Vẽ tường** (phím `W`) vẽ đa giác tự do, tự bắt thẳng góc và hiện chiều dài từng cạnh.
 - Nhấp lên tường để thêm điểm góc rồi kéo để tạo góc mới. Nhấp đúp vào một điểm góc để xoá điểm đó.
 - Kích thước từng cạnh hiển thị trực tiếp trên bản vẽ. Chiều cao trần dùng cho phần 3D.
 
-### Thư viện vật thể (25 loại)
+### Thư viện vật thể (29 loại)
 | Nhóm | Vật thể |
 |---|---|
 | Sân khấu & kỹ thuật | Sân khấu, màn LED, loa đứng, bàn điều khiển |
+| Ánh sáng & truss | Khung truss cổng, thanh truss treo, đèn Beam (moving head), đèn Par LED |
 | Gian hàng | Gian hàng 3×3, gian hàng 3×2, ki-ốt tròn, quầy lễ tân |
 | Bàn ghế | Bàn tròn 10 khách, bàn dài, ghế, khối ghế khán giả, chiếu ngồi |
 | Trang trí | Chậu cây, chậu hoa, cổng chào, chùm đèn lồng, bình phong, thảm lối đi |
@@ -65,7 +69,7 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 
 ### Chụp ảnh và dữ liệu
 - **Chụp ảnh** tạo một file PNG rộng 2400 px, gồm góc nhìn hiện tại (2D hoặc 3D), mặt bằng tổng thể có đánh dấu vị trí camera hoặc khung đang xem, và các số liệu chính.
-- **Dữ liệu** xuất toàn bộ bản vẽ ra JSON để sao chép, và nạp lại JSON để mở bản vẽ.
+- **Lưu file** mở hộp *Lưu và mở bản vẽ*: lưu bản vẽ thành file `.json` về máy (tuỳ chọn kèm ảnh), sao chép dữ liệu, hoặc mở lại file `.json` / dữ liệu đã dán.
 - Bản vẽ tự lưu trong trình duyệt (localStorage). Mỗi trình duyệt và mỗi địa chỉ trang có một bản lưu riêng.
 
 ### Hướng dẫn & thông tin
@@ -83,7 +87,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`, `led_image`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc` (kèm mẫu đã chọn), `led_image`, `save_file`, `open_file`.
 
 ## Ghi công
 
@@ -130,6 +134,7 @@ Bản vẽ được lưu dưới dạng JSON. Đơn vị là mét, gốc toạ �
 ```
 
 - `bg` (có thể không có): ảnh mặt bằng nền `{id, name, iw, ih, x, y, w, rot, op, lock, show}`; `x`, `y` là tâm ảnh, `w` là chiều rộng ảnh (m). Khi xuất JSON có kèm ảnh, thêm trường `data` (data URL).
+- `room.pts`: các điểm góc tường của phòng đầu tiên (`room.name` là tên phòng). `rooms` (có thể không có): các phòng thêm `[{id, name, pts}]`.
 - `room.pts`: các điểm góc tường theo thứ tự. `room.h` là chiều cao trần.
 - `items[].k`: mã loại vật thể, khớp với `CATALOG` trong code. `x`, `y` là tâm vật thể. `w`, `d`, `h` là rộng, sâu, cao. `rot` là góc xoay tính bằng độ, chiều kim đồng hồ.
 - `flows[].type`: `guest`, `vip`, `staff` hoặc `exit`. Điểm đầu tiên trong `pts` là nơi bắt đầu.

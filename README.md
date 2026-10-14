@@ -69,6 +69,7 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 
 ### Chụp ảnh và dữ liệu
 - **Chụp ảnh** tạo một file PNG rộng 2400 px, gồm góc nhìn hiện tại (2D hoặc 3D), mặt bằng tổng thể có đánh dấu vị trí camera hoặc khung đang xem, và các số liệu chính.
+- **Mặt bằng dài** (dài gấp ≥ 3 lần bề sâu, ví dụ trục đường 150 × 16 m): ảnh chụp tự chuyển sang bố cục **cắt đoạn**. Đầu ảnh có dải tổng thể đánh số đoạn; mỗi đoạn được phóng to, có thước đo mét tính từ đầu trục và phần gối 1,5 m sang đoạn kế (làm mờ). Mặt bằng ngang xếp các đoạn chồng lên nhau, mặt bằng dọc đặt các đoạn cạnh nhau. Trong hộp Chụp ảnh có thể chọn *Tự động / Một khung / Cắt đoạn* và số đoạn (2–6).
 - **Lưu file** mở hộp *Lưu và mở bản vẽ*: lưu bản vẽ thành file `.json` về máy (tuỳ chọn kèm ảnh), sao chép dữ liệu, hoặc mở lại file `.json` / dữ liệu đã dán.
 - Bản vẽ tự lưu trong trình duyệt (localStorage). Mỗi trình duyệt và mỗi địa chỉ trang có một bản lưu riêng.
 

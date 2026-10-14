@@ -198,6 +198,9 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 /* Side */
 .side{grid-area:side;background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-height:0;display:flex;flex-direction:column}
 .side>.sec{flex:none}
+.shot-opt{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;font-size:12.5px;color:var(--ink-2)}
+.shot-opt label{display:inline-flex;align-items:center;gap:6px}
+.shot-opt select{height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);padding:0 6px}
 .led-img{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--bg)}
 .led-img h4{margin:0;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
 .led-thumb{background:#0b0d0c;border-radius:4px;overflow:hidden;display:grid;place-items:center;color:#9aa;font-size:11px;text-align:center;padding:0}
@@ -452,7 +455,11 @@ a.btn.primary{color:var(--accent-ink)}
     <h3 id="sTitle">Ảnh chụp mặt bằng</h3>
     <div class="shot-prev"><img id="shotImg" alt="Ảnh chụp góc nhìn hiện tại kèm mặt bằng tổng thể"></div>
     <p class="note" id="sMsg" aria-live="polite"></p>
-    <label class="chk" id="sBgWrap" hidden><input type="checkbox" id="sBg"> Kèm ảnh mặt bằng nền</label>
+    <div class="shot-opt">
+      <label>Bố cục mặt bằng <select id="sLay"><option value="auto">Tự động</option><option value="one">Một khung</option><option value="strip">Cắt đoạn</option></select></label>
+      <label id="sNWrap">Số đoạn <select id="sN"><option value="0">Tự động</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+      <label class="chk" id="sBgWrap" hidden><input type="checkbox" id="sBg"> Kèm ảnh mặt bằng nền</label>
+    </div>
     <div class="row">
       <button class="btn primary" id="sSave">Tải ảnh PNG</button>
       <button class="btn" id="sClose">Đóng</button>
@@ -2209,6 +2216,117 @@ function svgDoc(markup, W, H, k = 2) {
 function loadImg(src) { return new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; }); }
 async function svgImg(doc) { const u = URL.createObjectURL(new Blob([doc], {type: 'image/svg+xml'})); try { return await loadImg(u); } finally { setTimeout(() => URL.revokeObjectURL(u), 1000); } }
 let shotBlob = null;
+/* ---------- Chụp ảnh mặt bằng dài: cắt đoạn ----------
+   Mặt bằng dài gấp ≥ 3 lần bề sâu (ví dụ trục đường 150 × 16 m) thì một khung ảnh không đọc được.
+   Khi đó cắt theo chiều dài thành n đoạn (gối 1,5 m sang đoạn kế), xếp chồng thành hàng (mặt bằng ngang)
+   hoặc đặt cạnh nhau thành cột (mặt bằng dọc), kèm dải tổng thể đánh số đoạn và thước đo mét. */
+function contentBox(withBg) {
+  const pts = allRoomPts(); state.items.forEach(i => pts.push(...shapePts(i)));
+  if (withBg && bgOn()) pts.push(...bgCorners(state.bg));
+  if (!pts.length) return null;
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  return {x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys)};
+}
+function shotLayout(withBg) {
+  const b = contentBox(withBg), want = $('#sLay').value, nSel = +$('#sN').value;
+  if (!b) return {strip: false};
+  const w = Math.max(b.x1 - b.x0, 1), h = Math.max(b.y1 - b.y0, 1), axis = w >= h ? 'x' : 'y', L = Math.max(w, h), D = Math.min(w, h);
+  const strip = want === 'strip' || (want === 'auto' && L/D >= 3);
+  // số đoạn: xếp hàng (mặt bằng ngang) cho tổng thể gần 3:2; xếp cột (mặt bằng dọc) cho tổng thể gần vuông
+  const n = nSel || clamp(Math.round(Math.sqrt(axis === 'x' ? L/(1.5*D) : L/D)), 2, 6);
+  return {strip, axis, n, b, L, D};
+}
+function shotHeader(g, Wt, pad, V, F) {
+  g.fillStyle = V('--panel'); g.fillRect(0, 0, Wt, g.canvas.height);
+  g.fillStyle = V('--accent'); g.fillRect(pad, 46, 54, 54);
+  const lg = (c, pts) => { g.fillStyle = c; g.beginPath(); pts.forEach(([x, y], i) => g[i ? 'lineTo' : 'moveTo'](pad + x*54/512, 46 + y*54/512)); g.closePath(); g.fill(); };
+  lg('#5D400D', [[121,284],[240,165],[458,165],[229,393]]); lg('#FFFFFF', [[52,266],[171,147],[389,147],[160,375]]);
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = V('--ink-3'); g.font = F(600, 17); g.fillText('MẶT BẰNG SỰ KIỆN · ' + new Date().toLocaleDateString('vi-VN'), pad + 74, 66);
+  g.fillStyle = V('--ink'); g.font = F(700, 34); g.fillText(state.name || 'Sự kiện', pad + 74, 102);
+  const area = totalArea(), seats = state.items.reduce((a, i) => a + seatsOf(i), 0);
+  const st = [['Diện tích sàn', fmt(area, 1) + ' m²'], ['Chỗ ngồi', String(seats)], ['Vật thể', String(state.items.length)], ['Trần', fmt(state.room.h, 1) + ' m']];
+  g.textAlign = 'right'; let sx = Wt - pad;
+  for (const [k, v] of st.reverse()) { g.fillStyle = V('--ink'); g.font = F(500, 30, '"JetBrains Mono", Menlo, monospace'); g.fillText(v, sx, 102); const w1 = g.measureText(v).width; g.fillStyle = V('--ink-3'); g.font = F(600, 15); g.fillText(k.toUpperCase(), sx, 64); sx -= Math.max(w1, g.measureText(k.toUpperCase()).width) + 56; }
+  g.textAlign = 'left';
+}
+async function shotStrip(lay, is3d, viewImg, vw, vh) {
+  const {axis, n, b, L} = lay, Wt = 2400, pad = 48, gap = 30, head = 150, foot = 70, Wa = Wt - pad*2;
+  const along0 = axis === 'x' ? b.x0 : b.y0, seg = L/n, ov = Math.min(1.5, seg*.08);
+  const V = n2 => getVar(n2) || '#888', F = (w, sz, fam = '"Be Vietnam Pro", "Helvetica Neue", Arial, sans-serif') => `${w} ${sz}px ${fam}`;
+  const saved = view, mx = 30, my = 46, out = [];
+  const render = async (W, H, vv, extra = '') => { view = vv; const doc = svgDoc(`<svg x="0" y="0" width="${W}" height="${H}" overflow="hidden">${planSVG(W, H, true)}${extra}</svg>`, W, H); view = saved; return svgImg(doc); };
+  // 1) dải tổng thể có đánh dấu ranh giới và số đoạn
+  const bw = b.x1 - b.x0, bh = b.y1 - b.y0;
+  let OH, ov0;
+  if (axis === 'x') { const so = (Wa - 2*mx)/bw; OH = Math.round(bh*so + 2*36); ov0 = {s: so, ox: mx - b.x0*so, oy: 36 - b.y0*so}; }
+  else { OH = 420; const so = (OH - 2*36)/bh; ov0 = {s: so, ox: Wa/2 - (b.x0 + bw/2)*so, oy: 36 - b.y0*so}; }
+  const sc = (x, y, vv) => [vv.ox + x*vv.s, vv.oy + y*vv.s];
+  let omark = '';
+  for (let i = 0; i < n; i++) {
+    const a = along0 + seg*i, m = a + seg/2;
+    if (i) { const [p1, p2] = axis === 'x' ? [sc(a, b.y0, ov0), sc(a, b.y1, ov0)] : [sc(b.x0, a, ov0), sc(b.x1, a, ov0)];
+      omark += `<line x1="${p1[0]}" y1="${p1[1] - (axis === 'x' ? 14 : 0)}" x2="${p2[0]}" y2="${p2[1] + (axis === 'x' ? 14 : 0)}" style="stroke:var(--accent-line)" stroke-width="2.5" stroke-dasharray="8 5"/>`; }
+    const [cx, cy] = axis === 'x' ? sc(m, b.y0, ov0) : sc(b.x1, m, ov0), lx = axis === 'x' ? cx : cx + 26, ly = axis === 'x' ? cy - 18 : cy;
+    omark += `<g transform="translate(${lx} ${ly})"><circle r="13" style="fill:var(--accent)"/><text text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="700" style="fill:var(--accent-ink)">${i + 1}</text></g>`;
+  }
+  const overImg = await render(Wa, OH, ov0, omark);
+  // 2) từng đoạn
+  const segs = [];
+  if (axis === 'x') {
+    const s1 = (Wa - 2*mx)/(seg + 2*ov), SH = Math.round(bh*s1 + 2*my);
+    for (let i = 0; i < n; i++) segs.push({i, a: along0 + seg*i, b: along0 + seg*(i + 1), W: Wa, H: SH, s: s1, vv: {s: s1, ox: mx - (along0 + seg*i - ov)*s1, oy: my - b.y0*s1}});
+  } else {
+    const cw = (Wa - gap*(n - 1))/n, s1 = (cw - 2*mx)/bw, SH = Math.round((seg + 2*ov)*s1 + 2*my);
+    for (let i = 0; i < n; i++) segs.push({i, a: along0 + seg*i, b: along0 + seg*(i + 1), W: cw, H: SH, s: s1, vv: {s: s1, ox: mx - b.x0*s1, oy: my - (along0 + seg*i - ov)*s1}});
+  }
+  for (const sg of segs) {
+    // làm mờ phần gối sang đoạn kế + vạch ranh giới
+    let mk = '';
+    for (const [p, q, edge] of [[sg.a - ov, sg.a, sg.i > 0], [sg.b, sg.b + ov, sg.i < n - 1]]) {
+      if (!edge) continue;
+      if (axis === 'x') { const [x1] = sc(p, 0, sg.vv), [x2] = sc(q, 0, sg.vv), xe = sg.i > 0 && p < sg.a ? x2 : x1;
+        mk += `<rect x="${x1}" y="0" width="${x2 - x1}" height="${sg.H}" style="fill:var(--panel)" fill-opacity=".6"/><line x1="${xe}" y1="0" x2="${xe}" y2="${sg.H}" style="stroke:var(--accent-line)" stroke-width="2" stroke-dasharray="8 5"/>`; }
+      else { const [, y1] = sc(0, p, sg.vv), [, y2] = sc(0, q, sg.vv), ye = sg.i > 0 && p < sg.a ? y2 : y1;
+        mk += `<rect x="0" y="${y1}" width="${sg.W}" height="${y2 - y1}" style="fill:var(--panel)" fill-opacity=".6"/><line x1="0" y1="${ye}" x2="${sg.W}" y2="${ye}" style="stroke:var(--accent-line)" stroke-width="2" stroke-dasharray="8 5"/>`; }
+    }
+    sg.img = await render(sg.W, sg.H, sg.vv, mk);
+  }
+  // 3) ghép canvas
+  const v3H = is3d ? Math.round(clamp(Wa*vh/vw, 500, 1100)) : 0, labH = 34, rulH = 34;
+  const segBlockH = axis === 'x' ? n*(labH + segs[0].H + rulH) + (n - 1)*gap : labH + segs[0].H + rulH;
+  const H = head + (is3d ? v3H + gap : 0) + labH + OH + gap + segBlockH + foot + pad/2;
+  const cv = document.createElement('canvas'); cv.width = Wt; cv.height = H; const g = cv.getContext('2d');
+  shotHeader(g, Wt, pad, V, F);
+  const frame = (img, x, y, w, h) => { g.fillStyle = V('--bg'); g.fillRect(x, y, w, h); g.drawImage(img, x, y, w, h); g.strokeStyle = V('--line'); g.lineWidth = 2; g.strokeRect(x + 1, y + 1, w - 2, h - 2); };
+  const label = (t, x, y, sub) => { g.fillStyle = V('--ink'); g.font = F(700, 17); g.fillText(t, x, y); if (sub) { const w = g.measureText(t).width; g.fillStyle = V('--ink-3'); g.font = F(500, 15, '"JetBrains Mono", Menlo, monospace'); g.fillText(sub, x + w + 14, y); } };
+  let y = head;
+  if (is3d) { g.fillStyle = V('--bg'); g.fillRect(pad, y, Wa, v3H); const k = Math.min(Wa/vw, v3H/vh), dw = vw*k, dh = vh*k; g.drawImage(viewImg, pad + (Wa - dw)/2, y + (v3H - dh)/2, dw, dh); g.strokeStyle = V('--line'); g.lineWidth = 2; g.strokeRect(pad + 1, y + 1, Wa - 2, v3H - 2); label('GÓC NHÌN 3D', pad + 16, y + 34); y += v3H + gap; }
+  label('MẶT BẰNG TỔNG THỂ', pad, y + 22, `${fmt(L, 1)} m · ${n} đoạn`); y += labH;
+  frame(overImg, pad, y, Wa, OH); y += OH + gap;
+  const nice = [1, 2, 5, 10, 20, 50];
+  segs.forEach((sg, k) => {
+    const x = axis === 'x' ? pad : pad + k*(sg.W + gap), yy = axis === 'x' ? y + k*(labH + sg.H + rulH + gap) : y;
+    label(`ĐOẠN ${sg.i + 1}`, x, yy + 22, `${fmt(sg.a - along0, 1)} – ${fmt(sg.b - along0, 1)} m`);
+    frame(sg.img, x, yy + labH, sg.W, sg.H);
+    // thước đo mét tính từ đầu mặt bằng
+    const step = nice.find(t => t*sg.s >= 70) || 50, ry = yy + labH + sg.H + 8;
+    g.strokeStyle = V('--ink-3'); g.fillStyle = V('--ink-2'); g.lineWidth = 1.5; g.font = F(500, 13, '"JetBrains Mono", Menlo, monospace'); g.textBaseline = 'top';
+    if (axis === 'x') {
+      const [xa] = sc(sg.a, 0, sg.vv), [xb] = sc(sg.b, 0, sg.vv); g.beginPath(); g.moveTo(x + xa, ry); g.lineTo(x + xb, ry); g.stroke();
+      for (let m = Math.ceil((sg.a - along0)/step)*step; m <= sg.b - along0 + 1e-6; m += step) { const [xm] = sc(along0 + m, 0, sg.vv); g.beginPath(); g.moveTo(x + xm, ry); g.lineTo(x + xm, ry + 7); g.stroke(); g.textAlign = 'center'; g.fillText(fmt(m) + ' m', x + xm, ry + 10); }
+    } else {
+      g.textAlign = 'left'; g.fillText(`↓ ${fmt(sg.a - along0, 1)} m → ${fmt(sg.b - along0, 1)} m`, x, ry + 4);
+    }
+    g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  });
+  g.fillStyle = V('--ink-3'); g.font = F(500, 15);
+  g.fillText(`Mặt bằng dài ${fmt(L, 1)} m được cắt thành ${n} đoạn theo chiều dài, mỗi đoạn gối ${fmt(ov, 1)} m sang đoạn kế (vùng mờ). Kích thước tính bằng mét.`, pad, H - pad/2 - 18);
+  shotBlob = await new Promise(r => cv.toBlob(r, 'image/png'));
+  $('#shotImg').src = URL.createObjectURL(shotBlob);
+  $('#sMsg').textContent = `${Wt} × ${H} px. Mặt bằng dài ${fmt(L, 1)} m, cắt thành ${n} đoạn ${axis === 'x' ? 'xếp chồng' : 'đặt cạnh nhau'} để đọc rõ${is3d ? ', kèm góc nhìn 3D' : ''}.`;
+  $('#shotModal').hidden = false;
+}
 async function takeShot() {
   const btn = $('#bShot'); btn.disabled = true;
   $('#sBgWrap').hidden = !bgOn(); shotBg = bgOn() && $('#sBg').checked;
@@ -2225,6 +2343,9 @@ async function takeShot() {
       vw = svg.clientWidth; vh = svg.clientHeight;
       viewImg = await svgImg(svgDoc(planSVG(vw, vh, true), vw, vh));
     }
+    const lay = shotLayout(shotBg);
+    $('#sNWrap').hidden = !lay.strip;
+    if (lay.strip) return await shotStrip(lay, is3d, viewImg, vw, vh);
     // 2) bố cục ảnh
     const Wt = 2400, pad = 48, gap = 36, head = 150, foot = 70;
     const Lw = 1380, Rw = Wt - pad*2 - gap - Lw;
@@ -2333,6 +2454,8 @@ $('#mOpen').onclick = () => $('#mFile').click();
 $('#mFile').onchange = async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; if (await loadData(await f.text(), f.name)) { modal.hidden = true; track('open_file'); } };
 $('#mBg').onchange = () => { $('#mMsg').textContent = ''; };
 $('#sBg').onchange = () => takeShot();
+$('#sLay').onchange = () => takeShot();
+$('#sN').onchange = () => { if ($('#sLay').value === 'one') $('#sLay').value = 'strip'; takeShot(); };
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; $('#newModal').hidden = true; } });
 

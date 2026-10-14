@@ -36,6 +36,10 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - `booth45` (Gian hàng 4,5×4,5) dùng chung builder 3D với `booth33`.
 - Mẫu `bookstreet` (`bookStreetTpl()`): trục 150 × 16 m, dãy gian 4,5 m hai bên (y 0–4,5 và 11,5–16), lòng đường 7 m ở giữa; vị trí sân khấu, cây xanh, cụm bàn, khu trò chơi quy đổi từ bản Excel của BTC.
 
+## Chụp ảnh mặt bằng dài (cắt đoạn)
+- `shotLayout()` quyết định bố cục từ `contentBox()` và lựa chọn `#sLay` (auto/one/strip), `#sN` (số đoạn). Auto: cắt đoạn khi dài/sâu ≥ 3. Số đoạn mặc định: mặt bằng ngang `√(L/1,5D)`, dọc `√(L/D)`, giới hạn 2–6.
+- `shotStrip()` vẽ: (góc nhìn 3D nếu đang ở 3D) + dải tổng thể có số đoạn + từng đoạn (dùng lại `planSVG` với `view` riêng, gối `ov` ≤ 1,5 m làm mờ) + thước đo mét. `shotHeader()` dùng chung cho cả hai bố cục.
+
 ## Chân cột phải
 - `.side-foot` (avatar + "Sản phẩm phi thương mại dành cho cộng đồng của Nhân Lưu", link nhanluu.com) nằm cuối `.side`; `.side` là flex cột nên `margin-top:auto` đẩy nó xuống đáy.
 

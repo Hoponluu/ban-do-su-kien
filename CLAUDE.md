@@ -31,6 +31,10 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - Nút `#bNew` (nút vàng `.btn.primary`, ngay sau tên sự kiện) mở `#newModal` qua `openNew()`; phím `N` ở chế độ chọn 2D, Ctrl/⌘ + N ở mọi chế độ (Chrome, Edge, Safari giữ Ctrl/⌘ + N nên thường không tới được trang). `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
 - Thẻ `#starter` hiện khi `isBlank()` (chưa có tường, vật thể, ảnh nền), đang ở chế độ `select` và xem 2D; `updStarter()` gọi trong `renderAll()`, `setMode()`, `setView()`. Khi thẻ hiện thì ô `#hint` ẩn. Bấm × đặt `starterOff` cho tới lần Tạo mới kế tiếp.
 
+## Lưu file và mẫu bản vẽ
+- Nút `#bJson` (nhãn "Lưu file") mở `#modal` "Lưu và mở bản vẽ": `#mSave` tải file `<tên>.json` (qua `fileSlug()`, dùng capability `downloads` nếu có), `#mCopy` sao chép, `#mOpen` + `#mFile` mở file, khung dán `#mText` + `#mLoad`. Cả mở file và dán đều qua `loadData(txt, fname)`.
+- `TEMPLATES` (mỗi mục `{id, n, d, build}`) hiện trong hộp Tạo mới dưới dạng thẻ có ảnh thu nhỏ (`tplThumb()` dựng bằng `planSVG` với state tạm, đổi id pattern để không trùng bản vẽ chính). Thêm mẫu mới: thêm một mục có `build()` trả về state đầy đủ.
+
 ## Ảnh mặt bằng nền
 - `state.bg = {id, name, iw, ih, x, y, w, rot, op, lock, show}` (tâm ảnh và chiều rộng tính bằng mét). File ảnh lưu trong IndexedDB (`IDB`, key `bg:<id>`), không nằm trong localStorage. `bgSrc[id]` là object URL để hiển thị, `bgData[id]` là data URL dùng khi chụp ảnh hoặc xuất JSON (ảnh trong SVG xuất ra phải là data URL thì mới vẽ được).
 - `bgSVG()` vẽ ảnh ngay trên lưới, dưới tường. Ảnh chỉ kéo được khi chưa khoá và đang ở chế độ `select` (`data-bg`, `drag.t = 'bgmove'`).

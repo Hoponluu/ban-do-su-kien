@@ -12,6 +12,7 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 ## Tính năng
 
 ### Không gian
+- Hộp Tạo mới cho chọn điểm bắt đầu: **Trang trống** hoặc một **mẫu có sẵn** (hiện có mẫu Hội chợ Tết · Chợ Quê; thêm mẫu mới trong mảng `TEMPLATES`).
 - Nút **Tạo mới** (vàng, cạnh tên sự kiện; phím `N`) mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
 - Nhập chiều dài × chiều rộng để tạo phòng hình chữ nhật.
 - Công cụ **Vẽ tường** (phím `W`) vẽ đa giác tự do, tự bắt thẳng góc và hiện chiều dài từng cạnh.
@@ -65,7 +66,7 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 
 ### Chụp ảnh và dữ liệu
 - **Chụp ảnh** tạo một file PNG rộng 2400 px, gồm góc nhìn hiện tại (2D hoặc 3D), mặt bằng tổng thể có đánh dấu vị trí camera hoặc khung đang xem, và các số liệu chính.
-- **Dữ liệu** xuất toàn bộ bản vẽ ra JSON để sao chép, và nạp lại JSON để mở bản vẽ.
+- **Lưu file** mở hộp *Lưu và mở bản vẽ*: lưu bản vẽ thành file `.json` về máy (tuỳ chọn kèm ảnh), sao chép dữ liệu, hoặc mở lại file `.json` / dữ liệu đã dán.
 - Bản vẽ tự lưu trong trình duyệt (localStorage). Mỗi trình duyệt và mỗi địa chỉ trang có một bản lưu riêng.
 
 ### Hướng dẫn & thông tin
@@ -83,7 +84,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`, `led_image`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc` (kèm mẫu đã chọn), `led_image`, `save_file`, `open_file`.
 
 ## Ghi công
 

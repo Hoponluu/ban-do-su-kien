@@ -192,6 +192,10 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 /* Side */
 .side{grid-area:side;background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-height:0;display:flex;flex-direction:column}
 .side>.sec{flex:none}
+.led-img{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--bg)}
+.led-img h4{margin:0;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
+.led-thumb{background:#0b0d0c;border-radius:4px;overflow:hidden;display:grid;place-items:center;color:#9aa;font-size:11px;text-align:center;padding:0}
+.led-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .side-foot{margin-top:auto;padding:14px 16px 16px;display:flex;align-items:center;gap:10px;font-size:11.5px;line-height:1.5;color:var(--ink-2)}
 .side-foot img{width:28px;height:28px;border-radius:50%;flex:none}
 .side-foot a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px}
@@ -416,6 +420,7 @@ a.btn.primary{color:var(--accent-ink)}
       <span>Sản phẩm phi thương mại dành cho cộng đồng của <a href="https://nhanluu.com" target="_blank" rel="noopener">Nhân Lưu</a></span>
     </footer>
     <input type="file" id="bgFile" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf" hidden>
+    <input type="file" id="ledFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
   </aside>
 </div>
 
@@ -505,7 +510,7 @@ a.btn.primary{color:var(--accent-ink)}
   <div class="modal-b" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <h3 id="mTitle">Dữ liệu bản vẽ (JSON)</h3>
     <p class="note">Đây là toàn bộ thông tin bản vẽ: không gian, vật thể, kích thước, vị trí, góc xoay. Sao chép để lưu hoặc gửi cho người khác; dán dữ liệu vào ô rồi bấm “Nạp” để mở lại.</p>
-    <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh mặt bằng nền (dữ liệu sẽ nặng hơn)</label>
+    <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh (ảnh mặt bằng nền, ảnh màn LED). Dữ liệu sẽ nặng hơn.</label>
     <textarea id="mText" spellcheck="false" aria-label="Dữ liệu JSON"></textarea>
     <p class="note" id="mMsg" aria-live="polite"></p>
     <div class="row">
@@ -631,7 +636,7 @@ function undo() { if (!hist.length) return; fut.push(JSON.stringify(state)); sta
 function redo() { if (!fut.length) return; hist.push(JSON.stringify(state)); state = JSON.parse(fut.pop()); pruneSel(); renderAll(); }
 function pruneSel() { for (const id of [...S]) if (!find(id)) S.delete(id); if (selFlow && !findF(selFlow)) selFlow = null; }
 const one = () => S.size === 1 ? find([...S][0]) : null;
-function updUndoBg() { if (state.bg && !bgSrc[state.bg.id]) bgRestore(); }
+function updUndoBg() { if (state.bg && !bgSrc[state.bg.id]) bgRestore(); if (state.items.some(i => i.img && !ledImgEl[i.img.id])) ledRestore(); }
 function updUndo() { updUndoBg(); $('#bUndo').disabled = !hist.length; $('#bRedo').disabled = !fut.length; }
 
 /* ---------- Geometry ---------- */
@@ -900,25 +905,24 @@ function calSVG() {
   pts.forEach(p => { const [x, y] = w2s(p[0], p[1]); o += `<circle cx="${x}" cy="${y}" r="5" style="fill:var(--panel);stroke:var(--accent-line)" stroke-width="2"/><path d="M${x-12} ${y}h24M${x} ${y-12}v24" style="stroke:var(--accent-line)" stroke-width="1"/>`; });
   return o;
 }
-async function bgStore(blob, name) {
-  // ảnh quá lớn thì thu về cạnh dài 4096 px để nhẹ bộ nhớ
+async function bgStore(blob, name, prefix = 'bg:', MAX = 4096, fill = '#fff') {
+  // ảnh quá lớn thì thu về cạnh dài MAX px để nhẹ bộ nhớ (ảnh nền 4096 px, ảnh màn LED 2048 px)
   let img = await loadImg(URL.createObjectURL(blob));
   let iw = img.naturalWidth, ih = img.naturalHeight;
   if (!iw || !ih) throw new Error('không đọc được ảnh');
-  const MAX = 4096;
   if (Math.max(iw, ih) > MAX) {
     const k = MAX/Math.max(iw, ih), c = document.createElement('canvas'); c.width = Math.round(iw*k); c.height = Math.round(ih*k);
-    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+    const g = c.getContext('2d'); g.fillStyle = fill; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
     blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .9)); iw = c.width; ih = c.height;
   }
   const id = uid();
-  await IDB.put('bg:' + id, blob).catch(() => {});
+  await IDB.put(prefix + id, blob).catch(() => {});
   bgSrc[id] = URL.createObjectURL(blob);
   return {id, iw, ih, name};
 }
 async function bgDataOf(id) {
   if (bgData[id]) return bgData[id];
-  if (!bgSrc[id]) return null;
+  if (!bgSrc[id]) { const blob = await IDB.get('img:' + id).catch(() => null) || await IDB.get('bg:' + id).catch(() => null); if (!blob) return null; bgSrc[id] = URL.createObjectURL(blob); }
   const blob = await (await fetch(bgSrc[id])).blob();
   return bgData[id] = await new Promise(r => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(blob); });
 }
@@ -958,10 +962,61 @@ async function bgRestore() {
 async function bgGc() {
   // xoá các ảnh cũ không còn dùng (giữ ảnh đang mở và ảnh trong lịch sử hoàn tác)
   try {
-    const keep = new Set([state.bg && state.bg.id, ...[...hist, ...fut].map(h => { try { return JSON.parse(h).bg?.id; } catch (e) { return null; } })]);
-    for (const k of await IDB.keys()) if (String(k).startsWith('bg:') && !keep.has(String(k).slice(3))) IDB.del(k);
+    const ids = st => [st && st.bg && st.bg.id, ...((st && st.items) || []).map(i => i.img && i.img.id)];
+    const keep = new Set([...ids(state), ...[...hist, ...fut].flatMap(h => { try { return ids(JSON.parse(h)); } catch (e) { return []; } })]);
+    for (const k of await IDB.keys()) { const m = /^(bg|img):(.+)$/.exec(String(k)); if (m && !keep.has(m[2])) IDB.del(k); }
   } catch (e) {}
 }
+/* ---------- Ảnh trên màn hình LED ----------
+   it.img = {id, name, iw, ih}. File ảnh lưu trong IndexedDB (key img:<id>), chỉ hiện trên mặt màn hình ở 3D. */
+const ledImgEl = {};    // id → ảnh đã nạp, dùng làm texture 3D
+async function ledImg(id) {
+  if (ledImgEl[id]) return ledImgEl[id];
+  if (!bgSrc[id]) { const blob = await IDB.get('img:' + id).catch(() => null); if (!blob) return null; bgSrc[id] = URL.createObjectURL(blob); }
+  return ledImgEl[id] = await loadImg(bgSrc[id]);
+}
+const ledPending = new Set();
+async function ledRestore() {
+  const ids = [...new Set(state.items.filter(i => i.img).map(i => i.img.id))].filter(id => !ledImgEl[id] && !ledPending.has(id));
+  if (!ids.length) return;
+  let got = false;
+  for (const id of ids) { ledPending.add(id); try { if (await ledImg(id)) got = true; } catch (e) {} ledPending.delete(id); }
+  if (got) { renderPanel(); if (viewMode === '3d') build3D(); }
+}
+let ledTarget = null, ledMsg = '';
+function ledSection(it) {
+  const sw = it.w*.97, sh = it.h*.7*.94, ratio = Math.max(.2, Math.min(8, sw/Math.max(sh, .01)));
+  const px = ratio >= 1 ? `1920×${Math.round(1920/ratio)}` : `${Math.round(1080*ratio)}×1080`;
+  const tip = `Màn này rộng ${fmt(sw, 1)} × cao ${fmt(sh, 1)} m (tỉ lệ khoảng ${fmt(ratio, 1)}:1). Ảnh khác tỉ lệ sẽ được cắt bớt ở mép, nên dùng ảnh khoảng ${px} px.`;
+  if (!it.img) return `<div class="led-img"><h4>Ảnh trên màn hình</h4>
+    <button class="btn primary" id="ledUp"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 11l3.5-3.5 3 3 2-2 3.5 3.5"/></svg>Chèn ảnh minh hoạ</button>
+    <p class="note">Ảnh hiện trên mặt màn hình trong mô phỏng 3D và khi chụp ảnh 3D. Ảnh chỉ lưu trên máy bạn. ${tip}</p>${ledMsg ? `<p class="note">${esc(ledMsg)}</p>` : ''}</div>`;
+  const src = bgSrc[it.img.id];
+  return `<div class="led-img"><h4>Ảnh trên màn hình</h4>
+    <div class="led-thumb" style="aspect-ratio:${ratio.toFixed(3)}">${src ? `<img src="${src}" alt="Ảnh trên màn LED">` : '<span>Trình duyệt này chưa có file ảnh.<br>Bấm “Đổi ảnh” để chọn lại.</span>'}</div>
+    <div class="bg-file"><b title="${esc(it.img.name || '')}">${esc(it.img.name || 'Ảnh')}</b><span class="mono">${it.img.iw}×${it.img.ih}px</span></div>
+    <p class="note">${tip}</p>
+    <div class="row"><button class="btn" id="ledRe">Đổi ảnh</button><button class="btn" id="ledView">Xem 3D</button><button class="btn danger" id="ledDel">Bỏ ảnh</button></div>
+    ${ledMsg ? `<p class="note">${esc(ledMsg)}</p>` : ''}</div>`;
+}
+function bindLed(it) {
+  const pick = () => { ledTarget = it.id; ledMsg = ''; $('#ledFile').click(); };
+  if ($('#ledUp')) $('#ledUp').onclick = pick;
+  if ($('#ledRe')) $('#ledRe').onclick = pick;
+  if ($('#ledView')) $('#ledView').onclick = () => setView('3d');
+  if ($('#ledDel')) $('#ledDel').onclick = () => { checkpoint(); delete it.img; ledMsg = 'Đã bỏ ảnh. Có thể hoàn tác bằng Ctrl Z.'; renderAll(); };
+}
+$('#ledFile').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  const it = ledTarget && find(ledTarget); if (!f || !it) return;
+  ledMsg = 'Đang đọc ảnh…'; renderPanel();
+  try {
+    const meta = await bgStore(f, f.name, 'img:', 2048, '#000');
+    ledImgEl[meta.id] = await loadImg(bgSrc[meta.id]);
+    checkpoint(); it.img = meta; ledMsg = viewMode === '3d' ? '' : 'Đã chèn ảnh. Bấm “Xem 3D” để xem trên màn hình.';
+    track('led_image'); renderAll(); bgGc();
+  } catch (err) { ledMsg = 'Không mở được ảnh: ' + (err && err.message || err) + '.'; renderPanel(); }
+};
 function setShowBg(v) { if (!state.bg) return; checkpoint(); state.bg.show = v; renderAll(); }
 let opDirty = false;
 function renderBgPanel() {
@@ -1513,6 +1568,7 @@ function renderPanel() {
       ${num('pX','Vị trí X', it.x, 'm', 0.25)}${num('pY','Vị trí Y', it.y, 'm', 0.25)}
     </div>
     <div class="fld"><label for="pC">Màu</label><div class="colr"><input id="pC" type="color" value="${toHex(col)}"><button class="btn" id="pCr" ${it.color ? '' : 'disabled'}>Theo nhóm</button></div></div>
+    ${it.k === 'led' ? ledSection(it) : ''}
     <div class="stat"><span>Diện tích chiếm chỗ</span><b>${fmt(footprint(it))} m²</b></div>
     ${seatsOf(it) ? `<div class="stat"><span>Số chỗ ngồi</span><b>${seatsOf(it)}</b></div>` : ''}
     <div class="row">
@@ -1525,6 +1581,7 @@ function renderPanel() {
   $('#pC').onchange = e => { checkpoint(); it.color = e.target.value; renderAll(); };
   $('#pCr').onclick = () => { checkpoint(); it.color = ''; renderAll(); };
   $('#pRot').onclick = () => rotSel(90); $('#pDup').onclick = dupSel; $('#pDel').onclick = delSel;
+  if (it.k === 'led') bindLed(it);
 }
 const AL = {
   l:  '<path d="M2.5 2v12"/><rect x="5" y="4" width="8" height="3"/><rect x="5" y="9" width="5" height="3"/>',
@@ -1886,13 +1943,31 @@ function buildItem(it, roomH) {
   switch (it.k) {
     case 'stage':
       box(w, h, d, mD); box(w, .02, d, mB, 0, h + .01, 0);
-      box(w, 3.2, .12, M(base.clone().multiplyScalar(.75)), 0, h + 1.6, -d/2 + .06);
+      // phông sân khấu: bỏ đi khi đã có màn LED đặt sát mép sau sân khấu (màn LED làm phông)
+      const r = -it.rot*D2R, ledBehind = state.items.some(o => {
+        if (o.k !== 'led') return false;
+        const dx = o.x - it.x, dy = o.y - it.y, lx = dx*Math.cos(r) - dy*Math.sin(r), ly = dx*Math.sin(r) + dy*Math.cos(r);
+        return Math.abs(lx) < w/2 && ly > -d/2 - 1.2 && ly < -d/2 + .6;
+      });
+      if (!ledBehind) box(w, 3.2, .12, M(base.clone().multiplyScalar(.75)), 0, h + 1.6, -d/2 + .06);
       [-1, 1].forEach(sx => { box(1.2, h/2, .5, mD, sx*(w/2 - .9), h/4, d/2 + .25); });
       break;
     case 'led': {
       const lh = h*.3; [-1, 1].forEach(sx => box(.12, lh, Math.max(d, .3), mBlack, sx*(w/2 - .3), lh/2, 0));
       box(w, h - lh, d, mBlack, 0, lh + (h - lh)/2, 0);
-      box(w*.97, (h - lh)*.94, .02, new THREE.MeshStandardMaterial({color: '#000', emissive: base.clone().lerp(new THREE.Color('#7fb6ff'), .4), emissiveIntensity: .9}), 0, lh + (h - lh)/2, d/2 + .012);
+      const sw = w*.97, sh = (h - lh)*.94, im = it.img && ledImgEl[it.img.id];
+      let scr;
+      if (im) {
+        // ảnh phủ kín mặt màn hình, cắt phần thừa ở giữa (như object-fit: cover)
+        const tx = new THREE.Texture(im), ia = im.naturalWidth/im.naturalHeight, sa = sw/sh;
+        if (ia > sa) { tx.repeat.set(sa/ia, 1); tx.offset.set((1 - sa/ia)/2, 0); } else { tx.repeat.set(1, ia/sa); tx.offset.set(0, (1 - ia/sa)/2); }
+        tx.encoding = THREE.sRGBEncoding; tx.anisotropy = 4; tx.needsUpdate = true;
+        scr = new THREE.MeshBasicMaterial({map: tx, toneMapped: false});
+      } else {
+        scr = new THREE.MeshStandardMaterial({color: '#000', emissive: base.clone().lerp(new THREE.Color('#7fb6ff'), .4), emissiveIntensity: .9});
+        if (it.img) ledRestore();
+      }
+      box(sw, sh, .02, scr, 0, lh + (h - lh)/2, d/2 + .012);
       break; }
     case 'speaker': box(w, h, d, mBlack); cyl(w*.3, w*.3, .02, M('#3a3d40'), 0, h*.35, d/2 + .01).rotation.x = Math.PI/2; break;
     case 'foh': box(w, h*.9, d, mD); box(w*.9, .06, d*.6, mBlack, 0, h*.93, 0).rotation.x = -.25; break;
@@ -2067,13 +2142,16 @@ $('#shotModal').addEventListener('click', e => { if (e.target.id === 'shotModal'
 
 /* ---------- Data modal ---------- */
 const modal = $('#modal');
+const hasImages = () => !!state.bg || state.items.some(i => i.img);
 async function dataText() {
-  if (!(state.bg && $('#mBg').checked)) return JSON.stringify(state, null, 2);
-  const data = await bgDataOf(state.bg.id);
-  return JSON.stringify({...state, bg: {...state.bg, data}}, null, 2);
+  if (!(hasImages() && $('#mBg').checked)) return JSON.stringify(state, null, 2);
+  const out = JSON.parse(JSON.stringify(state));
+  if (out.bg) out.bg.data = await bgDataOf(out.bg.id);
+  for (const it of out.items) if (it.img) { const d = await bgDataOf(it.img.id); if (d) it.img.data = d; }
+  return JSON.stringify(out, null, 2);
 }
-$('#bJson').onclick = async () => { $('#mBgWrap').hidden = !state.bg; $('#mText').value = await dataText(); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
-$('#mBg').onchange = async () => { $('#mText').value = await dataText(); $('#mMsg').textContent = $('#mBg').checked ? 'Đã kèm ảnh nền vào dữ liệu.' : ''; };
+$('#bJson').onclick = async () => { $('#mBgWrap').hidden = !hasImages(); $('#mText').value = await dataText(); $('#mMsg').textContent = ''; modal.hidden = false; $('#mText').focus(); };
+$('#mBg').onchange = async () => { $('#mText').value = await dataText(); $('#mMsg').textContent = $('#mBg').checked ? 'Đã kèm ảnh vào dữ liệu.' : ''; };
 $('#sBg').onchange = () => takeShot();
 $('#mClose').onclick = () => modal.hidden = true;
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
@@ -2132,15 +2210,24 @@ $('#mLoad').onclick = async () => {
     if (!s.room || !Array.isArray(s.room.pts) || !Array.isArray(s.items)) throw new Error('thiếu room hoặc items');
     s.items = s.items.filter(i => CM[i.k]).map(i => ({...mk(i.k, 0, 0), ...i, id: i.id || uid()}));
     s.room.h = s.room.h || 4; s.name = s.name || 'Sự kiện'; s.flows = Array.isArray(s.flows) ? s.flows.filter(f => f && Array.isArray(f.pts) && f.pts.length >= 2).map(f => ({id: f.id || uid(), type: FT[f.type] ? f.type : 'guest', name: f.name || '', pts: f.pts})) : [];
-    let bgNote = '';
+    let bgNote = '', ledIn = 0, ledMiss = 0;
+    for (const it of s.items) {
+      const m = it.img;
+      if (!m || typeof m !== 'object' || !(m.iw > 0 && m.ih > 0)) { delete it.img; continue; }
+      it.img = {id: String(m.id || uid()), name: String(m.name || 'Ảnh'), iw: +m.iw, ih: +m.ih};
+      if (typeof m.data === 'string' && m.data.startsWith('data:image/')) {
+        const blob = await (await fetch(m.data)).blob(), id = uid(); await IDB.put('img:' + id, blob).catch(() => {});
+        bgSrc[id] = URL.createObjectURL(blob); bgData[id] = m.data; ledImgEl[id] = await loadImg(bgSrc[id]); it.img.id = id; ledIn++;
+      } else if (!bgSrc[it.img.id]) ledMiss++;
+    }
     if (s.bg && typeof s.bg === 'object' && s.bg.iw && s.bg.ih && s.bg.w > 0) {
       const b = s.bg; s.bg = {id: b.id || uid(), name: b.name || 'Ảnh nền', iw: +b.iw, ih: +b.ih, x: +b.x || 0, y: +b.y || 0, w: +b.w, rot: +b.rot || 0, op: clamp(+b.op || .5, .1, 1), lock: !!b.lock, show: b.show !== false};
       if (typeof b.data === 'string' && b.data.startsWith('data:image/')) {
         const blob = await (await fetch(b.data)).blob(); s.bg.id = uid(); await IDB.put('bg:' + s.bg.id, blob).catch(() => {}); bgSrc[s.bg.id] = URL.createObjectURL(blob); bgData[s.bg.id] = b.data; bgNote = ' Kèm ảnh nền.';
       } else if (!bgSrc[s.bg.id]) bgNote = ' Dữ liệu không kèm ảnh nền: bấm “Đổi ảnh” ở panel phải để chọn lại file.';
     } else s.bg = null;
-    checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
-    $('#mMsg').textContent = `Đã nạp ${s.items.length} vật thể.` + bgNote;
+    checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); ledRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
+    $('#mMsg').textContent = `Đã nạp ${s.items.length} vật thể.` + bgNote + (ledIn ? ` Kèm ${ledIn} ảnh màn LED.` : '') + (ledMiss ? ` ${ledMiss} màn LED thiếu ảnh trên máy này (chọn lại ở panel phải).` : '');
   } catch (e) { $('#mMsg').textContent = 'Dữ liệu không đọc được (' + e.message + '). Hãy dán đúng nội dung đã sao chép từ công cụ này.'; }
 };
 $('#mSample').onclick = () => { checkpoint(); state = sample(); S = new Set(); renderAll(); fitView(); fitted = false; if (viewMode === '3d') enter3D(); $('#mMsg').textContent = 'Đã mở bản mẫu Hội chợ Tết. Có thể hoàn tác bằng Ctrl Z.'; $('#mText').value = JSON.stringify(state, null, 2); };
@@ -2161,6 +2248,7 @@ new ResizeObserver(() => { if (viewMode === '2d') render2D(); }).observe($('#sta
 renderAll();
 requestAnimationFrame(fitView);
 bgRestore().then(() => { if (bgOn()) fitView(); bgGc(); });
+ledRestore();
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { if (viewMode === '3d') build3D(); });
 })();
 </script>

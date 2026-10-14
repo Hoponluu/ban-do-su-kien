@@ -37,6 +37,13 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - Căn tỉ lệ: `mode = 'cal'`, `calPts`, khung nhập `#calBox`, `calApply()` phóng ảnh quanh điểm đo đầu tiên.
 - `bgGc()` xoá ảnh cũ trong IndexedDB nhưng giữ ảnh còn trong lịch sử hoàn tác. PDF đọc bằng pdf.js 2.16.105 từ cdnjs, chỉ tải khi cần (`pdfToBlob()`).
 
+## Ảnh trên màn hình LED
+- `it.img = {id, name, iw, ih}` chỉ có ở vật thể `led`. File lưu trong IndexedDB với key `img:<id>` (thu về cạnh dài 2048 px), dùng chung `bgSrc`/`bgData` với ảnh nền. `ledImgEl[id]` là ảnh đã nạp để làm texture.
+- `buildItem` case `led`: có ảnh thì mặt màn hình dùng `MeshBasicMaterial` với texture, cắt kiểu cover theo tỉ lệ màn. Ảnh chưa nạp thì gọi `ledRestore()` rồi dựng lại 3D.
+- Panel vật thể LED có mục "Ảnh trên màn hình" (`ledSection()`, `bindLed()`, input `#ledFile`). Xuất JSON có tick "Kèm ảnh" thì thêm `img.data`.
+- `bgGc()` giữ cả ảnh nền và ảnh LED còn dùng (kể cả trong lịch sử hoàn tác).
+- Sân khấu bỏ tấm phông 3,2 m khi có màn LED đặt sát mép sau (trong khoảng 1,2 m), để phông không che màn LED.
+
 ## Mô hình người
 - `HUMAN` chứa lưới tam giác của người nam và nữ (Quaternius "Background Posed Humans", CC0), toạ độ nguyên, chiều cao chuẩn hoá 1000, mặt trước hướng +z. Mỗi vật liệu một phần: `skin`, `shirt`, `pants`, `shoes`, `hair`. `humanPart()` dựng và lưu sẵn geometry; trong `buildItem`, màu áo lấy theo `it.color`.
 - Muốn đổi tư thế hay kiểu tóc: tải bản OBJ của pack, gom mỗi `usemtl` thành một phần, chuẩn hoá chiều cao về 1000, rồi thay dữ liệu trong `HUMAN`.

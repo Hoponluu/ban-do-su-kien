@@ -36,6 +36,10 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 - Chỉnh chiều rộng, góc xoay, vị trí tâm, độ rõ; khoá ảnh để không kéo nhầm; nút **Ảnh nền: hiện/ẩn** ở thanh dưới bản vẽ.
 - Khi chụp ảnh và khi xuất dữ liệu JSON có tuỳ chọn kèm ảnh nền (mặc định tắt). Đọc PDF dùng pdf.js (Mozilla, Apache 2.0), chỉ tải khi chọn file PDF.
 
+### Ảnh trên màn hình LED
+- Chọn một màn LED, ở panel phải bấm **Chèn ảnh minh hoạ**. Ảnh hiện trên mặt màn hình ở mô phỏng 3D và trong ảnh chụp 3D. Panel gợi ý kích thước ảnh theo tỉ lệ màn; ảnh khác tỉ lệ được cắt bớt ở mép.
+- Ảnh chỉ lưu trên máy (IndexedDB), thu về tối đa 2048 px để nhẹ bộ nhớ.
+
 ### Luồng di chuyển
 - Có 4 loại luồng: khách tham quan, khách VIP, nhân sự · hậu cần, thoát hiểm.
 - Vẽ bằng công cụ **Luồng** (phím `F`) hoặc bấm thẻ luồng trong thư viện. Nhấp lần lượt từng điểm theo hướng đi, nhấp đúp hoặc Enter để kết thúc.
@@ -79,7 +83,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`, `led_image`.
 
 ## Ghi công
 

@@ -12,7 +12,7 @@ Toàn bộ công cụ nằm trong một file `index.html`, không cần build v�
 ## Tính năng
 
 ### Không gian
-- Nút **Tạo mới** ở thanh trên mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
+- Nút **Tạo mới** (vàng, cạnh tên sự kiện; phím `N`) mở một trang trống (có hỏi lại, hoàn tác được). Khi bản vẽ còn trống, giữa màn hình hiện thẻ gợi ý: tải ảnh mặt bằng có sẵn, tự vẽ bằng công cụ Vẽ tường, hoặc tạo nhanh phòng 30 × 20 m.
 - Nhập chiều dài × chiều rộng để tạo phòng hình chữ nhật.
 - Công cụ **Vẽ tường** (phím `W`) vẽ đa giác tự do, tự bắt thẳng góc và hiện chiều dài từng cạnh.
 - Nhấp lên tường để thêm điểm góc rồi kéo để tạo góc mới. Nhấp đúp vào một điểm góc để xoá điểm đó.
@@ -35,6 +35,10 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 - **Căn tỉ lệ bằng 2 điểm:** nhấp hai đầu một đoạn đã biết kích thước, nhập độ dài thật (m), ảnh tự giãn đúng tỉ lệ.
 - Chỉnh chiều rộng, góc xoay, vị trí tâm, độ rõ; khoá ảnh để không kéo nhầm; nút **Ảnh nền: hiện/ẩn** ở thanh dưới bản vẽ.
 - Khi chụp ảnh và khi xuất dữ liệu JSON có tuỳ chọn kèm ảnh nền (mặc định tắt). Đọc PDF dùng pdf.js (Mozilla, Apache 2.0), chỉ tải khi chọn file PDF.
+
+### Ảnh trên màn hình LED
+- Chọn một màn LED, ở panel phải bấm **Chèn ảnh minh hoạ**. Ảnh hiện trên mặt màn hình ở mô phỏng 3D và trong ảnh chụp 3D. Panel gợi ý kích thước ảnh theo tỉ lệ màn; ảnh khác tỉ lệ được cắt bớt ở mép.
+- Ảnh chỉ lưu trên máy (IndexedDB), thu về tối đa 2048 px để nhẹ bộ nhớ.
 
 ### Luồng di chuyển
 - Có 4 loại luồng: khách tham quan, khách VIP, nhân sự · hậu cần, thoát hiểm.
@@ -79,7 +83,7 @@ Tool được tạo bởi **Nhân Lưu**, người sáng lập TELOS Academy, tr
 
 ## Google Analytics
 
-Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`.
+Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt xem trang, công cụ gửi thêm các sự kiện: `view_3d`, `take_screenshot`, `download_image`, `open_data`, `open_guide`, `bg_upload`, `bg_calibrate`, `new_doc`, `led_image`.
 
 ## Ghi công
 
@@ -90,6 +94,7 @@ Trang gắn GA4 với mã `G-PFSCQRQZM6` (property nhanluu.com). Ngoài lượt 
 
 | Phím | Tác dụng |
 |---|---|
+| `N` | Tạo bản vẽ mới (Ctrl/⌘ + N thường bị trình duyệt giữ để mở cửa sổ mới) |
 | `V` / `W` / `F` | Chọn / Vẽ tường / Vẽ luồng |
 | `Space` + kéo, chuột phải, vuốt trackpad | Dời bản vẽ |
 | `Ctrl`/`⌘` + cuộn, `+` / `−` | Phóng to / thu nhỏ |

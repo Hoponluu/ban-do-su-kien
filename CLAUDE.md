@@ -21,6 +21,9 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - **3D**: `enter3D()`, `build3D()`, `buildItem(it)` (mỗi loại vật thể một `case`), `buildFlows()` và `placeFlows(dt)` cho mũi tên chạy. Camera tự do nằm ở `step3D(dt)`, `bindFree3D()` và `floorHit()`. Toạ độ 2D `(x, y)` ứng với 3D `(x, 0, y)`, `rotation.y = -rot`.
 - **Chụp ảnh**: `takeShot()` ghép ảnh trên canvas. `saveShot()` dùng capability `downloads` khi chạy trong Claude artifact, ngoài ra tải bằng thẻ `<a download>`.
 
+## Giao diện điện thoại (≤900px)
+- Nút 2D/3D chỉ hiện "2D" / "3D" (phần chữ dài nằm trong `.lg`, bị ẩn). `#bShot` và `#bJson` nằm trong `.top-act`: trên desktop là `display:contents`, trên điện thoại thành thanh cố định ở đáy màn hình (body có `padding-bottom` tương ứng).
+
 ## Tạo mới và thẻ gợi ý
 - Nút `#bNew` (nút vàng `.btn.primary`, ngay sau tên sự kiện) mở `#newModal` qua `openNew()`; phím `N` ở chế độ chọn 2D, Ctrl/⌘ + N ở mọi chế độ (Chrome, Edge, Safari giữ Ctrl/⌘ + N nên thường không tới được trang). `newDoc()` thay state bằng trang trống (`room.pts` rỗng, không vật thể, không ảnh nền), có `checkpoint()` nên hoàn tác được.
 - Thẻ `#starter` hiện khi `isBlank()` (chưa có tường, vật thể, ảnh nền), đang ở chế độ `select` và xem 2D; `updStarter()` gọi trong `renderAll()`, `setMode()`, `setView()`. Khi thẻ hiện thì ô `#hint` ẩn. Bấm × đặt `starterOff` cho tới lần Tạo mới kế tiếp.

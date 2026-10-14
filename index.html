@@ -284,8 +284,17 @@ a.btn{text-decoration:none;color:inherit}
 a.btn.primary{color:var(--accent-ink)}
 @media (max-width:640px){.guide{grid-template-columns:minmax(0,1fr)}}
 
+.top-act{display:contents}
+.undo-grp{display:inline-flex;gap:10px}
+.seg.view button{gap:.28em}
 @media (max-width:900px){
-  body{overflow:auto}
+  body{overflow:auto;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+  .seg.view .lg{display:none}
+  .top .sep{display:none}
+  .seg.view button{padding:0 14px}
+  /* Chụp ảnh + Dữ liệu xuống thanh dưới cùng để phần trên gọn, vùng vẽ rộng hơn */
+  .top-act{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--panel);border-top:1px solid var(--line);padding:8px 16px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+  .top-act .btn{flex:1;height:40px}
   .app{height:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 64vh auto;grid-template-areas:"top" "lib" "stage" "side"}
   .lib{border-right:0;border-bottom:1px solid var(--line)}
   .lib-list{display:flex;gap:6px;overflow-x:auto;padding:0 16px 12px}
@@ -320,17 +329,21 @@ a.btn.primary{color:var(--accent-ink)}
       <button id="tFlow" aria-pressed="false" title="Vẽ luồng di chuyển (F)">
         <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13c3 0 3-8 7-8h4"/><path d="M11 3l2.5 2L11 7"/></svg>Luồng <kbd>F</kbd></button>
     </div>
-    <button class="btn icon" id="bUndo" title="Hoàn tác (Ctrl+Z)" aria-label="Hoàn tác"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 7l3 3"/><path d="M2 7h7.5a4 4 0 010 8H7"/></svg></button>
-    <button class="btn icon" id="bRedo" title="Làm lại (Ctrl+Shift+Z)" aria-label="Làm lại"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4l3 3-3 3"/><path d="M14 7H6.5a4 4 0 000 8H9"/></svg></button>
+    <span class="undo-grp">
+      <button class="btn icon" id="bUndo" title="Hoàn tác (Ctrl+Z)" aria-label="Hoàn tác"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 7l3 3"/><path d="M2 7h7.5a4 4 0 010 8H7"/></svg></button>
+      <button class="btn icon" id="bRedo" title="Làm lại (Ctrl+Shift+Z)" aria-label="Làm lại"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4l3 3-3 3"/><path d="M14 7H6.5a4 4 0 000 8H9"/></svg></button>
+    </span>
     <span class="spacer"></span>
     <div class="seg view" role="group" aria-label="Chế độ xem">
-      <button id="v2d" aria-pressed="true">Mặt bằng 2D</button>
-      <button id="v3d" aria-pressed="false">Mô phỏng 3D</button>
+      <button id="v2d" aria-pressed="true" aria-label="Mặt bằng 2D"><span class="lg">Mặt bằng</span>2D</button>
+      <button id="v3d" aria-pressed="false" aria-label="Mô phỏng 3D"><span class="lg">Mô phỏng</span>3D</button>
     </div>
-    <button class="btn" id="bShot" title="Chụp góc nhìn hiện tại kèm mặt bằng tổng thể">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h2.5l1.2-2h4.6l1.2 2H14v8H2z"/><circle cx="8" cy="8.8" r="2.4"/></svg>Chụp ảnh</button>
-    <button class="btn" id="bJson" title="Xuất / nhập dữ liệu bản vẽ">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Dữ liệu</button>
+    <div class="top-act">
+      <button class="btn" id="bShot" title="Chụp góc nhìn hiện tại kèm mặt bằng tổng thể">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h2.5l1.2-2h4.6l1.2 2H14v8H2z"/><circle cx="8" cy="8.8" r="2.4"/></svg>Chụp ảnh</button>
+      <button class="btn" id="bJson" title="Xuất / nhập dữ liệu bản vẽ">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Dữ liệu</button>
+    </div>
     <button class="btn icon" id="bInfo" title="Hướng dẫn &amp; thông tin" aria-label="Hướng dẫn và thông tin dự án">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2V11.5" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".55" fill="currentColor" stroke="none"/></svg></button>
   </header>

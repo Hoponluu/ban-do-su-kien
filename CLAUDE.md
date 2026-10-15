@@ -79,6 +79,11 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - Hộp thoại tải lên `#modelModal` (`modelImport()`, `renderModelModal()`): đoán đơn vị cm/mm khi mô hình quá lớn, nhập kích thước thật, tick giữ tỉ lệ. Panel vật thể có `modelSection()`/`bindModel()`, nút “Chọn lại file .glb” khi máy chưa có file (`modelRelink()`).
 - Xuất JSON có tick “Kèm ảnh và mô hình 3D”: thêm `models: {id: dataURL}` ở cấp gốc (mỗi file một lần). `loadData()` lưu lại vào IndexedDB, thêm vào thư viện và xoá `s.models` khỏi state. `bgGc()` giữ `model:` còn trong thư viện, bản vẽ hoặc lịch sử hoàn tác.
 
+## Đặt vật thể lên sân khấu / bàn
+- Chỉ áp dụng cho danh sách cố định: `SURF` là vật thể làm mặt đỡ (`stage`; bàn `roundtable`, `longtable`, `etable`, `buffet`, `counter`), `ON[stage|table]` là vật thể được đặt lên (sân khấu: loa, LED, bàn điều khiển, cây, hoa, ghế, bàn, bình phong, người, vật thể 3D; bàn: chỉ hoa và vật thể 3D).
+- Điều kiện: tâm vật thể nằm trong mặt đỡ. `calcSupport()` (gọi trong `validate()` và `build3D()`) dựng `supOf` (id → `{p, top}`), cho phép chồng tối đa 3 tầng (hoa trên bàn trên sân khấu). `elevOf(it)` là độ cao đặt trên 3D.
+- Vật đặt trên không tính chồng lấn với nơi đỡ (`restsOn()`), không tính vào diện tích chiếm chỗ, vẽ 2D sau nơi đỡ (`rank`). Panel hiện "Đặt trên … +x m".
+
 ## Thêm một loại vật thể mới
 1. Thêm mục vào `CATALOG`.
 2. Nếu cần hình 3D riêng, thêm `case` trong `buildItem`.

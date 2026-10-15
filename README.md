@@ -50,6 +50,10 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 - Mô hình chỉ lưu trong trình duyệt (IndexedDB), nằm trong mục **Vật thể của tôi** để dùng lại ở các bản vẽ khác. Trên 2D là khối chiếm chỗ có tên; trên 3D và ảnh chụp là mô hình thật, có bóng đổ. Nhiều bản sao dùng chung một lần nạp.
 - Lưu file có tick **Kèm ảnh và mô hình 3D** thì file .json chứa luôn mô hình, mở ở máy khác vẫn thấy. File không kèm mô hình: panel phải có nút **Chọn lại file .glb**.
 
+### Đặt lên sân khấu và bàn
+- Kéo loa, màn LED, bàn điều khiển, cây, hoa, ghế, bàn, bình phong, người hoặc vật thể 3D vào trong sân khấu: trên 3D vật thể đứng trên mặt sân khấu. Hoa và vật thể 3D đặt trong mặt bàn (bàn tròn, bàn dài, bàn sự kiện, buffet, quầy lễ tân) sẽ đứng trên mặt bàn.
+- Vật đặt lên không bị báo chồng lấn với nơi đỡ và không tính vào diện tích chiếm chỗ. Panel phải ghi rõ "Đặt trên … +độ cao".
+
 ### Luồng di chuyển
 - Có 4 loại luồng: khách tham quan, khách VIP, nhân sự · hậu cần, thoát hiểm.
 - Vẽ bằng công cụ **Luồng** (phím `F`) hoặc bấm thẻ luồng trong thư viện. Nhấp lần lượt từng điểm theo hướng đi, nhấp đúp hoặc Enter để kết thúc.

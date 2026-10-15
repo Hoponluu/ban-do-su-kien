@@ -767,8 +767,34 @@ function seatsOf(it) {
   if (it.k === 'seatblock') return Math.max(0, Math.floor(it.w/0.55)) * Math.max(0, Math.floor(it.d/0.95));
   return CM[it.k].seats || 0;
 }
+/* Đặt lên mặt phẳng: chỉ một số vật thể, khi tâm nằm trong sân khấu hoặc mặt bàn, sẽ đứng trên mặt đó (3D nâng lên, không tính chồng lấn với nơi đỡ).
+   SURF: vật thể làm mặt đỡ (mặt cao = it.h). ON: vật thể được phép đặt lên từng loại mặt. */
+const SURF = {stage: 'stage', roundtable: 'table', longtable: 'table', etable: 'table', buffet: 'table', counter: 'table'};
+const ON = {
+  stage: new Set(['speaker', 'led', 'foh', 'plant', 'flower', 'chair', 'longtable', 'etable', 'roundtable', 'screen', 'man', 'woman', 'custom']),
+  table: new Set(['flower', 'custom']),
+};
+let supOf = new Map();   // id → {p: vật thể đỡ, top: độ cao mặt đỡ (m)}
+function calcSupport() {
+  supOf = new Map();
+  const surf = state.items.filter(p => SURF[p.k]), memo = new Map();
+  const find = (it, depth) => {
+    if (memo.has(it.id)) return memo.get(it.id);
+    let best = null;
+    if (depth < 3) for (const p of surf) {
+      if (p === it || !ON[SURF[p.k]].has(it.k) || !inPoly(it.x, it.y, shapePts(p))) continue;
+      const ps = find(p, depth + 1), top = (ps ? ps.top : 0) + p.h;
+      if (!best || top > best.top) best = {p, top};
+    }
+    memo.set(it.id, best); return best;
+  };
+  for (const it of state.items) { const r = find(it, 0); if (r) supOf.set(it.id, r); }
+}
+const elevOf = it => (supOf.get(it.id) || {top: 0}).top;
+const restsOn = (a, b) => { for (let r = supOf.get(a.id), n = 0; r && n < 4; r = supOf.get(r.p.id), n++) if (r.p === b) return true; return false; };
 function validate() {
   issues = {outside: new Set(), overlap: new Set()};
+  calcSupport();
   const RL = roomList(), solid = [];
   for (const it of state.items) {
     const c = CM[it.k], P = shapePts(it);
@@ -778,6 +804,8 @@ function validate() {
     if (!c.flat && !c.hang && !c.ref) solid.push([it, P]);
   }
   for (let i = 0; i < solid.length; i++) for (let j = i+1; j < solid.length; j++) {
+    const a = solid[i][0], b = solid[j][0];
+    if (restsOn(a, b) || restsOn(b, a)) continue;   // vật đặt trên sân khấu / bàn không tính chồng lấn với nơi đỡ
     if (!sepAxis(solid[i][1], solid[j][1])) { issues.overlap.add(solid[i][0].id); issues.overlap.add(solid[j][0].id); }
   }
 }
@@ -1481,7 +1509,7 @@ function setShowFlows(v) {
 }
 $('#bFlow2').onclick = () => setShowFlows(!showFlowsNow());
 $('#bFlow3').onclick = () => setShowFlows(!showFlowsNow());
-const rank = it => { const c = CM[it.k]; return c.k === 'zone' ? 0 : c.flat ? 1 : c.ref ? 4 : c.hang ? 3 : 2; };
+const rank = it => { const c = CM[it.k]; return (c.k === 'zone' ? 0 : c.flat ? 1 : c.ref ? 4 : c.hang ? 3 : 2) + (supOf.has(it.id) ? .5 + supOf.get(it.id).top/100 : 0); };
 const trunc = (t, n) => t.length > n ? t.slice(0, Math.max(1, Math.floor(n)-1)) + '…' : t;
 
 function detail(it, c, s, col) {
@@ -1930,6 +1958,7 @@ function renderPanel() {
     </div>
     ${it.k === 'custom' ? modelSection(it) : `<div class="fld"><label for="pC">Màu</label><div class="colr"><input id="pC" type="color" value="${toHex(col)}"><button class="btn" id="pCr" ${it.color ? '' : 'disabled'}>Theo nhóm</button></div></div>`}
     ${it.k === 'led' ? ledSection(it) : ''}
+    ${supOf.has(it.id) ? `<div class="stat"><span>Đặt trên ${esc(supOf.get(it.id).p.label || nameOf(supOf.get(it.id).p))}</span><b>+${fmt(supOf.get(it.id).top)} m</b></div>` : ''}
     <div class="stat"><span>Diện tích chiếm chỗ</span><b>${fmt(footprint(it))} m²</b></div>
     ${it.k === 'etable' ? `<div class="stat"><span>Số bàn 1,6 m (tăng chiều rộng để thêm bàn)</span><b>${Math.max(1, Math.round(it.w/1.6))}</b></div>` : ''}
     ${seatsOf(it) ? `<div class="stat"><span>Số chỗ ngồi</span><b>${seatsOf(it)}</b></div>` : ''}
@@ -1978,7 +2007,7 @@ function renderFlowPanel(el, f) {
 }
 function renderMulti(el) {
   const its = selItems(); let area = 0, seats = 0; const by = {};
-  for (const it of its) { const c = CM[it.k]; if (!c.flat && !c.hang && !c.ref) area += footprint(it); seats += seatsOf(it); const nm = nameOf(it); by[nm] = by[nm] || {n: 0, c: c.c}; by[nm].n++; }
+  for (const it of its) { const c = CM[it.k]; if (!c.flat && !c.hang && !c.ref && !supOf.has(it.id)) area += footprint(it); seats += seatsOf(it); const nm = nameOf(it); by[nm] = by[nm] || {n: 0, c: c.c}; by[nm].n++; }
   const nBad = its.filter(i => issues.overlap.has(i.id) || issues.outside.has(i.id)).length, b = selBounds();
   el.innerHTML = `
     <h3>Đã chọn ${its.length} vật thể<span class="typ">${fmt(b.x1-b.x0,1)} × ${fmt(b.y1-b.y0,1)} m</span></h3>
@@ -2018,7 +2047,7 @@ function renderStats() {
   let occ = 0, seats = 0; const byCat = {};
   for (const it of state.items) {
     const c = CM[it.k];
-    if (!c.flat && !c.hang && !c.ref) occ += footprint(it);
+    if (!c.flat && !c.hang && !c.ref && !supOf.has(it.id)) occ += footprint(it);
     seats += seatsOf(it);
     const nm = nameOf(it); byCat[nm] = byCat[nm] || {n: 0, c: c.c}; byCat[nm].n++;
   }
@@ -2181,6 +2210,7 @@ $('#bLabels').onclick = () => { showLabels = !showLabels; $('#bLabels').setAttri
 
 function disposeTree(o) { o.traverse(n => { if (n.userData.shared) return; if (n.geometry) n.geometry.dispose(); if (n.material) { (Array.isArray(n.material) ? n.material : [n.material]).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); } }); }
 function build3D() {
+  calcSupport();
   if (!T || !window.THREE) return;
   if (T.root) { T.scene.remove(T.root); disposeTree(T.root); }
   const root = new THREE.Group(); T.root = root;
@@ -2224,8 +2254,8 @@ function build3D() {
     }
   }
   for (const it of state.items) {
-    const g = buildItem(it, H); g.position.set(it.x, 0, it.y); g.rotation.y = -it.rot*D2R; root.add(g);
-    if (showLabels && it.label) { const sp = labelSprite(it.label); sp.position.set(it.x, (CM[it.k].hang ? it.h : Math.max(it.h, 0.3)) + 0.7, it.y); root.add(sp); }
+    const el = elevOf(it), g = buildItem(it, H); g.position.set(it.x, el, it.y); g.rotation.y = -it.rot*D2R; root.add(g);
+    if (showLabels && it.label) { const sp = labelSprite(it.label); sp.position.set(it.x, (CM[it.k].hang ? it.h : el + Math.max(it.h, 0.3)) + 0.7, it.y); root.add(sp); }
   }
   T.flowAnims = [];
   if (showFlowsNow()) buildFlows(root);

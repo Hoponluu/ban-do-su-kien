@@ -44,6 +44,12 @@ Trên 2D, vật thể chỉ thể hiện chỗ chiếm và diện tích, có mũ
 - Chọn một màn LED, ở panel phải bấm **Chèn ảnh minh hoạ**. Ảnh hiện trên mặt màn hình ở mô phỏng 3D và trong ảnh chụp 3D. Panel gợi ý kích thước ảnh theo tỉ lệ màn; ảnh khác tỉ lệ được cắt bớt ở mép.
 - Ảnh chỉ lưu trên máy (IndexedDB), thu về tối đa 2048 px để nhẹ bộ nhớ.
 
+### Vật thể 3D của tôi (.glb)
+- Ở đầu thư viện, bấm **Tải vật thể 3D** và chọn file **.glb** (glTF 2.0 nhị phân, tối đa 20 MB). File .obj, .fbx, .gltf, .skp… được báo lỗi kèm hướng dẫn xuất sang .glb (ví dụ bằng Blender).
+- Hộp thoại hiện ảnh xem trước, số tam giác (cảnh báo khi quá 200.000), cho đặt tên và nhập kích thước thật; tick **Giữ tỉ lệ gốc** để các số đo đổi theo nhau. Mô hình dựng theo cm/mm được tự quy về mét.
+- Mô hình chỉ lưu trong trình duyệt (IndexedDB), nằm trong mục **Vật thể của tôi** để dùng lại ở các bản vẽ khác. Trên 2D là khối chiếm chỗ có tên; trên 3D và ảnh chụp là mô hình thật, có bóng đổ. Nhiều bản sao dùng chung một lần nạp.
+- Lưu file có tick **Kèm ảnh và mô hình 3D** thì file .json chứa luôn mô hình, mở ở máy khác vẫn thấy. File không kèm mô hình: panel phải có nút **Chọn lại file .glb**.
+
 ### Luồng di chuyển
 - Có 4 loại luồng: khách tham quan, khách VIP, nhân sự · hậu cần, thoát hiểm.
 - Vẽ bằng công cụ **Luồng** (phím `F`) hoặc bấm thẻ luồng trong thư viện. Nhấp lần lượt từng điểm theo hướng đi, nhấp đúp hoặc Enter để kết thúc.

@@ -71,6 +71,14 @@ Dự án là một web app một file: toàn bộ HTML, CSS và JS nằm trong `
 - `HUMAN` chứa lưới tam giác của người nam và nữ (Quaternius "Background Posed Humans", CC0), toạ độ nguyên, chiều cao chuẩn hoá 1000, mặt trước hướng +z. Mỗi vật liệu một phần: `skin`, `shirt`, `pants`, `shoes`, `hair`. `humanPart()` dựng và lưu sẵn geometry; trong `buildItem`, màu áo lấy theo `it.color`.
 - Muốn đổi tư thế hay kiểu tóc: tải bản OBJ của pack, gom mỗi `usemtl` thành một phần, chuẩn hoá chiều cao về 1000, rồi thay dữ liệu trong `HUMAN`.
 
+## Vật thể 3D của người dùng (.glb)
+- Chỉ nhận `.glb` (glTF 2.0 nhị phân, texture nhúng), tối đa 20 MB (`MODEL_MAX`); cảnh báo khi quá 200k tam giác (`TRI_WARN`). Đuôi khác báo lỗi kèm cách xuất GLB (`EXT_TIP`). Meshopt, KTX2 và file tham chiếu ngoài bị từ chối; Draco nạp `DRACOLoader` khi cần.
+- `GLTFLoader` (three@0.128.0, jsdelivr) chỉ tải khi cần (`getLoader()`). `parseGLB()` kiểm tra header rồi dựng; `normModel()` bỏ đèn/camera, đổi skinned mesh thành mesh thường, đặt đáy ở y = 0 và tâm ngang ở gốc, gắn `userData.shared` để `disposeTree()` không huỷ geometry dùng chung.
+- File lưu IndexedDB key `model:<id>`; thư viện “Vật thể của tôi” là `MLIB` trong localStorage key `matbang-sukien-models` (`{id, name, w, d, h, nw, nd, nh, tris, size, thumb}`), dùng lại ở mọi bản vẽ trên trình duyệt đó. Ảnh thu nhỏ dựng bằng `modelThumb()`.
+- Vật thể trên bản vẽ: `k: 'custom'` (`CM.custom`, nhóm màu `mine`), `it.model = {id, name, nw, nd, nh}` (kích thước gốc tính bằng mét, dùng cho “Về tỉ lệ gốc”). Tên hiển thị qua `nameOf(it)`. 3D: `buildItem` case `custom` clone `modelTpl[id].obj` và co giãn theo w/d/h; chưa nạp thì khối mờ, `modelRestore()` nạp rồi dựng lại.
+- Hộp thoại tải lên `#modelModal` (`modelImport()`, `renderModelModal()`): đoán đơn vị cm/mm khi mô hình quá lớn, nhập kích thước thật, tick giữ tỉ lệ. Panel vật thể có `modelSection()`/`bindModel()`, nút “Chọn lại file .glb” khi máy chưa có file (`modelRelink()`).
+- Xuất JSON có tick “Kèm ảnh và mô hình 3D”: thêm `models: {id: dataURL}` ở cấp gốc (mỗi file một lần). `loadData()` lưu lại vào IndexedDB, thêm vào thư viện và xoá `s.models` khỏi state. `bgGc()` giữ `model:` còn trong thư viện, bản vẽ hoặc lịch sử hoàn tác.
+
 ## Thêm một loại vật thể mới
 1. Thêm mục vào `CATALOG`.
 2. Nếu cần hình 3D riêng, thêm `case` trong `buildItem`.

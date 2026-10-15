@@ -68,7 +68,7 @@
   --grid-minor:#E4E8E1; --grid-major:#C9D0C6; --wall:#27302C;
   --accent:#FFC945; --accent-line:#8A5F00; --accent-soft:#FFF1CC; --accent-ink:#231A06; --gold:#A97F22;
   --danger:#D0342C; --warn:#B87309; --ok:#2E7A4E;
-  --c-stage:#5B4A93; --c-light:#B45309; --c-booth:#21698A; --c-seat:#3B7A55; --c-deco:#A97F22; --c-util:#5F6773; --c-zone:#B0473D; --c-ref:#3D5A80;
+  --c-stage:#5B4A93; --c-light:#B45309; --c-booth:#21698A; --c-seat:#3B7A55; --c-deco:#A97F22; --c-util:#5F6773; --c-zone:#B0473D; --c-ref:#3D5A80; --c-mine:#8A4F7D;
   --fl-guest:#2475C6; --fl-vip:#B07D0C; --fl-staff:#5F6773; --fl-exit:#138A4A;
   --bg3d:#E4E8E2; --ground3d:#CBD1C8; --floor3d:#F4F2EC; --wall3d:#B9C2BC;
   --f-ui:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -81,7 +81,7 @@
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
   --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
-  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
+  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --c-mine:#D39BC6; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
   color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -90,7 +90,7 @@
   --grid-minor:#1B211E; --grid-major:#2A322D; --wall:#D9E0DA;
   --accent:#FFC945; --accent-line:#FFC945; --accent-soft:#3A3016; --accent-ink:#231A06; --gold:#D6AE52;
   --danger:#FF6B5F; --warn:#E6A23C; --ok:#5BC08A;
-  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
+  --c-stage:#9C8AE0; --c-light:#F59E0B; --c-booth:#58AED3; --c-seat:#6CC08D; --c-deco:#D6AE52; --c-util:#9AA3AF; --c-zone:#E07A6E; --c-ref:#8FB3E0; --c-mine:#D39BC6; --fl-guest:#5AA9F0; --fl-vip:#E3B341; --fl-staff:#A3AAB5; --fl-exit:#4CC985;
   --bg3d:#1A1F1C; --ground3d:#232A26; --floor3d:#3A403C; --wall3d:#5E6A63;
   color-scheme:dark}
 
@@ -147,6 +147,24 @@ kbd{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);border:1px solid
 .card svg{width:100%;height:30px}
 .card b{font-weight:500;font-size:12px;line-height:1.25}
 .card span{font-size:10.5px;color:var(--ink-3)}
+.card .mth{width:100%;height:52px;object-fit:contain;display:block}
+.card.up{border-style:dashed;cursor:pointer;justify-content:center;align-items:center;text-align:center}
+.card.up svg{width:22px;height:22px;color:var(--accent-line)}
+.mcard{position:relative;display:flex;min-width:0}
+.mcard .card{flex:1}
+.mdel{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:5px;border:1px solid var(--line);background:var(--panel);color:var(--ink-2);display:grid;place-items:center;padding:0;cursor:pointer;opacity:0;font-size:11px}
+.mcard:hover .mdel,.mdel:focus-visible,.mdel.armed{opacity:1}
+.mdel.armed{background:var(--danger);border-color:var(--danger);color:#fff;width:auto;padding:0 6px}
+.mdel svg{width:12px;height:12px}
+#mdBody{display:flex;flex-direction:column;gap:12px}
+.mdl-prev{width:100%;height:220px;border-radius:8px;background:var(--canvas);display:grid;place-items:center;overflow:hidden}
+.mdl-prev img{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+.mdl-info{font-size:12px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:4px 14px}
+.mdl-warn{font-size:12.5px;line-height:1.45;padding:8px 10px;border-radius:6px;background:var(--accent-soft);color:var(--ink)}
+.mdl-err{font-size:13px;line-height:1.5;padding:10px 12px;border-radius:6px;border:1px solid var(--danger);color:var(--ink)}
+.mdl-th{background:var(--canvas);border-radius:6px;display:grid;place-items:center;height:120px;overflow:hidden}
+.mdl-th img{height:100%;width:auto;max-width:100%;object-fit:contain}
+@media (hover:none){.mdel{opacity:1}}
 
 /* Stage */
 .stage{grid-area:stage;position:relative;min-height:0;background:var(--canvas);overflow:hidden}
@@ -447,6 +465,7 @@ a.btn.primary{color:var(--accent-ink)}
     </footer>
     <input type="file" id="bgFile" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf" hidden>
     <input type="file" id="ledFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+    <input type="file" id="modelFile" accept=".glb,model/gltf-binary" hidden>
   </aside>
 </div>
 
@@ -464,6 +483,12 @@ a.btn.primary{color:var(--accent-ink)}
       <button class="btn primary" id="sSave">Tải ảnh PNG</button>
       <button class="btn" id="sClose">Đóng</button>
     </div>
+  </div>
+</div>
+<div class="modal" id="modelModal" hidden>
+  <div class="modal-b" role="dialog" aria-modal="true" aria-labelledby="mdTitle" style="width:min(520px,100%)">
+    <h3 id="mdTitle">Thêm vật thể 3D</h3>
+    <div id="mdBody"></div>
   </div>
 </div>
 <div class="modal" id="newModal" hidden>
@@ -548,7 +573,7 @@ a.btn.primary{color:var(--accent-ink)}
     <section class="fsec">
       <h4>Lưu file</h4>
       <p class="note">Toàn bộ bản vẽ (không gian, vật thể, luồng di chuyển) được lưu thành một file <b>.json</b> trên máy bạn.</p>
-      <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh (ảnh mặt bằng nền, ảnh màn LED). File sẽ nặng hơn.</label>
+      <label class="chk" id="mBgWrap" hidden><input type="checkbox" id="mBg"> Kèm ảnh và mô hình 3D (ảnh mặt bằng nền, ảnh màn LED, vật thể .glb). File sẽ nặng hơn.</label>
       <div class="row">
         <button class="btn primary" id="mSave"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12v2h10v-2"/></svg>Lưu file về máy</button>
         <button class="btn" id="mCopy">Sao chép dữ liệu</button>
@@ -622,7 +647,10 @@ const CATALOG = [
   ]},
 ];
 const CM = {}; CATALOG.forEach(g => g.items.forEach(i => CM[i.k] = i));
-const CAT_NAMES = {stage:'Sân khấu & kỹ thuật', light:'Ánh sáng & truss', booth:'Gian hàng', seat:'Bàn ghế', deco:'Trang trí', util:'Tiện ích', zone:'Vùng', ref:'Người'};
+// vật thể 3D người dùng tải lên (.glb): mỗi vật thể mang it.model = {id, name, nw, nd, nh}
+CM.custom = {k:'custom', n:'Vật thể 3D', w:1, d:1, h:1, c:'mine', dir:1};
+const CAT_NAMES = {stage:'Sân khấu & kỹ thuật', light:'Ánh sáng & truss', booth:'Gian hàng', seat:'Bàn ghế', deco:'Trang trí', util:'Tiện ích', zone:'Vùng', ref:'Người', mine:'Vật thể của tôi'};
+const nameOf = it => it.k === 'custom' ? (it.model && it.model.name) || CM.custom.n : CM[it.k].n;
 
 /* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
@@ -691,7 +719,7 @@ function undo() { if (!hist.length) return; fut.push(JSON.stringify(state)); sta
 function redo() { if (!fut.length) return; hist.push(JSON.stringify(state)); state = JSON.parse(fut.pop()); pruneSel(); renderAll(); }
 function pruneSel() { for (const id of [...S]) if (!find(id)) S.delete(id); if (selFlow && !findF(selFlow)) selFlow = null; }
 const one = () => S.size === 1 ? find([...S][0]) : null;
-function updUndoBg() { if (state.bg && !bgSrc[state.bg.id]) bgRestore(); if (state.items.some(i => i.img && !ledImgEl[i.img.id])) ledRestore(); }
+function updUndoBg() { if (state.bg && !bgSrc[state.bg.id]) bgRestore(); if (state.items.some(i => i.img && !ledImgEl[i.img.id])) ledRestore(); if (state.items.some(i => i.model && !modelTpl[i.model.id])) modelRestore(); }
 function updUndo() { updUndoBg(); $('#bUndo').disabled = !hist.length; $('#bRedo').disabled = !fut.length; }
 
 /* ---------- Geometry ---------- */
@@ -768,9 +796,17 @@ function glyph(c) {
     : `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1.5" style="fill:${col};fill-opacity:${c.k==='zone'?.08:.2};stroke:${col}" stroke-width="1.3" ${c.k==='zone'?'stroke-dasharray="4 3"':''}/>`;
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMinYMid meet" aria-hidden="true">${shp}</svg>`;
 }
+function mineGroup(q) {
+  const its = MLIB.filter(m => !q || (m.name + ' vật thể của tôi 3d').toLowerCase().includes(q));
+  if (q && !its.length && !'vật thể của tôi 3d glb tải lên'.includes(q)) return '';
+  const del = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>`;
+  return `<div class="grp"><h4>Vật thể của tôi</h4><div class="cards">${its.map(m =>
+    `<div class="mcard"><button class="card" data-m="${m.id}" title="Kéo vào bản vẽ hoặc bấm để thêm">${m.thumb ? `<img class="mth" src="${m.thumb}" alt="">` : glyph({...CM.custom, w: m.w, d: m.d})}<b>${esc(m.name)}</b><span class="mono">${fmt(m.w,1)} × ${fmt(m.d,1)} × ${fmt(m.h,1)} m</span></button><button class="mdel" data-mdel="${m.id}" title="Xoá khỏi thư viện" aria-label="Xoá ${esc(m.name)} khỏi thư viện">${del}</button></div>`).join('')}
+    <button class="card up" data-up="1" title="Tải mô hình 3D định dạng .glb từ máy bạn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V3M5 6l3-3 3 3M3 11v2h10v-2"/></svg><b>Tải vật thể 3D</b><span>.glb · tối đa 20 MB</span></button></div></div>`;
+}
 function renderLib() {
   const q = $('#libSearch').value.trim().toLowerCase();
-  $('#libList').innerHTML = CATALOG.map(g => {
+  $('#libList').innerHTML = mineGroup(q) + CATALOG.map(g => {
     const its = g.items.filter(i => !q || (i.n + ' ' + g.g).toLowerCase().includes(q));
     if (!its.length) return '';
     return `<div class="grp"><h4>${g.g}</h4><div class="cards">${its.map(i =>
@@ -786,9 +822,10 @@ $('#libSearch').addEventListener('input', renderLib);
 
 const libList = $('#libList');
 libList.addEventListener('pointerdown', e => {
-  const card = e.target.closest('.card'); if (!card || e.button !== 0) return;
+  const card = e.target.closest('.card'); if (!card || e.button !== 0 || card.dataset.up) return;
   if (card.dataset.ft) { e.preventDefault(); startFlow(card.dataset.ft); return; }
-  const k = card.dataset.k, c = CM[k];
+  const mm = card.dataset.m && MLIB.find(m => m.id === card.dataset.m);
+  const k = mm ? 'custom' : card.dataset.k, c = mm ? {...CM.custom, w: mm.w, d: mm.d, n: mm.name} : CM[k], ex = mm ? modelItem(mm) : undefined;
   const sx = e.clientX, sy = e.clientY, touch = e.pointerType === 'touch';
   let moved = false, ghost = null;
   if (!touch) { e.preventDefault(); card.setPointerCapture(e.pointerId); }
@@ -806,25 +843,35 @@ libList.addEventListener('pointerdown', e => {
     card.removeEventListener('pointermove', mv); card.removeEventListener('pointerup', up); card.removeEventListener('pointercancel', cancel);
     if (ghost) ghost.remove();
     if (touch && Math.hypot(ev.clientX-sx, ev.clientY-sy) > 8) return;
-    if (!moved) { addAtCenter(k); return; }
+    if (!moved) { addAtCenter(k, ex); return; }
     if (overStage(ev)) {
-      if (viewMode === '3d') { addAtCenter(k); return; }
+      if (viewMode === '3d') { addAtCenter(k, ex); return; }
       const r = $('#plan').getBoundingClientRect(); const [wx, wy] = s2w(ev.clientX - r.left, ev.clientY - r.top);
-      addItem(k, snapV(wx), snapV(wy));
+      addItem(k, snapV(wx), snapV(wy), ex);
     }
   };
   const cancel = () => { if (ghost) ghost.remove(); card.removeEventListener('pointermove', mv); card.removeEventListener('pointerup', up); card.removeEventListener('pointercancel', cancel); };
   card.addEventListener('pointermove', mv); card.addEventListener('pointerup', up); card.addEventListener('pointercancel', cancel);
 });
-libList.addEventListener('keydown', e => { const card = e.target.closest('.card'); if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); card.dataset.ft ? startFlow(card.dataset.ft) : addAtCenter(card.dataset.k); } });
+libList.addEventListener('keydown', e => {
+  const card = e.target.closest('.card'); if (!card || card.dataset.up || !(e.key === 'Enter' || e.key === ' ')) return;
+  e.preventDefault(); const mm = card.dataset.m && MLIB.find(m => m.id === card.dataset.m);
+  card.dataset.ft ? startFlow(card.dataset.ft) : mm ? addAtCenter('custom', modelItem(mm)) : addAtCenter(card.dataset.k);
+});
+libList.addEventListener('click', e => {
+  if (e.target.closest('[data-up]')) { $('#modelFile').click(); return; }
+  const b = e.target.closest('[data-mdel]'); if (!b) return;
+  if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = 'Xoá?'; setTimeout(() => { if (b.isConnected) renderLib(); }, 3000); return; }
+  mlibRemove(b.dataset.mdel);
+});
 function startFlow(t) { flowType = t; if (viewMode === '3d') setView('2d'); if (!showFlowsNow()) setShowFlows(true); setMode('flow'); }
 
-function addItem(k, x, y) { checkpoint(); const it = mk(k, r2(x), r2(y)); state.items.push(it); S = new Set([it.id]); setMode('select'); renderAll(); }
-function addAtCenter(k) {
+function addItem(k, x, y, ex) { checkpoint(); const it = mk(k, r2(x), r2(y), ex); state.items.push(it); S = new Set([it.id]); setMode('select'); renderAll(); }
+function addAtCenter(k, ex) {
   const p = state.room.pts; let x = 5, y = 5;
   if (viewMode === '2d') { const el = $('#plan'); [x, y] = s2w(el.clientWidth/2, el.clientHeight/2); }
   else if (p.length) { x = p.reduce((a,b)=>a+b[0],0)/p.length; y = p.reduce((a,b)=>a+b[1],0)/p.length; }
-  addItem(k, snapV(x), snapV(y));
+  addItem(k, snapV(x), snapV(y), ex);
 }
 
 /* ---------- 2D rendering ---------- */
@@ -900,7 +947,7 @@ function planSVG(W, H, ex) {
     // label (unrotated)
     const mn = Math.min(it.w, it.d)*s, mx = Math.max(it.w, it.d)*s;
     if (mx > 46 && mn > 15) {
-      const name = it.label || c.n, fs = clamp(mn*0.2, 9.5, 13);
+      const name = it.label || nameOf(it), fs = clamp(mn*0.2, 9.5, 13);
       const showDim = mn > 34;
       labels += `<g transform="translate(${sx} ${sy})" pointer-events="none"><text text-anchor="middle" dominant-baseline="central" y="${showDim?-fs*0.55:0}" font-size="${fs}" font-weight="600" style="fill:var(--ink);paint-order:stroke;stroke:var(--floor);stroke-width:3px;stroke-linejoin:round">${esc(trunc(name, mx/(fs*0.56)))}</text>${showDim?`<text text-anchor="middle" dominant-baseline="central" y="${fs*0.75}" font-size="${fs-2}" font-family="JetBrains Mono, monospace" style="fill:var(--ink-2);paint-order:stroke;stroke:var(--floor);stroke-width:3px">${fmt(it.w,1)}×${fmt(it.d,1)}</text>`:''}</g>`;
     }
@@ -1042,9 +1089,9 @@ async function bgRestore() {
 async function bgGc() {
   // xoá các ảnh cũ không còn dùng (giữ ảnh đang mở và ảnh trong lịch sử hoàn tác)
   try {
-    const ids = st => [st && st.bg && st.bg.id, ...((st && st.items) || []).map(i => i.img && i.img.id)];
-    const keep = new Set([...ids(state), ...[...hist, ...fut].flatMap(h => { try { return ids(JSON.parse(h)); } catch (e) { return []; } })]);
-    for (const k of await IDB.keys()) { const m = /^(bg|img):(.+)$/.exec(String(k)); if (m && !keep.has(m[2])) IDB.del(k); }
+    const ids = st => [st && st.bg && st.bg.id, ...((st && st.items) || []).flatMap(i => [i.img && i.img.id, i.model && i.model.id])];
+    const keep = new Set([...ids(state), ...MLIB.map(m => m.id), ...[...hist, ...fut].flatMap(h => { try { return ids(JSON.parse(h)); } catch (e) { return []; } })]);
+    for (const k of await IDB.keys()) { const m = /^(bg|img|model):(.+)$/.exec(String(k)); if (m && !keep.has(m[2])) IDB.del(k); }
   } catch (e) {}
 }
 /* ---------- Ảnh trên màn hình LED ----------
@@ -1097,6 +1144,202 @@ $('#ledFile').onchange = async e => {
     track('led_image'); renderAll(); bgGc();
   } catch (err) { ledMsg = 'Không mở được ảnh: ' + (err && err.message || err) + '.'; renderPanel(); }
 };
+/* ---------- Vật thể 3D của người dùng (.glb) ----------
+   File .glb lưu trong IndexedDB (key model:<id>), danh sách “Vật thể của tôi” lưu ở localStorage (MKEY) để dùng lại ở mọi bản vẽ trên trình duyệt này.
+   Mỗi vật thể trên bản vẽ: k = 'custom', it.model = {id, name, nw, nd, nh} (nw/nd/nh là kích thước gốc theo mét, dùng cho nút “Về tỉ lệ gốc”). */
+const MKEY = 'matbang-sukien-models', MODEL_MAX = 20*1024*1024, TRI_WARN = 200000;
+let MLIB = (() => { try { const a = JSON.parse(localStorage.getItem(MKEY)); return Array.isArray(a) ? a.filter(m => m && m.id) : []; } catch (e) { return []; } })();
+function mlibSave() { try { localStorage.setItem(MKEY, JSON.stringify(MLIB)); } catch (e) {} }
+function mlibRemove(id) { MLIB = MLIB.filter(m => m.id !== id); mlibSave(); renderLib(); bgGc(); }
+const modelItem = m => ({w: m.w, d: m.d, h: m.h, model: {id: m.id, name: m.name, nw: m.nw, nd: m.nd, nh: m.nh}});
+const fmtMB = b => b < 1048576 ? fmt(b/1024, 0) + ' KB' : fmt(b/1048576, 1) + ' MB';
+const rd3 = v => Math.max(.01, Math.round(v*1000)/1000);
+const blobData = b => new Promise(r => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(b); });
+const modelTpl = {};          // id → {obj, nw, nd, nh, tris}: mô hình đã dựng, các bản sao dùng chung geometry và vật liệu
+const modelMiss = new Map();  // id → 'missing' (máy này chưa có file) hoặc nội dung lỗi
+const modelPending = new Map();
+const loadJS = src => new Promise((ok, bad) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = () => bad(new Error('không tải được thư viện đọc mô hình, kiểm tra kết nối mạng')); document.head.appendChild(sc); });
+const TJS = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/';
+let gltfLoader = null;
+async function getLoader(draco) {
+  if (!THREE.GLTFLoader) await loadJS(TJS + 'loaders/GLTFLoader.js');
+  if (!gltfLoader) gltfLoader = new THREE.GLTFLoader();
+  if (draco && !gltfLoader.dracoLoader) {
+    if (!THREE.DRACOLoader) await loadJS(TJS + 'loaders/DRACOLoader.js');
+    const dl = new THREE.DRACOLoader(); dl.setDecoderPath(TJS + 'libs/draco/gltf/'); gltfLoader.setDRACOLoader(dl);
+  }
+  return gltfLoader;
+}
+async function parseGLB(buf) {
+  // kiểm tra phần đầu file GLB trước khi dựng
+  const dv = new DataView(buf);
+  if (buf.byteLength < 28 || dv.getUint32(0, true) !== 0x46546C67) throw new Error('File không đúng định dạng GLB (glTF nhị phân). Có thể file bị đổi đuôi từ định dạng khác.');
+  if (dv.getUint32(4, true) !== 2) throw new Error('Chỉ hỗ trợ glTF 2.0. Hãy xuất lại bằng phần mềm 3D đời mới.');
+  let j;
+  try { j = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 20, dv.getUint32(12, true)))); } catch (e) { throw new Error('File GLB bị lỗi phần mô tả.'); }
+  const ext = new Set([...(j.extensionsRequired || []), ...(j.extensionsUsed || [])]);
+  if (ext.has('EXT_meshopt_compression')) throw new Error('File dùng kiểu nén Meshopt, công cụ chưa đọc được. Hãy xuất lại không nén, hoặc nén Draco.');
+  if (ext.has('KHR_texture_basisu')) throw new Error('File dùng texture KTX2/Basis, công cụ chưa đọc được. Hãy xuất lại với texture PNG hoặc JPG.');
+  if ([...(j.images || []), ...(j.buffers || [])].some(x => x.uri && !/^data:/.test(x.uri))) throw new Error('File tham chiếu texture hoặc dữ liệu nằm ở file khác. Hãy xuất lại dạng glTF Binary (.glb) để gói mọi thứ vào một file.');
+  const L = await getLoader(ext.has('KHR_draco_mesh_compression'));
+  const gltf = await new Promise((ok, bad) => L.parse(buf, '', ok, e => bad(new Error('Không dựng được mô hình' + (e && e.message ? ': ' + e.message : '.')))));
+  return normModel(gltf.scene || gltf.scenes[0]);
+}
+function normModel(scene) {
+  // bỏ đèn, camera đi kèm file; skinned mesh đổi sang mesh thường (hiện tư thế gốc, không chạy animation)
+  const drop = [], skin = [];
+  scene.traverse(n => { if (n.isLight || n.isCamera) drop.push(n); else if (n.isSkinnedMesh) skin.push(n); });
+  drop.forEach(n => n.parent && n.parent.remove(n));
+  for (const n of skin) { const m = new THREE.Mesh(n.geometry, n.material); m.position.copy(n.position); m.quaternion.copy(n.quaternion); m.scale.copy(n.scale); n.children.slice().forEach(ch => m.add(ch)); n.parent.add(m); n.parent.remove(n); }
+  scene.updateMatrixWorld(true);
+  let tris = 0;
+  scene.traverse(n => {
+    if (n.geometry) n.userData.shared = 1;   // disposeTree() bỏ qua: geometry dùng chung giữa các bản sao
+    if (n.isMesh) { n.castShadow = n.receiveShadow = true; const g = n.geometry; tris += (g.index ? g.index.count : g.attributes.position.count)/3; }
+  });
+  const box = new THREE.Box3().setFromObject(scene);
+  if (box.isEmpty()) throw new Error('Mô hình không có hình khối nào.');
+  const sz = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  // đặt đáy mô hình ở mặt sàn (y = 0), tâm theo chiều ngang ở gốc toạ độ
+  const inner = new THREE.Group(), obj = new THREE.Group(); inner.add(scene); inner.position.set(-c.x, -box.min.y, -c.z); obj.add(inner);
+  return {obj, nw: Math.max(sz.x, 1e-3), nd: Math.max(sz.z, 1e-3), nh: Math.max(sz.y, 1e-3), tris: Math.round(tris)};
+}
+function modelThumb(t) {
+  let r;
+  try {
+    r = new THREE.WebGLRenderer({antialias: true, alpha: true, preserveDrawingBuffer: true});
+    r.setSize(240, 180, false); r.outputEncoding = THREE.sRGBEncoding;
+    const sc = new THREE.Scene(), dl = new THREE.DirectionalLight(0xffffff, .9);
+    dl.position.set(-2, 5, 4); sc.add(new THREE.HemisphereLight(0xffffff, 0x8a8478, .9), dl, t.obj.clone(true));
+    const R = Math.hypot(t.nw, t.nd, t.nh)/2, cam = new THREE.PerspectiveCamera(30, 4/3, R/100, R*100);
+    cam.position.set(0, t.nh/2, 0).addScaledVector(new THREE.Vector3(.8, .55, 1.3).normalize(), R/Math.sin(15*D2R)*1.02); cam.lookAt(0, t.nh/2, 0);
+    r.render(sc, cam); return r.domElement.toDataURL('image/png');
+  } catch (e) { return ''; } finally { if (r) { r.dispose(); r.forceContextLoss(); } }
+}
+function modelGet(id) {
+  if (modelTpl[id]) return Promise.resolve(modelTpl[id]);
+  if (!modelPending.has(id)) modelPending.set(id, (async () => {
+    try {
+      const blob = await IDB.get('model:' + id).catch(() => null);
+      if (!blob) { modelMiss.set(id, 'missing'); return null; }
+      const t = modelTpl[id] = await parseGLB(await blob.arrayBuffer()); modelMiss.delete(id);
+      const L = MLIB.find(m => m.id === id); if (L && !L.thumb) { L.thumb = modelThumb(t); L.tris = t.tris; mlibSave(); renderLib(); }
+      return t;
+    } catch (e) { modelMiss.set(id, e.message || String(e)); return null; }
+    finally { modelPending.delete(id); }
+  })());
+  return modelPending.get(id);
+}
+async function modelRestore() {
+  const ids = [...new Set(state.items.filter(i => i.model).map(i => i.model.id))].filter(id => !modelTpl[id] && !modelMiss.has(id) && !modelPending.has(id));
+  if (!ids.length) return;
+  const got = (await Promise.all(ids.map(modelGet))).some(Boolean);
+  renderPanel(); if (got && viewMode === '3d') build3D();
+}
+const EXT_TIP = {
+  obj: 'File .obj thường cần kèm .mtl và ảnh texture nên dễ thiếu khi tải lên. Hãy mở trong Blender (File › Import › Wavefront .obj) rồi xuất File › Export › glTF 2.0, chọn định dạng glTF Binary (.glb).',
+  mtl: 'File .mtl chỉ chứa thông tin vật liệu của file .obj. Hãy mở .obj trong Blender rồi xuất ra glTF Binary (.glb).',
+  gltf: 'File .gltf thường đi kèm file .bin và ảnh texture riêng. Hãy xuất lại dạng glTF Binary (.glb) để gói mọi thứ vào một file.',
+  fbx: 'Hãy mở file .fbx trong Blender (File › Import › FBX) rồi xuất File › Export › glTF 2.0, chọn glTF Binary (.glb).',
+  skp: 'SketchUp 2021 trở lên: File › Export › 3D Model, chọn định dạng .glb. Bản cũ hơn: cài plugin xuất glTF.',
+  blend: 'Trong Blender: File › Export › glTF 2.0, chọn định dạng glTF Binary (.glb).',
+  max: 'Trong 3ds Max: xuất ra .fbx rồi chuyển sang .glb bằng Blender, hoặc dùng plugin Babylon.js Exporter để xuất .glb.',
+  '3ds': 'Hãy mở file trong Blender rồi xuất File › Export › glTF 2.0, chọn glTF Binary (.glb).',
+  stl: 'File .stl không có màu và vật liệu. Hãy mở trong Blender, gán vật liệu rồi xuất glTF Binary (.glb).',
+  usdz: 'Hãy chuyển .usdz sang .glb bằng Blender (File › Import › USD) rồi xuất glTF Binary (.glb).',
+  dae: 'Hãy mở file .dae trong Blender (File › Import › Collada) rồi xuất glTF Binary (.glb).',
+};
+let mdState = null, relinkId = null;
+$('#modelFile').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; if (relinkId) modelRelink(f); else modelImport(f); };
+async function modelImport(file) {
+  mdState = {busy: true, name: file.name}; renderModelModal(); $('#modelModal').hidden = false;
+  try {
+    const ext = ((/\.([a-z0-9]+)$/i.exec(file.name) || [])[1] || '').toLowerCase();
+    if (ext !== 'glb') throw new Error(EXT_TIP[ext] || 'Công cụ chỉ nhận file .glb (glTF nhị phân). Hãy mở mô hình trong Blender hoặc phần mềm 3D bạn đang dùng rồi xuất ra .glb.');
+    if (file.size > MODEL_MAX) throw new Error(`File nặng ${fmtMB(file.size)}, vượt giới hạn 20 MB. Hãy giảm số đa giác (Blender: modifier Decimate) hoặc thu nhỏ texture rồi xuất lại.`);
+    const buf = await file.arrayBuffer(), t = await parseGLB(buf);
+    // file xuất theo cm hoặc mm thường to bất thường: đoán đơn vị rồi quy về mét
+    const mx = Math.max(t.nw, t.nd, t.nh), k = mx > 300 ? .001 : mx > 40 ? .01 : 1;
+    mdState = {file, buf, t, k, unit: k === .001 ? 'mm' : k === .01 ? 'cm' : '', thumb: modelThumb(t), name: (n => n ? n[0].toUpperCase() + n.slice(1) : 'Vật thể 3D')(file.name.replace(/\.glb$/i, '').replace(/[_-]+/g, ' ').trim()), w: rd3(t.nw*k), d: rd3(t.nd*k), h: rd3(t.nh*k), lock: true};
+    track('model_pick', {tris_k: Math.round(t.tris/1000)});
+  } catch (e) { mdState = {err: e.message || String(e), name: file.name}; track('model_error'); }
+  renderModelModal();
+}
+async function modelRelink(file) {
+  const id = relinkId; relinkId = null;
+  try {
+    if (!/\.glb$/i.test(file.name)) throw new Error('chỉ nhận file .glb');
+    if (file.size > MODEL_MAX) throw new Error('file vượt 20 MB');
+    const buf = await file.arrayBuffer(), t = await parseGLB(buf);
+    await IDB.put('model:' + id, new Blob([buf], {type: 'model/gltf-binary'}));
+    modelTpl[id] = t; modelMiss.delete(id);
+    const it = state.items.find(i => i.model && i.model.id === id);
+    if (it && !MLIB.some(m => m.id === id)) { MLIB.push({id, name: it.model.name, w: it.w, d: it.d, h: it.h, nw: it.model.nw, nd: it.model.nd, nh: it.model.nh, tris: t.tris, size: file.size, thumb: modelThumb(t)}); mlibSave(); renderLib(); }
+    renderAll();
+  } catch (e) { modelMiss.set(id, e.message || String(e)); renderPanel(); }
+}
+function renderModelModal() {
+  const m = mdState, el = $('#mdBody'); if (!m) return;
+  const close = () => { $('#modelModal').hidden = true; mdState = null; };
+  if (m.busy) { el.innerHTML = `<p class="note" aria-live="polite">Đang đọc ${esc(m.name)}…</p>`; return; }
+  if (m.err) {
+    el.innerHTML = `<div class="mdl-err" role="alert"><b>Chưa thêm được “${esc(m.name)}”.</b><br>${esc(m.err)}</div>
+      <p class="note">Công cụ nhận file <b>.glb</b> (glTF 2.0 nhị phân, đã nhúng texture), tối đa 20 MB. Có thể tìm mô hình miễn phí ở Sketchfab (lọc Downloadable, tải bản GLB), Poly Pizza hoặc Quaternius.</p>
+      <div class="row"><button class="btn" id="mdCancel">Đóng</button><button class="btn primary" id="mdPick">Chọn file khác…</button></div>`;
+    $('#mdCancel').onclick = close; $('#mdPick').onclick = () => $('#modelFile').click(); $('#mdPick').focus();
+    return;
+  }
+  const t = m.t, R = {w: t.nw, d: t.nd, h: t.nh};
+  el.innerHTML = `
+    <div class="mdl-prev">${m.thumb ? `<img src="${m.thumb}" alt="Xem trước mô hình ${esc(m.name)}">` : '<span class="note">Không tạo được ảnh xem trước</span>'}</div>
+    <div class="mdl-info"><span>${esc(m.file.name)}</span><span>${fmtMB(m.file.size)}</span><span>${t.tris.toLocaleString('vi-VN')} tam giác</span></div>
+    ${m.unit ? `<div class="mdl-warn">Mô hình có vẻ được dựng theo đơn vị ${m.unit} nên công cụ đã quy đổi sang mét. Kiểm tra lại kích thước bên dưới.</div>` : ''}
+    ${t.tris > TRI_WARN ? `<div class="mdl-warn">Mô hình khá nặng (${t.tris.toLocaleString('vi-VN')} tam giác). Chế độ 3D có thể chậm khi đặt nhiều bản sao. Nếu cần dùng số lượng lớn, nên giảm đa giác trước (Blender: modifier Decimate).</div>` : ''}
+    <div class="fld"><label for="mdName">Tên vật thể</label><input id="mdName" type="text" value="${esc(m.name)}"></div>
+    <div class="fld"><label>Kích thước thật</label><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      ${[['w', 'Rộng'], ['d', 'Sâu'], ['h', 'Cao']].map(([k, l]) => `<div class="unit"><input id="md_${k}" type="number" step="0.05" min="0.01" value="${m[k]}" aria-label="${l}"><em>${l.toLowerCase()} · m</em></div>`).join('')}
+    </div></div>
+    <label class="chk"><input type="checkbox" id="mdLock" ${m.lock ? 'checked' : ''}> Giữ tỉ lệ gốc (đổi một số đo, hai số đo còn lại đổi theo)</label>
+    <p class="note">Mặt trước của mô hình (mặt nhìn thấy ở góc Front trong Blender, tức hướng +Z của glTF) quay theo mũi tên nhỏ trên mặt bằng. Mô hình chỉ lưu trong trình duyệt này và nằm ở mục “Vật thể của tôi” để dùng lại cho các bản vẽ khác.</p>
+    <p class="note" id="mdMsg" aria-live="polite"></p>
+    <div class="row"><button class="btn" id="mdCancel">Huỷ</button><button class="btn primary" id="mdOk">Thêm vào bản vẽ</button></div>`;
+  $('#mdCancel').onclick = close;
+  $('#mdName').oninput = e => m.name = e.target.value;
+  $('#mdLock').onchange = e => m.lock = e.target.checked;
+  for (const k of ['w', 'd', 'h']) $('#md_' + k).onchange = e => {
+    const v = parseFloat(e.target.value); if (!(v > 0)) { e.target.value = m[k]; return; }
+    m[k] = rd3(v);
+    if (m.lock) for (const o of ['w', 'd', 'h']) if (o !== k) { m[o] = rd3(v*R[o]/R[k]); $('#md_' + o).value = m[o]; }
+  };
+  $('#mdOk').onclick = async () => {
+    const id = uid(), name = (m.name || '').trim() || 'Vật thể 3D';
+    try { await IDB.put('model:' + id, new Blob([m.buf], {type: 'model/gltf-binary'})); }
+    catch (e) { $('#mdMsg').textContent = 'Trình duyệt không cho lưu thêm (bộ nhớ đầy hoặc đang ở chế độ ẩn danh). Hãy xoá bớt vật thể trong thư viện rồi thử lại.'; return; }
+    modelTpl[id] = t;
+    const e = {id, name, w: m.w, d: m.d, h: m.h, nw: rd3(t.nw*m.k), nd: rd3(t.nd*m.k), nh: rd3(t.nh*m.k), tris: t.tris, size: m.file.size, thumb: m.thumb};
+    MLIB.push(e); mlibSave(); renderLib(); close();
+    track('model_upload', {tris_k: Math.round(t.tris/1000)});
+    addAtCenter('custom', modelItem(e));
+  };
+  $('#mdName').focus(); $('#mdName').select();
+}
+$('#modelModal').addEventListener('click', e => { if (e.target.id === 'modelModal') { e.target.hidden = true; mdState = null; } });
+function modelSection(it) {
+  const m = it.model || {}, L = MLIB.find(x => x.id === m.id), miss = modelMiss.get(m.id), t = modelTpl[m.id];
+  const st = miss === 'missing' ? 'Trình duyệt này chưa có file mô hình (bản vẽ được mở từ file không kèm mô hình). Bấm “Chọn lại file .glb” để nạp lại.'
+    : miss ? 'Không đọc được mô hình: ' + miss : !t ? 'Đang nạp mô hình…' : '';
+  return `<div class="led-img"><h4>Mô hình 3D</h4>
+    ${L && L.thumb ? `<div class="mdl-th"><img src="${L.thumb}" alt=""></div>` : ''}
+    ${st ? `<p class="note">${esc(st)}</p>` : ''}
+    <p class="note">Tỉ lệ gốc ${fmt(m.nw)} × ${fmt(m.nd)} × ${fmt(m.nh)} m. Trên 3D mô hình giữ nguyên vật liệu và màu của file.</p>
+    <div class="row"><button class="btn" id="mdRatio" title="Giữ chiều rộng, tính lại sâu và cao theo tỉ lệ gốc">Về tỉ lệ gốc</button><button class="btn" id="mdView">Xem 3D</button>${miss ? '<button class="btn" id="mdRelink">Chọn lại file .glb</button>' : ''}</div></div>`;
+}
+function bindModel(it) {
+  const m = it.model || {};
+  $('#mdRatio').onclick = () => { if (!(m.nw > 0)) return; checkpoint(); it.d = rd3(it.w*m.nd/m.nw); it.h = rd3(it.w*m.nh/m.nw); renderAll(); };
+  $('#mdView').onclick = () => setView('3d');
+  if ($('#mdRelink')) $('#mdRelink').onclick = () => { relinkId = m.id; $('#modelFile').click(); };
+}
 function setShowBg(v) { if (!state.bg) return; checkpoint(); state.bg.show = v; renderAll(); }
 let opDirty = false;
 function renderBgPanel() {
@@ -1539,7 +1782,7 @@ $('#tFlow').onclick = () => startFlow(flowType);
 $('#bUndo').onclick = undo; $('#bRedo').onclick = redo;
 
 document.addEventListener('keydown', e => {
-  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden) return;
+  if (e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden || !$('#modelModal').hidden) return;
   const ctrl = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
   if (e.code === 'Space') { spaceDown = true; svg.classList.add('panning'); e.preventDefault(); return; }
   if (ctrl && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
@@ -1677,15 +1920,15 @@ function renderPanel() {
   if (issues.overlap.has(it.id)) bad.push('Đang chồng lấn với vật thể khác.');
   if (issues.outside.has(it.id)) bad.push('Một phần nằm ngoài không gian.');
   el.innerHTML = `
-    <h3><span class="sw" style="background:${col}"></span>${esc(c.n)}<span class="typ">${CAT_NAMES[c.c]}</span></h3>
+    <h3><span class="sw" style="background:${col}"></span>${esc(nameOf(it))}<span class="typ">${CAT_NAMES[c.c]}</span></h3>
     ${bad.map(b => `<div class="issue">${b}</div>`).join('')}
-    <div class="fld"><label for="pL">Tên hiển thị</label><input id="pL" type="text" value="${esc(it.label)}" placeholder="${esc(c.n)}"></div>
+    <div class="fld"><label for="pL">Tên hiển thị</label><input id="pL" type="text" value="${esc(it.label)}" placeholder="${esc(nameOf(it))}"></div>
     <div class="g2">
       ${num('pW','Rộng', it.w, 'm', 0.1)}${num('pD','Sâu', it.d, 'm', 0.1)}
       ${num('pH', c.hang ? 'Cao treo' : 'Cao', it.h, 'm', 0.1)}${num('pR','Xoay', it.rot, '°', 15)}
       ${num('pX','Vị trí X', it.x, 'm', 0.25)}${num('pY','Vị trí Y', it.y, 'm', 0.25)}
     </div>
-    <div class="fld"><label for="pC">Màu</label><div class="colr"><input id="pC" type="color" value="${toHex(col)}"><button class="btn" id="pCr" ${it.color ? '' : 'disabled'}>Theo nhóm</button></div></div>
+    ${it.k === 'custom' ? modelSection(it) : `<div class="fld"><label for="pC">Màu</label><div class="colr"><input id="pC" type="color" value="${toHex(col)}"><button class="btn" id="pCr" ${it.color ? '' : 'disabled'}>Theo nhóm</button></div></div>`}
     ${it.k === 'led' ? ledSection(it) : ''}
     <div class="stat"><span>Diện tích chiếm chỗ</span><b>${fmt(footprint(it))} m²</b></div>
     ${it.k === 'etable' ? `<div class="stat"><span>Số bàn 1,6 m (tăng chiều rộng để thêm bàn)</span><b>${Math.max(1, Math.round(it.w/1.6))}</b></div>` : ''}
@@ -1697,10 +1940,10 @@ function renderPanel() {
     </div>`;
   const bind = (id, key, f = parseFloat) => { $(id).onchange = e => { const v = f(e.target.value); if (key !== 'label' && !isFinite(v)) return; checkpoint(); it[key] = key === 'rot' ? ((v % 360) + 360) % 360 : key === 'label' ? v : (['w','d','h'].includes(key) ? Math.max(key === 'h' ? 0 : 0.1, r2(v)) : r2(v)); renderAll(); }; };
   bind('#pL', 'label', v => v.trim()); bind('#pW','w'); bind('#pD','d'); bind('#pH','h'); bind('#pR','rot'); bind('#pX','x'); bind('#pY','y');
-  $('#pC').onchange = e => { checkpoint(); it.color = e.target.value; renderAll(); };
-  $('#pCr').onclick = () => { checkpoint(); it.color = ''; renderAll(); };
+  if ($('#pC')) { $('#pC').onchange = e => { checkpoint(); it.color = e.target.value; renderAll(); }; $('#pCr').onclick = () => { checkpoint(); it.color = ''; renderAll(); }; }
   $('#pRot').onclick = () => rotSel(90); $('#pDup').onclick = dupSel; $('#pDel').onclick = delSel;
   if (it.k === 'led') bindLed(it);
+  if (it.k === 'custom') bindModel(it);
 }
 const AL = {
   l:  '<path d="M2.5 2v12"/><rect x="5" y="4" width="8" height="3"/><rect x="5" y="9" width="5" height="3"/>',
@@ -1735,7 +1978,7 @@ function renderFlowPanel(el, f) {
 }
 function renderMulti(el) {
   const its = selItems(); let area = 0, seats = 0; const by = {};
-  for (const it of its) { const c = CM[it.k]; if (!c.flat && !c.hang && !c.ref) area += footprint(it); seats += seatsOf(it); by[c.n] = by[c.n] || {n: 0, c: c.c}; by[c.n].n++; }
+  for (const it of its) { const c = CM[it.k]; if (!c.flat && !c.hang && !c.ref) area += footprint(it); seats += seatsOf(it); const nm = nameOf(it); by[nm] = by[nm] || {n: 0, c: c.c}; by[nm].n++; }
   const nBad = its.filter(i => issues.overlap.has(i.id) || issues.outside.has(i.id)).length, b = selBounds();
   el.innerHTML = `
     <h3>Đã chọn ${its.length} vật thể<span class="typ">${fmt(b.x1-b.x0,1)} × ${fmt(b.y1-b.y0,1)} m</span></h3>
@@ -1777,7 +2020,7 @@ function renderStats() {
     const c = CM[it.k];
     if (!c.flat && !c.hang && !c.ref) occ += footprint(it);
     seats += seatsOf(it);
-    byCat[c.n] = byCat[c.n] || {n: 0, c: c.c}; byCat[c.n].n++;
+    const nm = nameOf(it); byCat[nm] = byCat[nm] || {n: 0, c: c.c}; byCat[nm].n++;
   }
   const pct = area ? occ/area*100 : 0;
   const ov = issues.overlap.size, out = issues.outside.size;
@@ -1859,7 +2102,7 @@ function loop3D() { if (looping) return; looping = true; lastT = performance.now
 /* Camera tự do: WASD/QE, zoom theo con trỏ, nhấp đúp để bay đến */
 const keys3 = new Set(); let fly = null;
 document.addEventListener('keydown', e => {
-  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden) return;
+  if (viewMode !== '3d' || e.ctrlKey || e.metaKey || e.altKey || e.target.matches('input,textarea,select') || !$('#modal').hidden || !$('#shotModal').hidden || !$('#infoModal').hidden || !$('#newModal').hidden || !$('#modelModal').hidden) return;
   const k = e.key.toLowerCase(); if ('wasdqe'.includes(k) && k.length === 1) { keys3.add(k); fly = null; e.preventDefault(); }
 });
 document.addEventListener('keyup', e => keys3.delete(e.key.toLowerCase()));
@@ -1936,7 +2179,7 @@ document.querySelectorAll('[data-cam]').forEach(b => b.onclick = () => cam(b.dat
 $('#bWalls').onclick = () => { wallMode = {ghost:'solid', solid:'hidden', hidden:'ghost'}[wallMode]; $('#bWalls').textContent = 'Tường: ' + {ghost:'mờ', solid:'đặc', hidden:'ẩn'}[wallMode]; build3D(); };
 $('#bLabels').onclick = () => { showLabels = !showLabels; $('#bLabels').setAttribute('aria-pressed', showLabels); build3D(); };
 
-function disposeTree(o) { o.traverse(n => { if (n.geometry) n.geometry.dispose(); if (n.material) { (Array.isArray(n.material) ? n.material : [n.material]).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); } }); }
+function disposeTree(o) { o.traverse(n => { if (n.userData.shared) return; if (n.geometry) n.geometry.dispose(); if (n.material) { (Array.isArray(n.material) ? n.material : [n.material]).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); } }); }
 function build3D() {
   if (!T || !window.THREE) return;
   if (T.root) { T.scene.remove(T.root); disposeTree(T.root); }
@@ -2193,6 +2436,13 @@ function buildItem(it, roomH) {
       spot.rotation.x = -Math.PI/2; spot.scale.y = 1/Math.cos(tilt); spot.position.set(0, .015, Math.sin(tilt)*L); g.add(spot);
       const lens = new THREE.Mesh(new THREE.CircleGeometry(beamy ? .09 : .11, 16), new THREE.MeshBasicMaterial({color: lc})); lens.position.set(0, -.001, 0); lens.rotation.x = Math.PI/2; lg.add(lens);
       break; }
+    case 'custom': {
+      // vật thể .glb: bản sao của mô hình đã dựng, co giãn theo kích thước trên bản vẽ; chưa nạp xong thì hiện khối mờ
+      const t = it.model && modelTpl[it.model.id];
+      if (t) { const o = t.obj.clone(true); o.scale.set(w/t.nw, Math.max(h, .01)/t.nh, d/t.nd); g.add(o); }
+      else box(w, Math.max(h, .1), d, M(base, {transparent: true, opacity: .35}));
+      break;
+    }
     default: box(w, Math.max(h, .1), d, mB);
   }
   return g;
@@ -2428,12 +2678,16 @@ $('#shotModal').addEventListener('click', e => { if (e.target.id === 'shotModal'
 
 /* ---------- Data modal ---------- */
 const modal = $('#modal');
-const hasImages = () => !!state.bg || state.items.some(i => i.img);
+const hasImages = () => !!state.bg || state.items.some(i => i.img || i.model);
 async function dataText() {
   if (!(hasImages() && $('#mBg').checked)) return JSON.stringify(state, null, 2);
   const out = JSON.parse(JSON.stringify(state));
   if (out.bg) out.bg.data = await bgDataOf(out.bg.id);
   for (const it of out.items) if (it.img) { const d = await bgDataOf(it.img.id); if (d) it.img.data = d; }
+  // mô hình .glb: mỗi file chỉ nhúng một lần dù có nhiều bản sao
+  for (const id of new Set(out.items.filter(i => i.model).map(i => i.model.id))) {
+    const b = await IDB.get('model:' + id).catch(() => null); if (b) (out.models = out.models || {})[id] = await blobData(b);
+  }
   return JSON.stringify(out, null, 2);
 }
 $('#bJson').onclick = () => { $('#mBgWrap').hidden = !hasImages(); $('#mText').value = ''; $('#mPaste').open = false; $('#mMsg').textContent = ''; modal.hidden = false; $('#mSave').focus(); };
@@ -2457,7 +2711,7 @@ $('#sBg').onchange = () => takeShot();
 $('#sLay').onchange = () => takeShot();
 $('#sN').onchange = () => { if ($('#sLay').value === 'one') $('#sLay').value = 'strip'; takeShot(); };
 modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; $('#newModal').hidden = true; } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.hidden = true; $('#shotModal').hidden = true; infoModal.hidden = true; $('#newModal').hidden = true; $('#modelModal').hidden = true; mdState = null; } });
 
 /* ---------- Tạo mới + thẻ gợi ý bắt đầu ---------- */
 let starterOff = false;
@@ -2602,11 +2856,28 @@ async function loadData(txt, fname) {
   try {
     const s = JSON.parse(txt);
     if (!s.room || !Array.isArray(s.room.pts) || !Array.isArray(s.items)) throw new Error('thiếu room hoặc items');
-    s.items = s.items.filter(i => CM[i.k]).map(i => ({...mk(i.k, 0, 0), ...i, id: i.id || uid()}));
+    s.items = s.items.filter(i => CM[i.k] && (i.k !== 'custom' || (i.model && i.model.id))).map(i => ({...mk(i.k, 0, 0), ...i, id: i.id || uid()}));
     s.room.h = s.room.h || 4; s.name = s.name || 'Sự kiện';
     const okPts = P => Array.isArray(P) && P.length >= 3 && P.every(q => Array.isArray(q) && isFinite(q[0]) && isFinite(q[1]));
     s.rooms = Array.isArray(s.rooms) ? s.rooms.filter(r => r && okPts(r.pts)).map((r, i) => ({id: r.id || uid(), name: String(r.name || `Phòng ${i + 2}`), pts: r.pts.map(q => [+q[0], +q[1]])})) : []; s.flows = Array.isArray(s.flows) ? s.flows.filter(f => f && Array.isArray(f.pts) && f.pts.length >= 2).map(f => ({id: f.id || uid(), type: FT[f.type] ? f.type : 'guest', name: f.name || '', pts: f.pts})) : [];
-    let bgNote = '', ledIn = 0, ledMiss = 0;
+    let bgNote = '', ledIn = 0, ledMiss = 0, mIn = 0;
+    const ms = s.models && typeof s.models === 'object' ? s.models : {}; delete s.models;
+    for (const it of s.items) {
+      if (it.k !== 'custom') { delete it.model; continue; }
+      const m = it.model; it.model = {id: String(m.id), name: String(m.name || 'Vật thể 3D'), nw: +m.nw || it.w, nd: +m.nd || it.d, nh: +m.nh || it.h};
+    }
+    for (const [id, d] of Object.entries(ms)) {
+      if (typeof d !== 'string' || !d.startsWith('data:')) continue;
+      if (!(await IDB.get('model:' + id).catch(() => null))) await IDB.put('model:' + id, await (await fetch(d)).blob()).catch(() => {});
+      modelMiss.delete(id); mIn++;
+      const it = s.items.find(i => i.model && i.model.id === id);
+      if (it && !MLIB.some(x => x.id === id)) MLIB.push({id, name: it.model.name, w: it.w, d: it.d, h: it.h, nw: it.model.nw, nd: it.model.nd, nh: it.model.nh, tris: 0, size: 0, thumb: ''});
+    }
+    if (mIn) { mlibSave(); renderLib(); }
+    let mMiss = 0;
+    for (const id of new Set(s.items.filter(i => i.model && !ms[i.model.id]).map(i => i.model.id))) {
+      if (modelTpl[id] || await IDB.get('model:' + id).catch(() => null)) modelMiss.delete(id); else mMiss++;
+    }
     for (const it of s.items) {
       const m = it.img;
       if (!m || typeof m !== 'object' || !(m.iw > 0 && m.ih > 0)) { delete it.img; continue; }
@@ -2622,8 +2893,8 @@ async function loadData(txt, fname) {
         const blob = await (await fetch(b.data)).blob(); s.bg.id = uid(); await IDB.put('bg:' + s.bg.id, blob).catch(() => {}); bgSrc[s.bg.id] = URL.createObjectURL(blob); bgData[s.bg.id] = b.data; bgNote = ' Kèm ảnh nền.';
       } else if (!bgSrc[s.bg.id]) bgNote = ' File không kèm ảnh nền: bấm “Đổi ảnh” ở panel phải để chọn lại file.';
     } else s.bg = null;
-    checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); ledRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
-    $('#mMsg').textContent = `Đã mở ${fname ? fname + ', ' : ''}${s.items.length} vật thể.` + bgNote + (ledIn ? ` Kèm ${ledIn} ảnh màn LED.` : '') + (ledMiss ? ` ${ledMiss} màn LED thiếu ảnh trên máy này (chọn lại ở panel phải).` : '');
+    checkpoint(); state = s; S = new Set(); setMode('select'); renderAll(); bgRestore(); ledRestore(); modelRestore(); fitView(); fitted = false; if (viewMode === '3d') enter3D();
+    $('#mMsg').textContent = `Đã mở ${fname ? fname + ', ' : ''}${s.items.length} vật thể.` + bgNote + (ledIn ? ` Kèm ${ledIn} ảnh màn LED.` : '') + (ledMiss ? ` ${ledMiss} màn LED thiếu ảnh trên máy này (chọn lại ở panel phải).` : '') + (mIn ? ` Kèm ${mIn} mô hình 3D.` : '') + (mMiss ? ` ${mMiss} mô hình 3D chưa có trên máy này (chọn lại file .glb ở panel phải).` : '');
     return true;
   } catch (e) { $('#mMsg').textContent = (fname ? `File ${fname} không đọc được` : 'Dữ liệu không đọc được') + ` (${e.message}). Hãy dùng file hoặc dữ liệu lưu từ công cụ này.`; return false; }
 }
